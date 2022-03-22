@@ -478,6 +478,8 @@ function translate(){
  buttonGUI('da', TransText('da'))
  buttonGUI('marathon', TransText('marathon'))
  buttonGUI('play', TransText('play'))
+ buttonGUI('settings', TransText('settings'))
+
  buttonGUI('controls', TransText('controls'))
  classGUI('replaycon', TransText('replaycon'))
  classGUI('return', TransText('return'))
