@@ -2286,9 +2286,9 @@ function init(gt, gamep) {
   if (DOWNFALL !== void 0 && DOWNFALL == true) {
    fallboard()
   }
-  setTimeout(function() {
+  
    menu(5);
-  }, 2000)
+  
  }
 
  var replaystring
