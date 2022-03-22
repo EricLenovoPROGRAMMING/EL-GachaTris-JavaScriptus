@@ -272,7 +272,8 @@ function saveSetting(s) {
     setting[s][settings[s]];
 
   localStorage['settingsse'] = JSON.stringify(settings);
-  localStorage['settings'] = JSON.stringify(settings)
+  localStorage['settings'] = JSON.stringify(settings):
+  translate()
 }
 function loadLocalData() {
       if (localStorage['binds']) {
