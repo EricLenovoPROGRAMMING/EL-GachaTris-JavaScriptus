@@ -619,6 +619,7 @@ function init(gt, gamep) {
      clearInterval(intid)
     if (true) {
      intid = setInterval(function() {
+      if(true){
       /* if (settings.Slowdown !== 0 && gametype == 0 && !paused) {
         playsfx('movesound')
         if (frame in replayKeys.keys && replayKeys.keys[frame] == 0) playsfx('spinsound')
@@ -637,8 +638,8 @@ function init(gt, gamep) {
       /* if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
      
-                                    
-  }, 1000 / /*setting.Slowdown[settings.Slowdown]/**/60)
+      }                        
+  }, 1000 / 60)
     }
    }
   }
