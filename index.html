@@ -1,0 +1,452 @@
+  <!doctype html>
+  <meta charset=utf-8>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+
+  <title>Gachatris Javascriptus</title>
+  <link rel=stylesheet href='style.css'>
+
+  <link rel="script" href=translation/translations.js>
+  <!--<audio controls autoplay style="display:none"> </audio>-->
+  <!--<canvas id=bg></canvas>-->
+  <!-- <video id=bg  loop autoplay></video>-->
+  <!--
+<div id="touchOverlay" class="touchoverlay-disabled">
+ <div class="touchbutton" id="touchLeft" style="display:none"><i class="material-icons">&#xE5C4;</i></div>
+ <div class="touchbutton" id="touchRight" style="display:none"><i class="material-icons">&#xE5C8;</i></div>
+ <div class="touchbutton" id="touchDown" style="display:none"><i class="material-icons">&#xE906;</i></div>
+ <div class="touchbutton" id="touchDrop" style="display:none"><i class="material-icons">&#xE2C4;</i></div>
+ <div class="touchbutton" id="touchHold" style="display:none"><i class="material-icons">&#xE8D4;</i></div>
+ <div class="touchbutton" id="touchRotRight" style="display:none"><i class="material-icons">&#xE15A;</i></div>
+ <div class="touchbutton" id="touchRotLeft" style="display:none"><i class="material-icons">&#xE166;</i></div>
+ <div class="touchbutton" id="touchRot180" style="display:none"><i class="material-icons">&#xE5D5;</i></div>
+ <div class="touchbutton" id="touchLayout" style="display:none"><i class="material-icons">&#xE913;</i></div>
+</div>-->
+  <div id=menumain style="position:absolute;z-index: 1000 ;overflow:hidden">
+   <!-- <div id=bgmain style="position:absolute;background: rgba(0,0,0,1);width:100%;height:100%">-->
+   <nav class='menu on'>
+    <h1 id=guitext_title>Tetr.js GTJS 0.8a.1a Alpha Gachatris</h1>
+    <h6  id=guitext_title2>Gachatris JavaScriptus</h6>
+    <ul>
+     <li><a onclick=morefunction(0) id=gui_play>Play!</a>
+     <li><a onclick=menu(2) id=gui_controls>Controls</a>
+     <li><a onclick=morefunction(1) class=guiclass_replaycon>ReplayCon</a>
+     <li><a onclick=menu(1)  id=gui_settings><i class=icon-cog></i>Settings</p></a>
+    </ul>
+   </nav>
+   <nav class=moremodes>
+    <h2 id=guitext_moremodes>Play</h2>
+    <ul>
+     <li><a onclick=menuS(7) id=gui_sprint>Sprint</a>
+      <!--<li><a onclick=init(1)>Play Marathon</a>
+        <li><a onclick=init(2)>Play Ultra</a>-->
+     <li><a onclick=init(3) id=gui_dig>Dig Race</a>
+     <li><a onclick=init(111)  id=gui_tsd>TSD Only</a>
+     <li><a onclick=init(112) id=gui_gf>Garbage Fire</a>
+     <li><a onclick=init(113) id=gui_renc4w>REN C4W</a>
+     <li><a onclick=init(114)  id=gui_2mu>2-minute Ultra</a>
+    <!-- <li><a onclick=init(115)>Garbage Ultra</a>-->
+     <li><a onclick=menuS(6)  id=gui_da>Downstack Attack</a>
+     <li><a onclick=menuS(8)  id=gui_marathon>Marathon</a></li>
+     <li><a onclick=menuS(9)  id=gui_master>Master</a></li>
+
+     <li><a onclick=menu(0)  id=gui_returnCAP><- RETURN</a>
+    </ul>
+   </nav>
+   <div class=menu>
+    <h2 id=guitext_settings>Settings</h2>
+    <h6  id=guitext_settingsNote>EricLenovo's note to you: some settings are not fully developed yet! *cries*</h6>
+    <div id=settings>
+    </div>
+    <div style=clear:both><a class=button onclick=morefunction(2)  id=gui_easysettings>Easy Settings</a></div>
+    <div style=clear:both><a class=button onclick=menu(0) class=guiclass_done>Done</a></div>
+   </div>
+   <div class=menu>
+    <h2 id=guitext_controls>Controls</h2>
+    <p id=guitext_controlsNote>Click on the control you want to change, then press any key.
+    <table id=controls>
+     <tr>
+      <th  id=guicontrols_left>Move Left:
+      <td id=moveLeft>←
+     <tr>
+      <th id=guicontrols_right>Move Right:
+      <td id=moveRight>→
+     <tr>
+      <th  id=guicontrols_softdrop>Move Down:
+      <td id=moveDown>↓
+     <tr>
+      <th  id=guicontrols_harddrop>Hard Drop:
+      <td id=hardDrop>Space
+     <tr>
+      <th  id=guicontrols_hold>Hold:
+      <td id=holdPiece>C
+     <tr>
+      <th  id=guicontrols_cw>Spin Right:
+      <td id=rotRight>X
+     <tr>
+      <th  id=guicontrols_ccw>Spin Left:
+      <td id=rotLeft>Z
+     <tr>
+      <th id=guicontrols_180>Spin 180:
+      <td id=rot180>Shift
+     <tr>
+      <th  id=guicontrols_retry>Retry:
+      <td id=retry>R
+     <tr>
+      <th  id=guicontrols_pause>Pause:
+      <td id=pause>Esc
+    </table>
+    <div style=clear:both><a class=button onclick=menu(0)  class=guiclass_done>Done</a></div>
+   </div>
+   <nav class=menu>
+
+   </nav>
+   <nav id=pause class=menu>
+    <ul>
+     <li><a onclick=unpause() id=gui_continue>Return</a>
+     <li><a onclick=init(gametype) class=guiclass_retry>Restart</a>
+     <li><a onclick=menu(0) class=guiclass_menu>Main menu</a>
+    </ul>
+   </nav>
+   <nav class='menu ' id=go>
+    <h2 id=msgr2></h2>
+    <ul>
+     <li><a onclick=init(gametype) class=guiclass_retry>Retry</a>
+     <li><a onclick=init('replay') id=gui_replay>Watch Replay</a>
+     <li><a onclick=curreplay() class=guiclass_replaycon>ReplayCon</a>
+     <li><a onclick=menu(0) id=gui_menu>Main Menu</a>
+    </ul>
+   </nav>
+   <nav class='moremodes'>
+    <h1 class=guiclass_replaycon>ReplayCon</h1>
+    <textarea id="replaydata" spellcheck="false" style="width:100%;height:90%;;background:#232323;color:#fff"></textarea>
+    <ul>
+     <li><a onclick=executereplay() id=gui_watch>Watch</a>
+     <li><a onclick=downloadreplay() id=gui_savereplay>Save as .GTRD</a>
+     <li><a onclick=uploadreplay() id=gui_loadreplay>Load a .GTRD</a>
+
+     <li><a onclick=menu(menudef) class=guiclass_return>Return</a>
+    </ul>
+   </nav>
+   <!--MOREMODES 2 -->
+   <nav class='moremodes' id="easy--settings">
+    <h1 id=guitext_easysettings>Easy Settings</h1>
+    <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+     <div  style="width:90%;;">
+      
+      <span id=DASSP>Delay Autoshift</span>
+      <input type=range min=0 max=100 class="slider" id="DASS"></input>
+      <span id=ARRSP>Auto Repeat Rate</span>
+      <input type=range min=0 max=11 class="slider" id="ARRS"></input>
+      <span id=GRAVSP>Piece Gravity</span>
+      <input type=range min=0 max=84 class="slider" id="GRAVS"></input>
+      <span id=SFTSP>Soft Drop Gravity</span>
+      <input type=range min=0 max=82 class="slider" id="SFTS"></input>
+      <span id=LCKSP>Piece Lock Delay</span>
+      <input type=range min=0 max=100 class="slider" id="LCKS"></input>
+      <span id=guitext_SFXVP>SFX Volume</span>
+      <input type=range min=0 max=100 class="slider" id="SES"></input>
+      <span id=guitext_CVVP>Character Voice Volume</span>
+      <input type=range min=0 max=100 class="slider" id="CVS"></input>
+      <span id=guitext_ComVP>Commentary Volume</span>
+      <input type=range min=0 max=100 class="slider" id="CMVS"></input>
+      <span id=guitext_PNVP>Piece Spawn Volume</span>
+      <input type=range min=0 max=100 class="slider" id="PSVS"></input>
+      <span id=guitext_character>Gacha Club Character</span>
+      <form>
+       <select id="CHARSET" size="8"></select>
+      </form>
+     </div>
+    </div>
+    <ul>
+     <li><a onclick=savesettings() class=guiclass_return>Back</a>
+    </ul>
+   </nav>
+   <!--menu 5-->
+   <nav class='menu'>
+    <h1 id=guitext_da>Downstack Attack</h1>
+        <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+     <div style="width:90%;;">
+      <table>
+       <tr>
+            <th id=guitext_timeheader>Timer: </th> <td id=timeheader>2:00</td>
+       </tr>
+      </table>
+    
+    <input type=range class=slider min=60 max=3600 value=120 id=timeset></input>
+          <table>
+       <tr>
+            <th id=guitext_missheader>Max Mistakes: </th> <td id=missheader>2:00</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=1 max=50 value=5 id=missset></input>
+          <table>
+       <tr>
+            <th id=guitext_MLheader>Map Phase: </th> <td id=MLheader>1</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=1 max=13 value=1 id=MLset></input>
+</div>
+</div>
+    <ul>
+     <li><a onclick=startMode('DA') class=guiclass_start>Start</a>
+     <li><a onclick=backtomoremodes() class=guiclass_return>Back</a>
+    </ul>
+   </nav>
+   <!--menu 6-->
+   <nav class='menu'>
+    <h1 id=guitext_sprint>Sprint</h1>
+        <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+     <div  style="width:90%;;">
+
+              <table>
+       <tr>
+            <th id=guitext_typeheader>Queue Type: </th> <td id=typeheader>Normal (7-bag)</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=0 max=2 value=0 id=typeset></input>
+              <table>
+       <tr>
+            <th id=guitext_lineheader>Lines to Clear: </th> <td id=lineheader>40</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=4 max=1000 value=40 id=lineset></input>
+</div>
+        </div>
+    <ul>
+     <li><a onclick=startMode('Sprint') class=guiclass_start>Start</a>
+     <li><a onclick=backtomoremodes() class=guiclass_return>Back</a>
+    </ul>
+   </nav>
+   <nav class='menu'>
+    <h1 id=guitext_marathon>Marathon</h1>
+            <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+     <div  style="width:90%;;">
+
+              <table>
+       <tr>
+            <th id=guitext_marathon-levelheader>Level: </th> <td id=marathon-levelheader>1</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=1 max=100 value=1 id=marathon-levelset></input>
+                  <table>
+       <tr>
+            <th id=guitext_marathon-lineheader>Lines to Clear: </th> <td id=marathon-lineheader>100</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=4 max=301 value=150 id=marathon-lineset></input>
+                  <table>
+       <tr>
+            <th id=guitext_marathon-linereqheader>Lines to Level Up: </th> <td id=marathon-linereqheader>1</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=3 max=100 value=10 id=marathon-linereqset></input>
+</div>
+</div>
+    <ul>
+     <li><a onclick=startMode('Marathon') class=guiclass_start>Start</a>
+     <li><a onclick=backtomoremodes() class=guiclass_return>Back</a>
+    </ul>
+   </nav>
+    <nav class='menu'>
+    <h1 id=guitext_master>Master</h1>
+            <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+     <div  style="width:90%;;">
+
+              <table>
+       <tr>
+            <th id=guitext_master-levelheader>Mach Level: </th> <td id=master-levelheader>1</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=1 max=100 value=1 id=master-levelset></input>
+                  <table>
+       <tr>
+            <th id=guitext_master-lineheader>Lines to Clear: </th> <td id=master-lineheader>300</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=4 max=601 value=300 id=master-lineset></input>
+                  <table>
+       <tr>
+            <th id=guitext_master-linereqheader>Lines to Level Up: </th> <td id=master-linereqheader>4</td>
+       </tr>
+      </table>
+    <input type=range class=slider min=3 max=100 value=10 id=master-linereqset></input>
+</div>
+</div>
+    <ul>
+     <li><a onclick=startMode('Master') class=guiclass_start>Start</a>
+     <li><a onclick=backtomoremodes() class=guiclass_return>Back</a>
+    </ul>
+   </nav>
+
+   <div style="display:flex;justify-content:center">
+
+    <div id=content style="display:flex;justify-content:center">
+     <!-- Canvases -->
+     <div id=d>
+      <h3 id=guitext_hold>Hold</h3>
+      <div id=a>
+       <canvas id=hold></canvas>
+      </div>
+      <ul id=replay style=display:none>
+       <li><a onclick=replay(-1)>prev</a>
+       <li><a onclick=replay()>Play/Pause</a>
+       <li><a onclick=replay(1)>next</a>
+      </ul>
+      <table id=stats>
+       <tr>
+        <td id=pendum>
+        <th id=pendin>
+       </tr>
+       <tr>
+        <td id=line>
+        <th id='linetsd'>
+       <tr>
+        <td id=piece>0
+        <th id='guitext_piece'>PIECE(S)
+        <th id='pps'> 0.00 PPS
+       <tr>
+        <th id=time>00:00.00
+       <tr>
+        <td id='score'>00000000
+      </table>
+     </div>
+     <div id=b>
+      <div>
+       <div style="z-index: 5">
+        <canvas id=bgStack> </canvas>
+        <canvas id=stack>
+        </canvas>
+        <canvas id=active></canvas>
+        <p id=msg>
+
+         <!--        <nav class='menu on'>
+                      <h1>Tetr.js GTJS</h1>
+                      <h6>Gachatris JavaScriptus</h6>
+                      <ul>
+                          <li><a onclick=morefunction(0)>Play!</a>
+                          <li><a onclick=menu(2)><i class=></i>Controls</a>
+                          <li><a onclick=morefunction(1)>ReplayCon</a>
+                          <li><a onclick=menu(1)><i class=icon-cog></i>Settings</a>
+                      </ul>
+                  </nav>-->
+
+       </div>
+       <!--
+                                                                  <div id=fieldflash style="width:100%;height:100%;z-index:37;background-color: #fff;position: absolute">
+                                                                  	<!--  	<canvas id=fieldflash></canvas>
+                
+                                                                  </div>
+                                                                  <div id=divFEVER style="width:100%;height:100%;position:absolute; z-index:30; overflow:hidden">
+                                                                  	<div id=divFEVERI style="width:100%; height:100%;position:absolute">
+                                                                  		<img id=feverIMG style=" width: 100%; height: 100%;position: absolute" />
+                                                                  	</div>
+                                                                  	<p id=feverTXT>FRENZY!</p>
+                
+                                                                  </div>-->
+       <div id="divclear" style="z-index:188; position:absolute">
+        <p id=clearstats>
+        <p id=clearstatspc>
+        <p id=clearstatsren>
+       </div>
+
+      </div>
+      <div id=bA style='position:absolute'>
+
+       <div id=SHOWFIELD style="width:100%;height:100%;position:absolute;z-index:-5">
+        <img id=bgFIELD style=" width: 100%; height: 100%;position: absolute" />
+
+       </div>
+       <div id=SHOWFEVER style="width:100%;height:100%;position:absolute;;display:flex;justify-content: center;visibility: hidden;z-index:-4">
+
+        <img src="sketch-1645536901709.png" id=bgFEVER style=" width: auto; height:200%;position: absolute;transform:translateY(-25%);" />
+
+        <div id=fevercolor style="background-color:rgba(200,4,0,1);opacity: 0.4;position:absolute;width:100%;height:100%;z-index:1"></div>
+       </div>
+
+       <div style="width:100%;height:100%">
+        <p id=allcleartext>PERFECT<br />CLEAR</p>
+       </div>
+
+      </div>
+      <div id=fieldflash style="width:100%;height:100%;z-index:37;background-color: #fff;position: absolute">
+       <!--  	<canvas id=fieldflash></canvas>-->
+
+      </div>
+      <div id=divFEVER style="width:100%;height:100%;position:absolute; z-index:30; overflow:hidden">
+       <div id=divFEVERI style="width:100%; height:100%;position:absolute">
+        <img id=feverIMG style=" width: auto; height: 100%;position: absolute" />
+        <p id=feverTXT>FRENZY!</p>
+
+       </div>
+
+      </div>
+      <div id=garbagemeter style='background-color:#000000;height:100%;;float:right;position:relative;z-index:-2'>
+       <div id=active_GM style='background-color:#ff0000;height:1;width:1;top:100%;position:absolute;z-index:-1.5;opacity:0.7'>
+       </div>
+       <div id=active_FM style='background-color:#00ff00;height:1;width:1;top:100%;position:absolute;z-index:-1.45; opacity:0.5'>
+       </div>
+      </div>
+     </div>
+     <div id=c>
+      <h3 id=nextTXT>Next</h3>
+      <canvas id=preview></canvas>
+     </div>
+     <div>
+      <table>
+       <tr>
+        <th id='spindetect' style="display:block">
+      </table>
+     </div>
+     <div id="readybardiv">
+      <progress id="readybar" value="0" max="100" style="display:none"></progress>
+     </div>
+     <!--  <div id=contento>
+                                     <nav class='menu on'>
+                                         <h1>Tetr.js GTJS</h1>
+                                         <h6>Gachatris JavaScriptus</h6>
+                                         <ul>
+                                             <li><a onclick=morefunction(0)>Play!</a>
+                                             <li><a onclick=menu(2)><i class=></i>Controls</a>
+                                             <li><a onclick=morefunction(1)>ReplayCon</a>
+                                             <li><a onclick=menu(1)><i class=icon-cog></i>Settings</a>
+                                         </ul>
+                                     </nav>
+  </div>--->
+    </div>
+   </div>
+  </div>
+  <canvas id=sprite></canvas>
+  <div id=customSpriteDiv>
+   <img src='tetrimino/20220312_182127.png' id='customSprite' />
+  </div>
+  <script type="text/javascript" src=howler.core.js> </script>
+  <script type="text/javascript" src='hey its jquery!!!.js'> </script>
+  <script type="text/javascript" src=pizzicato_clientside.js> </script>
+
+  <script type="text/javascript" src=downstackmaps.js>
+  </script>
+  <script>
+   var lini = document.getElementById('spindetect')
+  </script>
+  <script type="text/javascript" src=translation/translations.js></script>
+  <script type="text/javascript" src=sounds_library.js> </script>
+  <script type="text/javascript" src=easysettings.js> </script>
+  <script type="text/javascript" src=tetris.js></script>
+  <script type="text/javascript" src=piece.js></script>
+  <script type="text/javascript" src=stack.js></script>
+  <script type="text/javascript" src=hold.js></script>
+  <script type="text/javascript" src=preview.js></script>
+  <script type="text/javascript" src=menu.js></script>
+  <script type="text/javascript" src=bg.js></script>
+  <script type="text/javascript" src=executesound.js></script>
+  <script>
+   /*
+      _gaq = [['_setAccount', 'UA-30472693-1'], ['_trackPageview']];
+      (function(d) {
+          var g = d.createElement('script'),
+              s = d.scripts[0];
+          g.src = '//www.google-analytics.com/ga.js';
+          s.parentNode.insertBefore(g, s)
+      })(document)
+  */
+  </script>
