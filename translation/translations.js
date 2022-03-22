@@ -289,7 +289,7 @@ function TransText(_TEXT, _INPUT) {
    play: "Jouer",
    controls: "Contrôles",
    replaycon: "Console de Relecture",
-   settings: "Settings",
+   settings: "Paramètres",
    settingsnote: "Note d'EricLenovo pour vous: certains paramètres ne sont pas encore tout à fait au point! *pleure*",
    hold: "Réserve",
    next: "Suivant",
@@ -510,7 +510,8 @@ textGUI('master-lineheader',TransText('linelimit'))
 textGUI('master-levelheader',TransText('master_level'))
 textGUI('master-linereqheader',TransText('master_linereq'))
 
- 
+ $iH('feverTXT',TransText('frenzy'))
+
  buttonGUI('returnCAP', TransText('return'));
   buttonGUI('menu', TransText('mainmenu'));
 
