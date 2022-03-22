@@ -638,7 +638,7 @@ function init(gt, gamep) {
       }
      }
                                     
-  }, 1000 / /`setting.Slowdown[settings.Slowdown]/``/60)
+  }, 1000 / /*setting.Slowdown[settings.Slowdown]/**/60)
     }
    }
   }
