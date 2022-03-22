@@ -618,7 +618,7 @@ function init(gt, gamep) {
     for (var i = 0; i < 5; i++)
      clearInterval(intid)
     if (true) {
-     intid = setInterval(function() {if(toGreyRow>=0||!watchingReplay){
+     intid = setInterval(function() {
       /* if (settings.Slowdown !== 0 && gametype == 0 && !paused) {
         playsfx('movesound')
         if (frame in replayKeys.keys && replayKeys.keys[frame] == 0) playsfx('spinsound')
@@ -636,7 +636,7 @@ function init(gt, gamep) {
       } else {
       /* if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
-     }
+     
                                     
   }, 1000 / /*setting.Slowdown[settings.Slowdown]/**/60)
     }
