@@ -306,7 +306,11 @@ function loadLocalData() {
 }
 
 loadLocalData();
+function loadsettinginit(){
+ try{
+
 for (var s in settings) {
+ try{
   var div = document.createElement('div');
   var b = document.createElement('b');
   var iLeft = document.createElement('i');
@@ -326,6 +330,41 @@ for (var s in settings) {
   div.appendChild(iLeft);
   div.appendChild(span);
   div.appendChild(iRight);
-}/**/
-
+ }catch(e){
+  localStorage['settingsse'][s]=undefined
+ }
+  
+ }
+}catch(e){
+  for (var s in settings) {
+  
+   var div = document.createElement('div');
+   var b = document.createElement('b');
+   var iLeft = document.createElement('i');
+   var span = document.createElement('span');
+   var iRight = document.createElement('i');
+  
+   div.id = s;
+   b.innerHTML = s + ':';
+   span.innerHTML = setting[s][settings[s]];
+   iLeft.className = 'left';
+   iRight.className = 'right';
+   iLeft.onmousedown = left;
+   iRight.onmousedown = right;
+  
+   set.removeChild(div);
+   div.removeChild(b);
+   div.removeChild(iLeft);
+   div.removeChild(span);
+   div.removeChild(iRight);
+  
+  
+  }
+  localStorage['settings']=null
+  localStorage['settingsse']=null; loadLocalData();
+  loadsettinginit()
+  alert(e)
+}
+}
+loadsettinginit()
 resize();
