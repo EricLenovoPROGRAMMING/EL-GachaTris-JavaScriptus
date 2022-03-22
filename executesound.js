@@ -51,7 +51,6 @@ function stopsfxJSO(varname) {
 }
 
 function playvoice(voicename) {
-   try{
  if (gamediff == undefined || gamediff < 50)
   if (settings.Voice == 1 && settings.VFXVol !== 0) {
    {
@@ -67,7 +66,6 @@ function playvoice(voicename) {
    }
 
   }
-   }catch(e){}
 }
 
 function playpiecesfx(jsonname) {

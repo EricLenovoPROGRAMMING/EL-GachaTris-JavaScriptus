@@ -133,7 +133,7 @@ Piece.prototype.new = function(index) {
     // Preview.draw();
     //preview.next();
 
-//INITIAL ROTATION SYSTEM
+
    
       
     // Check for blockout.
@@ -531,7 +531,7 @@ if (piece.y>-10&&gametype!==116&&feverAble==false&&feverActivate==false){
         hold.draw();
     }
 }
-else if(feverActivate==false&&feverAble==false){
+else if(feverActivate==false&&feverAble==false&&gametype!==116){
  IHScount++
  if(IHScount>=2)IHScount=0
  if(IHScount!==0){

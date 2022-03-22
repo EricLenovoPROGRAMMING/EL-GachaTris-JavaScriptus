@@ -1,4 +1,4 @@
-var version ='0.8a.1M Gachatris';
+var version = '0.8a.1L Gachatris';
 var setLoop;
 var sfx
 var arrowReleased = true;
@@ -272,8 +272,7 @@ function saveSetting(s) {
     setting[s][settings[s]];
 
   localStorage['settingsse'] = JSON.stringify(settings);
-  localStorage['settings'] = JSON.stringify(settings);
-  translate();
+  localStorage['settings'] = JSON.stringify(settings)
 }
 function loadLocalData() {
       if (localStorage['binds']) {

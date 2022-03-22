@@ -184,8 +184,8 @@ function LineLValueF() {
 
 $d('marathon-lineset').oninput = MarLineLValueF
 function MarLineLValueF() {
- $d('marathon-lineheader').innerHTML = ` ${(this.value) !== '301' ? this.value : TransText('endless')}`
- marathonParameter.LINELIMIT = (~~(this.value)!==301?~~(this.value):'infinity')
+ $d('marathon-lineheader').innerHTML = ` ${(this.value) !== '151' ? this.value : TransText('endless')}`
+ marathonParameter.LINELIMIT = (~~(this.value)!==151?~~(this.value):'infinity')
 }
 $d('marathon-levelset').oninput = MarLevelValueF
 function MarLevelValueF() {
@@ -201,8 +201,8 @@ marathonParameter.LINESREQ = (this.value)
 
 $d('master-lineset').oninput =
 function MarLineLValueF() {
- $d('master-lineheader').innerHTML = ` ${(this.value) !== '601' ? this.value : TransText('endless')}`
- masterParameter.LINELIMIT = (~~(this.value)!==601?~~(this.value):'infinity')
+ $d('master-lineheader').innerHTML = ` ${(this.value) !== '301' ? this.value : TransText('endless')}`
+ masterParameter.LINELIMIT = (~~(this.value)!==301?~~(this.value):'infinity')
 }
 $d('master-levelset').oninput = 
 function MarLevelValueF() {
@@ -281,13 +281,13 @@ $d('typeheader').innerHTML = ` ${{
 }
 
 if (menuIndexe == 8) {
-$d('marathon-lineheader').innerHTML = ` ${($dvalue('marathon-line')) !== 301? $dvalue('marathon-line') : "ENDLESS"}`
+$d('marathon-lineheader').innerHTML = ` ${($dvalue('marathon-line')) !== 151? $dvalue('marathon-line') : "ENDLESS"}`
 $d('marathon-levelheader').innerHTML =  ` ${$dvalue('marathon-level')}`;
 $d('marathon-linereqheader').innerHTML = ` ${$dvalue('marathon-linereq')}`;
 
 }
-if (menuIndexe == 8) {
-$d('master-lineheader').innerHTML = ` ${($dvalue('master-line')) !== 601? $dvalue('marathon-line') : "ENDLESS"}`
+if (menuIndexe == 9) {
+$d('master-lineheader').innerHTML = ` ${($dvalue('master-line')) !== 301? $dvalue('marathon-line') : "ENDLESS"}`
 $d('master-levelheader').innerHTML =  ` ${$dvalue('master-level')}`;
 $d('master-linereqheader').innerHTML = ` ${$dvalue('master-linereq')}`;
 

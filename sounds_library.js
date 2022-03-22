@@ -1060,14 +1060,14 @@ function startMode(type) {
  }
  if (type == "Marathon") {
   marathonParameter.LEVEL = ~~($d('marathon-levelset').value)
-  marathonParameter.LINELIMIT = ~~($d('marathon-lineset').value)==301?'infinity':~~($d('marathon-lineset').value)
+  marathonParameter.LINELIMIT = ~~($d('marathon-lineset').value)==151?'infinity':~~($d('marathon-lineset').value)
   marathonParameter.LINESREQ = ~~($d('marathon-linereqset').value)
 
   init(117)
  }
  if (type == "Master") {
   masterParameter.LEVEL = ~~($d('master-levelset').value)
-  masterParameter.LINELIMIT = ~~($d('master-lineset').value) == 601 ? 'infinity' : ~~($d('master-lineset').value)
+  masterParameter.LINELIMIT = ~~($d('master-lineset').value) == 301 ? 'infinity' : ~~($d('master-lineset').value)
   masterParameter.LINESREQ = ~~($d('master-linereqset').value)
  
   init(118)
@@ -1124,6 +1124,9 @@ function fallboard() {
 
 }
 
+
+
+function editnum(){}
 
 const MarathonSpeed = {
  '-1': -2,
