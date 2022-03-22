@@ -626,7 +626,7 @@ function init(gt, gamep) {
         playsfx('movesound')
         if (frame in replayKeys.keys && replayKeys.keys[frame] == 0) playsfx('spinsound')
        } /**/
-      if (toGreyRow <= 0) clwarInterval('intid')
+      if (toGreyRow <= 0) clearInterval('intid')
       if (watchingReplay == true) {
        if (paused == true) {
         replaytime++
@@ -637,7 +637,7 @@ function init(gt, gamep) {
        gamediff = gametime - (replaytime + 1 + frame) //(startPauseTime - startTime - (pauseTime) / (1000 / 60));
        for (i = 0; i < gamediff; i++) gameLoop()
       } else {
-       if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
+       /*if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
      }, 1000 //* setting.Slowdown[settings.Slowdown]*/60)
     }
