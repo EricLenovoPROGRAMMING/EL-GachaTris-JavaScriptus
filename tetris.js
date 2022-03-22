@@ -2308,7 +2308,7 @@ function init(gt, gamep) {
 
  function downloadreplay() {
   if (replaystring !== void 0) {
-   var text = replaystring.replace(/,/g, ',\n').replace(/{/g, '\n{\n').replace(/}/g, '\n}\n');
+   var text = replaystring
    var filename = "gachatris_replay_" + Date.now() + ".gtrd-json";
    download(filename, text);
   }
