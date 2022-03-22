@@ -891,7 +891,7 @@ function init(gt, gamep) {
    garbagenumber = 0;
    statsLines.innerHTML = garbagenumber;
 
-   statsType.innerHTML = 'Pending lines'
+   statsType.innerHTML = TransText('pending')
 
   }
 
@@ -2338,7 +2338,7 @@ function init(gt, gamep) {
      }
     } else alert(TransText('gtrdenderror', file.name))
    } else {
-    alert('Select only one file!')
+    
    }
   }
   input.click();
