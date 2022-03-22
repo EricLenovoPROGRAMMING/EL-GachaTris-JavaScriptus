@@ -333,7 +333,7 @@ var setting = {
  })(),
  'Lock Delay': range(0, 101),
  Previews: range(0, 7),
- //Slowdown: [60, 1, 6, 8, 10, 40],
+ /*Slowdown: [60, 1, 6, 8, 10, 40],/**/
  Size: ['Auto', 'Small', 'Medium', 'Large'],
  Character: ['NO CHAR', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf'],
 
