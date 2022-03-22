@@ -287,7 +287,7 @@ $d('marathon-linereqheader').innerHTML = ` ${$dvalue('marathon-linereq')}`;
 
 }
 if (menuIndexe == 9) {
-$d('master-lineheader').innerHTML = ` ${($dvalue('master-line')) !== 301? $dvalue('marathon-line') : "ENDLESS"}`
+$d('master-lineheader').innerHTML = ` ${($dvalue('master-line')) !== 301? $dvalue('master-line') : "ENDLESS"}`
 $d('master-levelheader').innerHTML =  ` ${$dvalue('master-level')}`;
 $d('master-linereqheader').innerHTML = ` ${$dvalue('master-linereq')}`;
 
