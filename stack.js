@@ -1005,8 +1005,7 @@ flipgridcreate([
   	setTimeout(scorecheck(), 1000)*/
   ;
  } catch (e) {
-  var wt = 'error NOPE '
-  alert(e)
+
  }
 }
 /**
