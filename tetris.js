@@ -618,7 +618,7 @@ function init(gt, gamep) {
     for (var i = 0; i < 5; i++)
      clearInterval(intid)
     if (true) {
-     intid = setInterval(function() {if(toGreyRow<=0){
+     intid = setInterval(function() {if(toGreyRow>=0||!watchingReplay){
       /* if (settings.Slowdown !== 0 && gametype == 0 && !paused) {
         playsfx('movesound')
         if (frame in replayKeys.keys && replayKeys.keys[frame] == 0) playsfx('spinsound')
