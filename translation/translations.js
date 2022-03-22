@@ -512,7 +512,8 @@ textGUI('master-linereqheader',TransText('master_linereq'))
 
  
  buttonGUI('returnCAP', TransText('return'));
- 
+  buttonGUI('menu', TransText('mainmenu'));
+
  var t= {
   0: function(){
    $iH('linetsd', TransText('line'))
