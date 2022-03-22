@@ -1157,4 +1157,4 @@ function MarathonLockLimit(int){
  }
 }
 
-var currentCharacter=0, currentCOMVoice=0
+var currentCharacter=null, currentCOMVoice=null
