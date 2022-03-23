@@ -620,7 +620,8 @@ Stack.prototype.addPiece = function(tetro) {
 
   if (gametype == 118) {
    piece.y = -89
-   varpiecedelay=frame+ARERestrict(45,masterParameter.activity.LEVEL)
+   varpiecedelay=frame+ARERestrict(30,masterParameter.activity.LEVEL)
+  dropscore=0
   }
 
 
@@ -861,7 +862,7 @@ flipgridcreate([
    }
    if (marathonParameter.LINELIMIT !== 'infinity')
     if (lines >= marathonParameter.LINELIMIT) {
-     endgame(TransText('success'), 10)
+     endgame(TransText('marathonsuccess'), 10)
     }
   }
 
@@ -871,9 +872,9 @@ flipgridcreate([
     masterParameter.activity.LEVEL += 1
     masterParameter.activity.LINESREQ += replayKeys.masterParams.linesRequire
    }
-   if (marathonParameter.LINELIMIT !== 'infinity')
-    if (lines >= marathonParameter.LINELIMIT) {
-     endgame(TransText('success'), 10)
+   if (masterParameter.LINELIMIT !== 'infinity')
+    if (lines >= masterParameter.LINELIMIT) {
+     endgame(TransText('marathonsuccess'), 10)
     }
   }
 
