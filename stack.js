@@ -865,7 +865,7 @@ flipgridcreate([
      endgame(TransText('marathonsuccess'), 10)
     }
   }
-
+//master
   if (gametype == 118) {
    while (masterParameter.activity.LINESREQ <= 0 && lines < masterParameter.LINELIMIT) {
     playsfx('levelUp')
