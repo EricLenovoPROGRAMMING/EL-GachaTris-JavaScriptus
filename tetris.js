@@ -1484,7 +1484,7 @@ function init(gt, gamep) {
      clearrows = []
      if (ds) playsfx('linedown')
      stack.draw()
-     linos = linis.toString().replace(/0/g, '').replace(/\,/g, '').length
+     linos = stack.grid.toString().replace(/0/g, '').replace(/\,/g, '').length
      varpiecedelay=frame+ARERestrict(50,masterParameter.activity.LEVEL)
     }
    }
