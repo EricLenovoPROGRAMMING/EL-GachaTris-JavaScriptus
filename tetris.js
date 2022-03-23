@@ -722,7 +722,7 @@ function init(gt, gamep) {
   hold.piece = void 0;
   if (replayKeys.GRAV === 0 && gametype !== 117) { gravity = gravityUnit * 4; }
   if (gametype == 117) { gravity = gravityUnit * 4 + (marathonParameter.activity.LEVEL < 20 ? MarathonSpeed[marathonParameter.activity.LEVEL - 1] : 20) }
-  if (gametype == 118) { gravity = gravityUnit * 4 + 20 }
+  if (gametype == 118) { gravity = gravityUnit * 4 + 22 }
 
   startTime = Date.now();
   clearrows = []
@@ -1484,6 +1484,7 @@ function init(gt, gamep) {
      clearrows = []
      if (ds) playsfx('linedown')
      stack.draw()
+     linos = linis.toString().replace(/0/g, '').replace(/\,/g, '').length
      varpiecedelay=frame+ARERestrict(50,masterParameter.activity.LEVEL)
     }
    }

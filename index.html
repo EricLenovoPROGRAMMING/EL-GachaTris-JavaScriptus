@@ -4,7 +4,7 @@
 
   <title>Gachatris Javascriptus</title>
   <link rel=stylesheet href='style.css'>
-
+    <link rel="icon" type="image/x-icon" href='icon.png'>
   <link rel="script" href=translation/translations.js>
   <!--<audio controls autoplay style="display:none"> </audio>-->
   <!--<canvas id=bg></canvas>-->
@@ -24,13 +24,15 @@
   <div id=menumain style="position:absolute;z-index: 1000 ;overflow:hidden">
    <!-- <div id=bgmain style="position:absolute;background: rgba(0,0,0,1);width:100%;height:100%">-->
    <nav class='menu on'>
-    <h1 id=guitext_title>Tetr.js GTJS 0.8a.1a Alpha Gachatris</h1>
+    <h1 class=guiclass_title>Tetr.js GTJS Gachatris</h1>
     <h6  id=guitext_title2>Gachatris JavaScriptus</h6>
     <ul>
      <li><a onclick=morefunction(0) id=gui_play>Play!</a>
      <li><a onclick=menu(2) id=gui_controls>Controls</a>
      <li><a onclick=morefunction(1) class=guiclass_replaycon>ReplayCon</a>
-     <li><a onclick=menu(1)  id=gui_settings><i class=icon-cog></i>Settings</p></a>
+          <li><a onclick=menu(3) class=guiclass_about>About</a>
+
+     <li><a onclick=menu(1) id=gui_settings ><i class=icon-cog ></i>Settings</i></a>
     </ul>
    </nav>
    <nav class=moremodes>
@@ -58,7 +60,7 @@
     <div id=settings>
     </div>
     <div style=clear:both><a class=button onclick=morefunction(2)  id=gui_easysettings>Easy Settings</a></div>
-    <div style=clear:both><a class=button onclick=menu(0) class=guiclass_done>Done</a></div>
+    <div style=clear:both><a class=button onclick=menu(0) name=guiname_done>Done</a></div>
    </div>
    <div class=menu>
     <h2 id=guitext_controls>Controls</h2>
@@ -95,9 +97,23 @@
       <th  id=guicontrols_pause>Pause:
       <td id=pause>Esc
     </table>
-    <div style=clear:both><a class=button onclick=menu(0)  class=guiclass_done>Done</a></div>
+    <div style=clear:both><a class=button onclick=menu(0)  name=guiname_done>Done</a></div>
    </div>
    <nav class=menu>
+    <h1 class=guiclass_title>Gachatris JavaScriptus</h1>
+    <h2 class=guiclass_about>About</h2>
+            <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+             <div style="width:90%;height:80%;">
+              <img src=about.png style=" width: 50%; height:50%; position:relative" />
+
+      <p id=guitext_aboutP style='font-size:120%'>Gachatris JavaScriptus - a simonlc/tetr.js mod of EricLenovo, whose name was founded by himself - is a block stacking game whose aim is to clear rows of 10 blocks making up lines. Gachatris JavaScriptus was made on January 12, 2022. It consists of not only Gacha Club characters, but also more modes and features. EricLenovo himself is a Tetris-Gacha YouTuber who owns this tetr.js mod. 
+      </p>
+      <p id=guitext_aboutC style='font-size:120%'>The Original Tetr.js was designed and made by Simon Laroche under MIT License; Gacha Club, and other Gacha games, are the trademarks of Lunime; 'Gachatris JavaScriptus' is abbreviated as 'GT.JS'</p>
+             </div></div>
+                    <li><a href='https://discord.gg/egwWMHVAxs' target='_blank' id=gui_discord>Gachatris JavaScriptus Discord Server</a>
+                    <li><a href='https://simon.lc/tetr.js' target='_blank' id=gui_tetrjs>Simon Laroche's Tetr.JS</a>
+
+       <li><a onclick=menu(0) class=guiclass_return>Return</a>
 
    </nav>
    <nav id=pause class=menu>
@@ -153,12 +169,12 @@
       <input type=range min=0 max=100 class="slider" id="PSVS"></input>
       <span id=guitext_character>Gacha Club Character</span>
       <form>
-       <select id="CHARSET" size="8"></select>
+       <select id="CHARSET" size="8" onchange=changechar()></select>
       </form>
      </div>
     </div>
     <ul>
-     <li><a onclick=savesettings() class=guiclass_return>Back</a>
+     <li><a onclick=menu(menudef) class=guiclass_return>Back</a>
     </ul>
    </nav>
    <!--menu 5-->
@@ -209,7 +225,7 @@
             <th id=guitext_lineheader>Lines to Clear: </th> <td id=lineheader>40</td>
        </tr>
       </table>
-    <input type=range class=slider min=4 max=100 value=40 id=lineset></input>
+    <input type=range class=slider min=4 max=1000 value=40 id=lineset></input>
 </div>
         </div>
     <ul>
@@ -239,7 +255,7 @@
             <th id=guitext_marathon-linereqheader>Lines to Level Up: </th> <td id=marathon-linereqheader>1</td>
        </tr>
       </table>
-    <input type=range class=slider min=3 max=30 value=10 id=marathon-linereqset></input>
+    <input type=range class=slider min=3 max=100 value=10 id=marathon-linereqset></input>
 </div>
 </div>
     <ul>
@@ -269,7 +285,7 @@
             <th id=guitext_master-linereqheader>Lines to Level Up: </th> <td id=master-linereqheader>4</td>
        </tr>
       </table>
-    <input type=range class=slider min=3 max=30 value=10 id=master-linereqset></input>
+    <input type=range class=slider min=3 max=100 value=10 id=master-linereqset></input>
 </div>
 </div>
     <ul>
