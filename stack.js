@@ -621,7 +621,7 @@ Stack.prototype.addPiece = function(tetro) {
   if (gametype == 118) {
    piece.y = -89
    varpiecedelay=frame+ARERestrict(30,masterParameter.activity.LEVEL)
-  dropscore=0
+   dropscore=0
   }
 
 
@@ -852,9 +852,7 @@ flipgridcreate([
 				]);
 */
 
-  
-
-if (gametype == 117) {
+  if (gametype == 117) {
    while (marathonParameter.activity.LINESREQ <= 0) {
     playsfx('levelUp')
     marathonParameter.activity.LEVEL += 1
@@ -881,6 +879,7 @@ if (gametype == 117) {
      endgame(TransText('marathonsuccess'), 10)
     }
   }
+
 
   // voices
 

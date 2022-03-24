@@ -249,9 +249,8 @@ var marathonParameter={
 
 //MASTER: restrict ARE
 function ARERestrict(a,i){
- return Math.max(10, a-(Math.round((i-1)*1.4)))
+ return Math.max(4, a-(Math.round((i-1)*1.4)))
 }
-
 
 var QUEUE = {
  0: [0, 1, 2, 3, 4, 5, 6],

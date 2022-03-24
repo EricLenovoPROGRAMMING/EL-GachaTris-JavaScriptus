@@ -295,7 +295,7 @@ var settings = {
  'Soft Drop': 80,
  'Lock Delay': 30,
  Previews: 5,
- //Slowdown: 0,
+// Slowdown: 0,
  Size: 0,
 
  Character: 0,
@@ -334,7 +334,7 @@ var setting = {
  })(),
  'Lock Delay': range(0, 101),
  Previews: range(0, 7),
- //Slowdown: [60, 1, 6, 8, 10, 40],
+// Slowdown: [60, 1, 6, 8, 10, 40],
  Size: ['Auto', 'Small', 'Medium', 'Large'],
  Character: ['NO CHAR', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf'],
 
@@ -637,9 +637,9 @@ function init(gt, gamep) {
        gamediff = gametime - (replaytime + 1 + frame) //(startPauseTime - startTime - (pauseTime) / (1000 / 60));
        for (i = 0; i < gamediff; i++) gameLoop()
       } else {
-    /*   if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
+      /* if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
-     }, 1000 / /*setting.Slowdown[settings.Slowdown]*/60)
+     }, 1000 / /* setting.Slowdown[settings.Slowdown]/**/60)
     }
    }
   }
