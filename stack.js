@@ -855,26 +855,27 @@ flipgridcreate([
   
 
 if (gametype == 117) {
-   while (marathonParameter.activity.LINESREQ <= 0 && lines < marathonParameter.LINELIMIT) {
+   while (marathonParameter.activity.LINESREQ <= 0 && replayKeys.marathonParams.lineLimit!=='infinity'?(lines < replayKeys.marathonParams.lineLimit):true) {
     playsfx('levelUp')
     marathonParameter.activity.LEVEL += 1
     marathonParameter.activity.LINESREQ += replayKeys.marathonParams.linesRequire
     gravity = gravityUnit * 4 + ( /*+(((marathonParameter.activity.LEVEL-1)*(1/16))*(marathonParameter.activity.LEVEL-1)*(6/64))*/
      (marathonParameter.activity.LEVEL < 20 ? MarathonSpeed[marathonParameter.activity.LEVEL] : 20))
    }
-   if (marathonParameter.LINELIMIT !== 'infinity')
+   if (replayKeys.marathonParams.lineLimit !== 'infinity')
     if (lines >= replayKeys.marathonParams.lineLimit) {
      endgame(TransText('marathonsuccess'), 10)
     }
   }
 
   if (gametype == 118) {
-   while (masterParameter.activity.LINESREQ <= 0 && lines < masterParameter.LINELIMIT) {
+   while (masterParameter.activity.LINESREQ <= 0 && replayKeys.masterParams.lineLimit!=='infinity'?(lines < replayKeys.masterParams.lineLimit):true) 
+ {
     playsfx('levelUp')
     masterParameter.activity.LEVEL += 1
     masterParameter.activity.LINESREQ += replayKeys.masterParams.linesRequire
    }
-   if (masterParameter.LINELIMIT !== 'infinity')
+   if (replayKeys.masterParams.lineLimit !== 'infinity')
     if (lines >= replayKeys.masterParams.lineLimit) {
      endgame(TransText('marathonsuccess'), 10)
     }
