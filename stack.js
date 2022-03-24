@@ -855,7 +855,7 @@ flipgridcreate([
   
 
 if (gametype == 117) {
-   while (marathonParameter.activity.LINESREQ <= 0 && replayKeys.marathonParams.lineLimit!=='infinity'?(lines < replayKeys.marathonParams.lineLimit):true) {
+   while (marathonParameter.activity.LINESREQ <= 0) {
     playsfx('levelUp')
     marathonParameter.activity.LEVEL += 1
     marathonParameter.activity.LINESREQ += replayKeys.marathonParams.linesRequire
@@ -869,7 +869,8 @@ if (gametype == 117) {
   }
 
   if (gametype == 118) {
-   while (masterParameter.activity.LINESREQ <= 0 && replayKeys.masterParams.lineLimit!=='infinity'?(lines < replayKeys.masterParams.lineLimit):true) 
+   
+   while (masterParameter.activity.LINESREQ <= 0) 
  {
     playsfx('levelUp')
     masterParameter.activity.LEVEL += 1
