@@ -852,7 +852,9 @@ flipgridcreate([
 				]);
 */
 
-  if (gametype == 117) {
+  
+
+if (gametype == 117) {
    while (marathonParameter.activity.LINESREQ <= 0 && lines < marathonParameter.LINELIMIT) {
     playsfx('levelUp')
     marathonParameter.activity.LEVEL += 1
@@ -861,11 +863,11 @@ flipgridcreate([
      (marathonParameter.activity.LEVEL < 20 ? MarathonSpeed[marathonParameter.activity.LEVEL] : 20))
    }
    if (marathonParameter.LINELIMIT !== 'infinity')
-    if (lines >= marathonParameter.LINELIMIT) {
+    if (lines >= replayKeys.marathonParams.lineLimit) {
      endgame(TransText('marathonsuccess'), 10)
     }
   }
-//master
+
   if (gametype == 118) {
    while (masterParameter.activity.LINESREQ <= 0 && lines < masterParameter.LINELIMIT) {
     playsfx('levelUp')
@@ -873,11 +875,10 @@ flipgridcreate([
     masterParameter.activity.LINESREQ += replayKeys.masterParams.linesRequire
    }
    if (masterParameter.LINELIMIT !== 'infinity')
-    if (lines >= masterParameter.LINELIMIT) {
+    if (lines >= replayKeys.masterParams.lineLimit) {
      endgame(TransText('marathonsuccess'), 10)
     }
   }
-
 
   // voices
 
