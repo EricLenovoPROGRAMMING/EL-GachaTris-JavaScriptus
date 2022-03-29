@@ -527,7 +527,7 @@ nameGUI('done', TransText('done'))
  buttonGUI('tetrjs', TransText('tetrjsB'))
 
 textGUI('selector', TransText('selector'))
-textGUI('charName', TransText(''))
+textGUI('charName', TransText('charName'))
 
  buttonGUI('continue', TransText('return'))
 
