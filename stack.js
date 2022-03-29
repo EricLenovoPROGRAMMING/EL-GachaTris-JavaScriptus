@@ -1,5 +1,6 @@
 function Stack() {
  //this.grid;
+ this.valid=false
 };
 
 
@@ -258,7 +259,7 @@ Stack.prototype.addPiece = function(tetro) {
 
   // Add the piece to the stack.
   var range = [];
-  var valid = false;
+  this.valid = false;
 
   for (var x = 0; x < tetro.length; x++) {
    for (var y = 0; y < tetro[x].length; y++) {
@@ -274,15 +275,17 @@ Stack.prototype.addPiece = function(tetro) {
       range.push(y + piece.y);
       // This checks if any cell is in the play field. If there
       //  isn't any this is called a lock out and the game ends.
-      if (y + piece.y > 1) valid = true;
+      if (y + piece.y > 1) this.valid = true;
      }
     }
    }
   }
   // Lock out
-  if (!valid) {
-   endgame(TransText('lockout'), 9, true)
+  if (!this.valid) {
+   endgame(TransText('lockout'), 9, true, "lose")
    return;
+  } else{
+   
   }
 
   if (
@@ -538,7 +541,7 @@ Stack.prototype.addPiece = function(tetro) {
       failsDA++
       if (failsDA >= replayKeys.DAParams['maxmiss']) {
        failToClear = false
-       endgame(TransText('DAfailed'), 9, true)
+       endgame(TransText('DAfailed'), 9, true,'lose')
        varpiecedelay = -1
        playvoice('fail')
        IRScount = 0
@@ -661,7 +664,7 @@ Stack.prototype.addPiece = function(tetro) {
       stackCtx.fillStyle = `rgba(255,255,255,${(((10-y)/10))})`
 
       for (var l = 0; l < 10; l++) {
-       for (i of clearrows) {
+       for (let i of clearrows) {
         stackCtx.clearRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
 
         stackCtx.fillRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
@@ -690,7 +693,7 @@ Stack.prototype.addPiece = function(tetro) {
          stackCtx.fillStyle = `rgba(0,255,0,${(((10-y)/10))})`
 
          for (var l = 0; l < 10; l++) {
-          for (i of clearrows) {
+          for (let i of clearrows) {
            stackCtx.clearRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
 
            stackCtx.fillRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
@@ -862,7 +865,7 @@ flipgridcreate([
    }
    if (replayKeys.marathonParams.lineLimit !== 'infinity')
     if (lines >= replayKeys.marathonParams.lineLimit) {
-     endgame(TransText('marathonsuccess'), 10)
+     endgame(TransText('marathonsuccess'), 10, void 0, 'win')
     }
   }
 
@@ -876,7 +879,7 @@ flipgridcreate([
    }
    if (replayKeys.masterParams.lineLimit !== 'infinity')
     if (lines >= replayKeys.masterParams.lineLimit) {
-     endgame(TransText('marathonsuccess'), 10)
+     endgame(TransText('marathonsuccess'), 10, void 0, 'win')
     }
   }
 
@@ -1007,6 +1010,18 @@ flipgridcreate([
   	}
   	setTimeout(scorecheck(), 1000)*/
   ;
+  if (gametype == 0) {
+   if (lines >= lineLimit) {
+    endgame(TransText('finish'), 1,void 0, "win")
+   }
+  }
+  
+  
+  if (gametype == 3) {
+   if (digLines.length === 0) {
+    endgame(TransText('digfinish'), 1,void 0,'win')
+   }
+  }
  } catch (e) {
   var wt = 'error NOPE '
   alert(e)

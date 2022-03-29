@@ -70,14 +70,15 @@ function playvoice(voicename) {
 
 function playpiecesfx(jsonname) {
  var vol = settings.PieceVol / 100
+ try{
  if (gamediff == undefined || gamediff < 4)
   if (settings.PieceVol !== 0 && settings.PieceSFX !== 0) {
-   piecesound[setting.PieceSFX[settings.PieceSFX]][jsonname].volume(vol)
-   piecesound[setting.PieceSFX[settings.PieceSFX]][jsonname].stop()
-   piecesound[setting.PieceSFX[settings.PieceSFX]][jsonname].play()
+   piecesound[jsonname].volume(vol)
+   piecesound[jsonname].stop()
+   piecesound[jsonname].play()
   }
 
-    
+}catch(e){}
 
 }
 

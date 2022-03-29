@@ -1,9 +1,9 @@
-var version = '0.8a.1L Gachatris';
+var version = '0.8a.1L Gachatris Plus';
 var setLoop;
 var sfx
 var arrowReleased = true;
 var arrowDelay = 0;
-var minoesdetect=document.getElementById('spindetect')
+var minoesdetect=document.getElementById('DEBUGTEXT')
 var scorestats = document.getElementById('score')
 var varalarm;
 var alertsoundactive;
@@ -310,7 +310,8 @@ loadLocalData();
 function loadsettinginit(){
  try{
 
-for (var s in settings) {
+for (let s in settings) {
+ if(s=='Character')continue
  try{
   var div = document.createElement('div');
   var b = document.createElement('b');

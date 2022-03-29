@@ -80,6 +80,8 @@ var bgStackCanvas = document.getElementById('bgStack');
 var stackCanvas = document.getElementById('stack');
 var activeCanvas = document.getElementById('active');
 var previewCanvas = document.getElementById('preview');
+var previewCanvas2 = document.getElementById('preview2');
+
 var spriteCanvas = document.getElementById('sprite');
 var spriteCustom = document.getElementById('customSprite');
 var spriteDIV = document.getElementById('customSpriteDiv');
@@ -90,6 +92,8 @@ var bgStackCtx = bgStackCanvas.getContext('2d');
 var stackCtx = stackCanvas.getContext('2d');
 var activeCtx = activeCanvas.getContext('2d');
 var previewCtx = previewCanvas.getContext('2d');
+var previewCtx2 = previewCanvas2.getContext('2d');
+
 var spriteCtx = spriteCanvas.getContext('2d');
 
 /**
@@ -333,19 +337,19 @@ var setting = {
   return array;
  })(),
  'Lock Delay': range(0, 101),
- Previews: range(0, 7),
-// Slowdown: [60, 1, 6, 8, 10, 40],
+ Previews: range(0,10),
+//Slowdown: [60, 1, 6, 8, 10, 40],
  Size: ['Auto', 'Small', 'Medium', 'Large'],
- Character: ['NO CHAR', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf'],
+ Character: ['No Character', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf', 'LeoSnowy', 'DaWildOne', 'ItsBreezeyFears'],
 
  Sound: ['Off', 'On'],
  Voice: ['Off', 'On'],
  VFXVol: range(0, 101),
- SoundType: ['GTJS', 'TETR.JS'],
+ SoundType: ['GTJS', 'TGM3','TetraLegends','Farter-Memes'],
  Volume: range(0, 101),
  Commentary: ['TTS', 'GTJS'],
  CMVol: range(0, 101),
- PieceSFX: ['OFF', 'GT.JS', 'TETR.IO'],
+ PieceSFX: ['OFF', 'GTJS', 'TGM3'],
  PieceVol: range(0, 101),
  Block: ['Shaded', 'Solid', 'Glossy', 'Arika', 'World', 'Custom'],
  Ghost: ['Normal', 'Colored', 'Off'],
@@ -440,6 +444,8 @@ function resize() {
  var GM2 = document.getElementById('active_GM');
  var FM = document.getElementById('active_FM');
  var mainmenu = document.getElementById('menumain')
+ var iconCHAR=$d('iconCHAR')
+ let selectorS=(args)=>{return $d(`selector${args}`)}
  // TODO Finalize this.
  // Aspect ratio: 1.024
  var screenHeight = window.innerHeight - 34;
@@ -478,6 +484,10 @@ function resize() {
  GM2.style.height = 100 + '%';
  FM.style.width = cellSize * 0.5 + 'px';
  FM.style.height = 100 + '%';
+ 
+iconCHAR.style.height=$d('selectorICON').style.height = /* (cellSize * 5) + 'px';*/ `${cellSize*5}px`
+
+//iconCHAR.style.height = $d('selectorICON').style.height;
 
  holdCanvas.width = cellSize * 4;
  holdCanvas.height = cellSize * 2;
@@ -486,12 +496,15 @@ function resize() {
 
  previewCanvas.width = cellSize * 4;
  previewCanvas.height = stackCanvas.height;
+ previewCanvas2.width = cellSize * 4;
+ previewCanvas2.height = cellSize * 2;
  c.style.width = previewCanvas.width + 'px';
+ 
  c.style.height = b.style.height;
 
  // Scale the text so it fits in the thing.
  // TODO get rid of extra font sizes here.
- msg.style.lineHeight = b.style.height;
+ msg.style.marginTop=`${cellSize*10}px`;
  msg.style.fontSize = ~~(stackCanvas.width / 6) + 'px';
  stats.style.fontSize = ~~(stackCanvas.width / 11) + 'px';
  document.documentElement.style.fontSize = ~~(stackCanvas.width / 16) + 'px';
@@ -520,11 +533,11 @@ function resize() {
 }
 addEventListener('resize', resize, false);
 
-//addEventListener('keydown',function(e){$iH('spindetect', e.keyCode)}, false)/**/
+//addEventListener('keydown',function(e){$iH('DEBUGTEXT', e.keyCode)}, false)/**/
 
 
 var replaysettings;
-var lini = document.getElementById('spindetect')
+var lini = document.getElementById('DEBUGTEXT')
 var gametime;
 /**
  * ========================== Model ===========================================
@@ -622,7 +635,7 @@ function init(gt, gamep) {
      clearInterval(intid)
     if (true) {
      intid = setInterval(function() {
-      /* if (settings.Slowdown !== 0 && gametype == 0 && !paused) {
+     /*  if (settings.Slowdown !== 0 && gametype == 0 && !paused) {
         playsfx('movesound')
         if (frame in replayKeys.keys && replayKeys.keys[frame] == 0) playsfx('spinsound')
        } /**/
@@ -639,7 +652,7 @@ function init(gt, gamep) {
       } else {
       /* if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
-     }, 1000 / /* setting.Slowdown[settings.Slowdown]/**/60)
+     }, 1000 / 60 /*setting.Slowdown[settings.Slowdown]/**/)
     }
    }
   }
@@ -664,7 +677,7 @@ function init(gt, gamep) {
    alert(e)
   }
 
-  document.getElementById('b').style.boxShadow = '0 0 3px #fff'
+  document.getElementById('b').style.border = "0.2em solid #fff"
 
   lineLimit = (replayKeys.sprintParams !== undefined ? replayKeys.sprintParams.lineLimit : 40);
 
@@ -1250,7 +1263,8 @@ function init(gt, gamep) {
  })
  window.addEventListener("load", function() {
   makeSprite();
-
+  loadCharacters()
+  setCharTest()
   document.getElementById('b').style.transform = 'translateY(0)'
  })
  resize()
@@ -1407,18 +1421,7 @@ function init(gt, gamep) {
 
   // Win
   // TODO
-  if (gametype == 0) {
-   if (lines >= lineLimit) {
-    endgame(TransText('finish'), 1)
-   }
-  }
-
-
-  if (gametype == 3) {
-   if (digLines.length === 0) {
-    endgame(TransText('digfinish'), 1)
-   }
-  }
+  
 
   statistics();
 
@@ -1485,6 +1488,7 @@ function init(gt, gamep) {
      if (ds) playsfx('linedown')
      stack.draw()
      linos = stack.grid.toString().replace(/0/g, '').replace(/\,/g, '').length
+     whiletrigger=true
      varpiecedelay=frame+ARERestrict(45,masterParameter.activity.LEVEL)
     }
    }
@@ -1916,7 +1920,7 @@ function init(gt, gamep) {
       case 0: {
        paused = true
        submessage.innerHTML = `${TransText ('score')}: ${statsscore}`
-       endgame(TransText('timeup'), 9)
+       endgame(TransText('timeup'), 9, false)
        playsfx('timeup')
 
       };
@@ -2048,7 +2052,7 @@ function init(gt, gamep) {
    //	lini.innerHTML=setPattern + ' \| ' + piececolor + ' \| ' + flip
    //lini.innerHTML = startPauseTime + ' \| ' + pauseTime + ' \| ' + gametime + ' \| ' + gamediff
    //lini.innerHTML=spinCheckCount + ' \| ' + miniSpinCount + ' \| ' + mini2SpinCount  + ' \| ' + mini3SpinCount  + ' \| ' +  mini3REVSpinCount
-   ////$iH('spindetect',"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""))
+   ////$iH('DEBUGTEXT',"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""))
   } catch (e) {
    //document.write('INTERNAL ERROR!!! ')
    //  endgame('NOPE', 3)
@@ -2091,9 +2095,10 @@ function init(gt, gamep) {
   } else if (gameState === 2) {
    // Count Down
    if (frame < 50) {
-    if (msg.innerHTML !== 'READY') {
+    if (msg.innerHTML !== TransText('ready')) {
      msg.innerHTML = TransText('ready');
      submessage.innerHTML = ''
+     playsfx('ready')
     };
     frame += 0
 
@@ -2102,12 +2107,14 @@ function init(gt, gamep) {
 
 
    } else if (frame < 100) {
-    if (msg.innerHTML !== 'GO!') msg.innerHTML = TransText('go');
+    if (msg.innerHTML !== TransText('go')){
+     playsfx('ready2')
+     msg.innerHTML = TransText('go');}
     frame += 0
    } else {
     msg.innerHTML = '';
     gameState = 0;
-
+   if(frame==100) playsfx('start')
    }
 
 
@@ -2279,7 +2286,7 @@ function init(gt, gamep) {
   var parametersingame = {}
  }
 
- function endgame(TITLE, STATE, DOWNFALL = Boolean) {
+ function endgame(TITLE, STATE, DOWNFALL, SOUND) {
   gameState = STATE
   msg.innerHTML = TITLE
   if (!watchingReplay)
@@ -2287,7 +2294,13 @@ function init(gt, gamep) {
   if (DOWNFALL !== void 0 && DOWNFALL == true) {
    fallboard()
   }
-  
+  var _SOUND=SOUND
+ 
+  if (_SOUND !== void 0){
+  if(_SOUND == 'win') {playsfx('win')}
+  if(_SOUND == 'lose') {playsfx('lose')}
+
+}
    menu(5);
   
  }

@@ -1,71 +1,83 @@
 var SoundFX = {
- renend: new Howl({ src: 'sounds/GTJS/endren.ogg' }),
- b2bs: new Howl({ src: 'sounds/GTJS/b2b.ogg' }),
- b2bs2: new Howl({ src: 'sounds/GTJS/b2b-low.ogg' }),
- b2bs3: new Howl({ src: 'sounds/GTJS/b2b-med.ogg' }),
- b2bs4: new Howl({ src: 'sounds/GTJS/b2b-high.ogg' }),
- b2bs5: new Howl({ src: 'sounds/GTJS/b2b-exhigh.ogg' }),
- spinsound: new Howl({ src: 'sounds/GTJS/spinrot.ogg' }),
- minispinsound: new Howl({ src: 'sounds/GTJS/spinrotmini.ogg' }),
- minizero: new Howl({ src: 'sounds/GTJS/mini0.ogg' }),
- onemini: new Howl({ src: 'sounds/GTJS/mini1.ogg' }),
- hdsound: new Howl({ src: 'sounds/GTJS/harddrop.ogg' }),
- garbageup: new Howl({ src: 'sounds/GTJS/lineup.ogg' }),
+ renend: new Howl({ src: 'sounds/UNDEFINED/endren.ogg' }),
+ b2bs: new Howl({ src: 'sounds/UNDEFINED/b2b.ogg' }),
+ b2bs2: new Howl({ src: 'sounds/UNDEFINED/b2b-low.ogg' }),
+ b2bs3: new Howl({ src: 'sounds/UNDEFINED/b2b-med.ogg' }),
+ b2bs4: new Howl({ src: 'sounds/UNDEFINED/b2b-high.ogg' }),
+ b2bs5: new Howl({ src: 'sounds/UNDEFINED/b2b-exhigh.ogg' }),
+ spinsound: new Howl({ src: 'sounds/UNDEFINED/spinrot.ogg' }),
+ minispinsound: new Howl({ src: 'sounds/UNDEFINED/spinrotmini.ogg' }),
+ minizero: new Howl({ src: 'sounds/UNDEFINED/mini0.ogg' }),
+ onemini: new Howl({ src: 'sounds/UNDEFINED/mini1.ogg' }),
+ hdsound: new Howl({ src: 'sounds/UNDEFINED/harddrop.ogg' }),
+ garbageup: new Howl({ src: 'sounds/UNDEFINED/lineup.ogg' }),
  minisound: new Howl({ src: 'nuisanceL.ogg' }),
- spinzero: new Howl({ src: 'sounds/GTJS/spin0.ogg' }),
- perfectclear: new Howl({ src: 'sounds/GTJS/perfect.wav' }),
- // alertsoundslow: new Howl({ src: 'sounds/GTJS/alertsound.ogg' }),
- KO: new Howl({ src: 'sounds/GTJS/KO.ogg' }),
- timeup: new Howl({ src: 'sounds/GTJS/timerunout.ogg' }),
- oneline: new Howl({ src: 'sounds/GTJS/single.ogg' }),
- twoline: new Howl({ src: 'sounds/GTJS/double.ogg' }),
- threeline: new Howl({ src: 'sounds/GTJS/triple.ogg' }),
- fourline: new Howl({ src: 'sounds/GTJS/tetris.ogg' }),
- onespin: new Howl({ src: 'sounds/GTJS/spin1.ogg' }),
- twospin: new Howl({ src: 'sounds/GTJS/spin2.ogg' }),
- threespin: new Howl({ src: 'sounds/GTJS/spin3.ogg' }),
- IRSSound: new Howl({ src: 'sounds/GTJS/irs.ogg' }),
-IHSSound: new Howl({ src: 'sounds/GTJS/ihs.ogg' }),
+ spinzero: new Howl({ src: 'sounds/UNDEFINED/spin0.ogg' }),
+ perfectclear: new Howl({ src: 'sounds/UNDEFINED/perfect.ogg' }),
+ // alertsoundslow: new Howl({ src: 'sounds/UNDEFINED/alertsound.ogg' }),
+ KO: new Howl({ src: 'sounds/UNDEFINED/KO.ogg' }),
+ timeup: new Howl({ src: 'sounds/UNDEFINED/timerunout.ogg' }),
+ oneline: new Howl({ src: 'sounds/UNDEFINED/single.ogg' }),
+ twoline: new Howl({ src: 'sounds/UNDEFINED/double.ogg' }),
+ threeline: new Howl({ src: 'sounds/UNDEFINED/triple.ogg' }),
+ fourline: new Howl({ src: 'sounds/UNDEFINED/tetris.ogg' }),
+ onespin: new Howl({ src: 'sounds/UNDEFINED/spin1.ogg' }),
+ twospin: new Howl({ src: 'sounds/UNDEFINED/spin2.ogg' }),
+ threespin: new Howl({ src: 'sounds/UNDEFINED/spin3.ogg' }),
+ IRSSound: new Howl({ src: 'sounds/UNDEFINED/irs.ogg' }),
+IHSSound: new Howl({ src: 'sounds/UNDEFINED/ihs.ogg' }),
 
- b2b1: new Howl({ src: 'sounds/GTJS/b2b-1.ogg' }),
- b2b2: new Howl({ src: 'sounds/GTJS/b2b-2.ogg' }),
- b2b3: new Howl({ src: 'sounds/GTJS/b2b-3.ogg' }),
- b2b4: new Howl({ src: 'sounds/GTJS/b2b-4.ogg' }),
- b2b_end: new Howl({ src: 'sounds/GTJS/b2b-end.ogg' }),
+ b2b1: new Howl({ src: 'sounds/UNDEFINED/b2b-1.ogg' }),
+ b2b2: new Howl({ src: 'sounds/UNDEFINED/b2b-2.ogg' }),
+ b2b3: new Howl({ src: 'sounds/UNDEFINED/b2b-3.ogg' }),
+ b2b4: new Howl({ src: 'sounds/UNDEFINED/b2b-4.ogg' }),
+ b2b_end: new Howl({ src: 'sounds/UNDEFINED/b2b-end.ogg' }),
+ 
+ ready: new Howl({ src: 'sounds/UNDEFINED/state-ready.ogg' }),
+ ready2: new Howl({ src: 'sounds/UNDEFINED/state-ready2.ogg' }),
+ start: new Howl({ src: 'sounds/UNDEFINED/state-go.ogg' }),
+ 
+ win: new Howl({ src: 'sounds/UNDEFINED/game-win.ogg' }),
+ lose: new Howl({ src: 'sounds/UNDEFINED/game-lose.ogg' }),
 
 
- place: new Howl({ src: 'sounds/GTJS/place.ogg' }),
- softdrops: new Howl({ src: 'sounds/GTJS/softdrop.ogg' }),
- hdsound: new Howl({ src: 'sounds/GTJS/harddrop.ogg' }),
- alarm: new Howl({ src: 'sounds/GTJS/tapoutalarm.ogg', loop: true}),
- rotatepiece: new Howl({ src: 'sounds/GTJS/rotate.ogg' }),
- movesound: new Howl({ src: 'sounds/GTJS/moves.ogg' }),
- noninithold: new Howl({ src: 'sounds/GTJS/nith.ogg' }),
- inithold: new Howl({ src: 'sounds/GTJS/ith.ogg' }),
- lockse: new Howl({ src: 'sounds/GTJS/lock.ogg' }),
- alertsoundslow: new Howl({ src: 'sounds/GTJS/alertsound.ogg', loop: true}),
- pieceLand: new Howl({ src: 'sounds/GTJS/land.mp3',}),
- levelUp: new Howl({ src: 'sounds/GTJS/levelup.ogg', html5: true }),
+ place: new Howl({ src: 'sounds/UNDEFINED/place.ogg' }),
+ softdrops: new Howl({ src: 'sounds/UNDEFINED/softdrop.ogg' }),
+ hdsound: new Howl({ src: 'sounds/UNDEFINED/harddrop.ogg' }),
+ alarm: new Howl({ src: 'sounds/UNDEFINED/tapoutalarm.ogg', loop: true}),
+ rotatepiece: new Howl({ src: 'sounds/UNDEFINED/rotate.ogg' }),
+ movesound: new Howl({ src: 'sounds/UNDEFINED/moves.ogg' }),
+ noninithold: new Howl({ src: 'sounds/UNDEFINED/nith.ogg' }),
+ inithold: new Howl({ src: 'sounds/UNDEFINED/ith.ogg' }),
+ lockse: new Howl({ src: 'sounds/UNDEFINED/lock.ogg' }),
+ alertsoundslow: new Howl({ src: 'sounds/UNDEFINED/alertsound.ogg', loop: true}),
+ pieceLand: new Howl({ src: 'sounds/UNDEFINED/land.ogg',}),
+ levelUp: new Howl({ src: 'sounds/UNDEFINED/levelup.ogg', html5: true }),
 
- timer: new Howl({ src: 'sounds/GTJS/timerwarn.ogg', html5: true }),
- linedown: new Howl({ src: 'sounds/GTJS/linedown.ogg', html5: true })
+ timer: new Howl({ src: 'sounds/UNDEFINED/timerwarn.ogg', html5: true }),
+ linedown: new Howl({ src: 'sounds/UNDEFINED/linedown.ogg', html5: true })
 }
 var REN = {}
 var musicbgm = new Howl({ src: 'music/original.mp3', html5: true })
 
 
 
-var reninit = '/GTJS/ren/' /*  */
+var soundsinit = 'GTJS' /*  */
 for (let k = 0; k < 21; k++) {
  REN[k] = new Howl({
-  src: ['sounds' + reninit + 'ren' + k + '.mp3'],
+  src: [`sounds/${soundsinit}/ren/ren${k}.ogg`],
  })
  var tloadk =
   /*new Howl({
    src: ['sounds' + reninit + 'ren' + k + '.mp3'],
   })*/
   REN[k].load()
+ REN[k].once('loaderror',function(){
+  REN[k] = new Howl({
+   src: [`sounds/${soundsinit}/ren/ren${k}.mp3`],
 
+  })
+ })
 }
 /**
  * EricLenovo:
@@ -251,6 +263,7 @@ function characterinit() {
  for (var UNLOAD in comvoice)
  if(UNLOAD in comvoice) comvoice[UNLOAD].unload()
  /*  */
+ loadSFX()
  if(currentCOMVoice!=settings.Commentary){
  comvoice = {
   line1: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/single.ogg', html5: true, preload: false }),
@@ -407,7 +420,7 @@ var varfieldenable = fieldimgenable == true && fieldimg2enable == true && fieldi
 var frenzydifficulty = 4
 
 function warningalarm() {
- if (linosbool && !paused && gameState == 0 && gametype !== 113 || timewarning) {
+ if (linosbool && !paused && gameState == 0 && gametype !== 113 &&gametype!==116 || timewarning) {
 
   if (!alertsoundactive) {
    sfxRETURN('alertsoundslow').off('end', function() {
@@ -416,7 +429,7 @@ function warningalarm() {
    playsfx('alertsoundslow');
 
    alertsoundactive = true;
-   document.getElementById('b').style.boxShadow = "0 0 32px rgba(255,0,0,1)"
+   document.getElementById('b').style.border = "0.2em solid #f00"
    if (gameState == 4 || gameState >= 3) {
     if (varfieldenable) {
      document.getElementById('bgFIELD').src = fieldsleepload
@@ -439,7 +452,7 @@ function warningalarm() {
  else {
   if (alertsoundactive == true) {
    alertsoundactive = false;
-   document.getElementById('b').style.boxShadow = "0 0 4px rgba(255,255,255,1)"
+   document.getElementById('b').style.border = "0.2em solid #fff"
    {
     if (varfieldenable) {
      if (document.getElementById('bgFIELD').src !== fieldload) {
@@ -484,10 +497,9 @@ function warningalarm() {
 var gtrisenable = false
 var gtrisenableplus = false
 var gtrisinput = false
-try {
- var piecesound = {
-  'OFF': {},
-  'GT.JS': {
+var piecesound = {
+  /*'OFF': {},
+  'GTJS': {
    0: new Howl({ src: 'piece-sounds/1/Piece-0.mp3', html5: true }),
    1: new Howl({ src: 'piece-sounds/1/Piece-1.mp3', html5: true }),
    2: new Howl({ src: 'piece-sounds/1/Piece-2.mp3', html5: true }),
@@ -496,18 +508,16 @@ try {
    5: new Howl({ src: 'piece-sounds/1/Piece-5.mp3', html5: true }),
    6: new Howl({ src: 'piece-sounds/1/Piece-6.mp3', html5: true }),
   },
-  'TETR.IO': {
-   0: new Howl({ src: 'piece-sounds/2/Piece-0.mp3', html5: true }),
-   1: new Howl({ src: 'piece-sounds/2/Piece-1.mp3', html5: true }),
-   2: new Howl({ src: 'piece-sounds/2/Piece-2.mp3', html5: true }),
-   3: new Howl({ src: 'piece-sounds/2/Piece-3.mp3', html5: true }),
-   4: new Howl({ src: 'piece-sounds/2/Piece-4.mp3', html5: true }),
-   5: new Howl({ src: 'piece-sounds/2/Piece-5.mp3', html5: true }),
-   6: new Howl({ src: 'piece-sounds/2/Piece-6.mp3', html5: true }),
-  }
- }
-} catch (ell) { alert(ell) }
-
+  'TGM3': {
+   0: new Howl({ src: 'piece-sounds/2/Piece-0.ogg', html5: true }),
+   1: new Howl({ src: 'piece-sounds/2/Piece-1.ogg', html5: true }),
+   2: new Howl({ src: 'piece-sounds/2/Piece-2.ogg', html5: true }),
+   3: new Howl({ src: 'piece-sounds/2/Piece-3.ogg', html5: true }),
+   4: new Howl({ src: 'piece-sounds/2/Piece-4.ogg', html5: true }),
+   5: new Howl({ src: 'piece-sounds/2/Piece-5.ogg', html5: true }),
+   6: new Howl({ src: 'piece-sounds/2/Piece-6.ogg', html5: true }),
+  }*/
+}
 var gachatrismax = 40
 
 
@@ -799,7 +809,7 @@ function clear_line(boollinevv, LNSDTCT, LSR, MSR, PC, Multiplier) {
 
   while (failTSD == true) {
 
-   endgame(TransText('nottsd'), 9, true)
+   endgame(TransText('nottsd'), 9, true, 'lose')
 
    failTSD = false;
   }
@@ -1090,7 +1100,7 @@ function hidefield() {
 
  $("#SHOWFEVER").css('visibility', 'hidden')
  document.getElementById('active_FM').style.color = '#0ff'
- document.getElementById('b').style.boxShadow = '0 0 3px #fff'
+ document.getElementById('b').style.border = '0.2em solid #fff'
 
  var time2 = setTimeout(function() {
   document.getElementById('fieldflash').style.transition = "opacity 1s linear"

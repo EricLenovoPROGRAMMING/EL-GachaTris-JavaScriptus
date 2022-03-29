@@ -38,7 +38,7 @@ function TransText(_TEXT, _INPUT) {
    score: "Score",
    inihold: "INITIAL",
 
-   /*MODES*/
+   
    sprint: "Sprint",
    marathon: "Marathon",
    dig: "Dig Race",
@@ -48,7 +48,7 @@ function TransText(_TEXT, _INPUT) {
    '2mu': "2-minute Ultra",
    da: "Downstack Attack",
    master: "Master",
-   /*EASY SETTINGS*/
+   
    easysettings: "Easy Settings",
    das: "Delay Autoshift",
    arr: "Auto Repeat Rate",
@@ -60,7 +60,9 @@ function TransText(_TEXT, _INPUT) {
    comvol: "Commentary Volume",
    piecevol: "Piece Next Volume",
    oc: "Gacha Club Character",
-   /*CONTROLS*/
+   selector: "Select a Gacha Character",
+   charName: "You are now using:",
+   
    controls: "Controls",
    controlsnote: "Click on the control you want to change, then press any key.",
    left: "Move Left",
@@ -72,13 +74,13 @@ function TransText(_TEXT, _INPUT) {
    rot180: "Spin 180°",
    retry: "retry",
    pause: "Pause",
-   /*COMMON*/
+   
    done: "Done",
    back: "Back",
    return: "Return",
    mainmenu: "Main Menu",
    restart: "Start Over",
-   /*GAME STATS TEXTS*/
+   
    line: "LINES",
    piece: "PIECES",
    pending: "PENDING LINES",
@@ -204,6 +206,8 @@ function TransText(_TEXT, _INPUT) {
    comvol: "Volume ng Komentaryo",
    piecevol: "Volume ng Kasunod na Piraso",
    oc: "Tao ng Gacha Club",
+      selector: "Pumili ng Gacha Character",
+       charName: "Ginagamit mo na ngayon si:",
    /*CONTROLS*/
    controlsnote: "Mag-click sa kontrol na gusto mong baguhin, pagkatapos ay pindutin ang anumang key.",
    left: "Gumalaw Pakaliwa",
@@ -256,8 +260,8 @@ function TransText(_TEXT, _INPUT) {
    marathon_warn1: 'Sa Marathon Mode, dapat na umiiral ang parameter na \'marathonParams\' bilang default.',
    endless: "WALANG KATAPUSAN",
 
-   master_level: "Antas ng Mach",
-   master_linereq: "Lines to Level Up",
+   master_level: "Antas na Mach",
+   master_linereq: "Mga Linya para mag-Level Up",
    master_warn2: 'Sa Master Mode, ang level, linesRequire at lineLimit ay dapat na LAHAT ay umiiral. Kung hindi, kung babaguhin mo ang ilan sa mga ito para sa nasabing Mode mula sa orihinal na mga parameter sa replay data, maaaring may mangyari na hindi maganda.',
    master_warn1: 'Sa Master Mode, dapat na umiiral ang parameter na \'masterParams\' bilang default.',
 
@@ -348,6 +352,8 @@ function TransText(_TEXT, _INPUT) {
    comvol: "Volume des Commentaires",
    piecevol: "Morceau Volume suivant",
    oc: "Personnage du Gacha Club",
+      selector: "Sélectionnez un personnage Gacha",
+       charName: "Vous utilisez maintenant:",
    /*CONTROLS*/
    controlsnote: "Cliquez sur le contrôle que vous souhaitez modifier, puis appuyez sur n'importe quelle touche.",
    left: "Se Déplacer à Gauche",
@@ -520,6 +526,8 @@ nameGUI('done', TransText('done'))
  buttonGUI('discord', TransText('discordB'))
  buttonGUI('tetrjs', TransText('tetrjsB'))
 
+textGUI('selector', TransText('selector'))
+textGUI('charName', TransText(''))
 
  buttonGUI('continue', TransText('return'))
 

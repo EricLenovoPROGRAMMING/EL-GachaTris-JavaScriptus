@@ -77,13 +77,13 @@
 }*/
 
 @keyframes flashThing{
-	0% {box-shadow: 0 0 40px rgba(255,0,0,1);}
-	15% {box-shadow: 0 0 40px rgba(255,255,0,1);}
-		29% {box-shadow: 0 0 40px rgba(0,255,0,1);}
-		44% {box-shadow: 0 0 40px rgba(0,255,255,1);}
-			69% {box-shadow: 0 0 40px rgba(0,0,255,1);}
-			88% {box-shadow: 0 0 40px rgba(255,0,255,1);}
-	100% {box-shadow: 0 0 40px rgba(255,0,0,1);}
+	0% {border: 0.2em solid rgba(255,0,0,1);}
+	15% {border: 0.2em solid rgba(255,255,0,1);}
+		29% {border: 0.2em solid rgba(0,255,0,1);}
+		44% {border: 0.2em solid rgba(0,255,255,1);}
+			69% {border: 0.2em solid rgba(0,0,255,1);}
+			88% {border: 0.2em solid rgba(255,0,255,1);}
+	100% {border: 0.2em solid rgba(255,0,0,1);}
 }
 
 @keyframes flashThing2{
@@ -180,11 +180,11 @@ nav a {
   display: inline-block;
   width: 50%;
   color: #fff;
-  border: 3pt solid #fff;
+  border: 2pt solid #fff;
   cursor: pointer;
-  border-radius: 10px;
-  padding: 0.3rem 0.6rem 0.4rem;
-  margin: 0.10em;
+  border-radius: 2px;
+  padding: 0.5rem 0.6rem 0.4rem;
+  margin: 0.2em;
   background: #111;
   transition: background 0.03s linear;
 }
@@ -272,6 +272,14 @@ select{
   	
 }
 
+.ACTIVE{
+ border-color:#0ff;
+}
+
+#selector{
+ height:60%;
+}
+
 .layoutcenter table{
  color:white;
  margin:1em;
@@ -289,9 +297,9 @@ select{
   float: left;
 }
 #b {
-  border: 0px solid #fff;
+  border: 0.2em solid #fff;
   background-color: #000;
-  box-shadow: 0 0 0px rgba(255,255,255,1);
+  
   margin:0;
   margin-top: 0;
   transform: translateY(-1000px);
@@ -299,10 +307,10 @@ select{
   overflow: hidden;
   float: left;
   z-index: 3;
-  border-radius: 0%;
+  
   transition: 
-              transform 500ms ease
-              
+              transform 500ms ease;
+  
              /* box-shadow 0.2s ease;*/
               
 }
@@ -325,25 +333,48 @@ select{
     
   }
   #hold,
-  #preview,
-  #stack {
+  #previewDIV,
+  #stack
+  {
     position: absolute;
     z-index: 2;
     
   }
-  #hold,
   #preview{
       background-color: #000;
-      width: 50%;
+      width: 45%;
       height: auto;
       padding-top: 10%;
       align-self: center;
       margin-left: 20%;
   }
+    #hold {
+     background-color: #000;
+     width: 75%;
+     height: auto;
+     padding-top: 0%;
+     align-self: center;
+     margin-left: 2%;
+    }
+  #preview{
+   position:relative;
+  }
+    #preview2 {
+     position:relative;
+     background-color: #000;
+     width: 75%;
+     height: auto;
+     padding-top: 0%;
+     align-self: center;
+     margin-left: 15%;
+    }
   #hold h3,
   #preview h3 {
       position: absolute;
       vertical-align: center;
+  }
+  #preview h3{
+   margin-left:0%;
   }
  #contento {
      position: absolute;

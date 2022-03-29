@@ -6,7 +6,7 @@ var SFTSlider = document.getElementById('SFTS')
 var LCKSlider = document.getElementById('LCKS')
 var SESlider = document.getElementById('SES')
 var CVSlider = document.getElementById('CVS')
-var CHARSET = document.getElementById('CHARSET')
+
 var SESET = document.getElementById('SECOM')
 var CMVSlider = document.getElementById('CMVS')
 var PSVSlider = document.getElementById('PSVS')
@@ -24,9 +24,7 @@ var MLText = document.getElementById('MLheader')
 
 
 function loadeasysettings() {
- for (var i = CHARSET.length; i > -1; i--) {
-  CHARSET.remove(i)
- }
+
 
 
  try {
@@ -41,19 +39,7 @@ function loadeasysettings() {
   PSVSlider.value = settings.PieceVol;
  } catch (e) { alert(e + e) }
 
- for (var i = 0;; i++) {
-  if (setting.Character[i] == void 0) {
-   break
-  }
-  option = document.createElement("option");
-  option.text = setting.Character[i]
 
-  CHARSET.add(option, i);
-
-  if (settings.Character >= CHARSET.length - 1) {
-   CHARSET.selectedIndex = settings.Character
-  }
- }
  try {
 
   document.getElementById('DASSP').innerHTML = `${TransText('das')}: ${setting.DAS[DASSlider.value]}`
@@ -70,9 +56,6 @@ function loadeasysettings() {
 
 }
 
-function changechar() {
-settings.Character = CHARSET.selectedIndex;saveSetting('Character')
-}
 
 
 function savesettings() {
@@ -85,8 +68,6 @@ function savesettings() {
    settings.Volume=SESlider.value
    settings.VFXVol=CVSlider.value
    */
-  settings.Character = CHARSET.selectedIndex
-
 
   for (var s in settings) saveSetting(s)
 
@@ -287,7 +268,7 @@ $d('marathon-linereqheader').innerHTML = ` ${$dvalue('marathon-linereq')}`;
 
 }
 if (menuIndexe == 9) {
-$d('master-lineheader').innerHTML = ` ${($dvalue('master-line')) !== 301? $dvalue('marathon-line') : "ENDLESS"}`
+$d('master-lineheader').innerHTML = ` ${($dvalue('master-line')) !== 301? $dvalue('master-line') : "ENDLESS"}`
 $d('master-levelheader').innerHTML =  ` ${$dvalue('master-level')}`;
 $d('master-linereqheader').innerHTML = ` ${$dvalue('master-linereq')}`;
 

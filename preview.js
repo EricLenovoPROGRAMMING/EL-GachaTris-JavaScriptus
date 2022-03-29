@@ -71,37 +71,52 @@ Preview.prototype.gen = function() {
  */
 Preview.prototype.draw = function() {
   clear(previewCtx);
+  clear(previewCtx2)
   for (var i = 0; i < Math.min( replayKeys.PREV,this.grabBag.length); i++) {
    if (i==0){
-   if (this.grabBag[i] === 0 || this.grabBag[i] === 3) {
+   if (this.grabBag[i] === 0) {
     draw(
      pieces[this.grabBag[i]].tetro,
      pieces[this.grabBag[i]].x - 3,
-     pieces[this.grabBag[i]].y + 2 + 0.1* 3,
-     previewCtx,
+     pieces[this.grabBag[i]].y + 2 + (i) * 3,
+     previewCtx2,
+    );
+   } else if (this.grabBag[i] === 3) {
+    draw(
+     pieces[this.grabBag[i]].tetro,
+     pieces[this.grabBag[i]].x - 3.25,
+     pieces[this.grabBag[i]].y + 2 + (i) * 3,
+     previewCtx2,
     );
    } else {
     draw(
      pieces[this.grabBag[i]].tetro,
      pieces[this.grabBag[i]].x - 2.5,
      pieces[this.grabBag[i]].y + 2 + i * 3,
-     previewCtx,
+     previewCtx2,
     );
    }
   }
    else
-    if (this.grabBag[i] === 0 || this.grabBag[i] === 3) {
+    if (this.grabBag[i] === 0) {
       draw(
         pieces[this.grabBag[i]].tetro,
-        pieces[this.grabBag[i]].x - 3,
-        pieces[this.grabBag[i]].y + 2 + i * 3,
+        pieces[this.grabBag[i]].x - 2.6,
+        pieces[this.grabBag[i]].y + 2 + (i-1) * 3,
         previewCtx,
       );
+    } else if ( this.grabBag[i] === 3) {
+     draw(
+      pieces[this.grabBag[i]].tetro,
+      pieces[this.grabBag[i]].x - 3,
+      pieces[this.grabBag[i]].y + 2 + (i - 1) * 3,
+      previewCtx,
+     );
     } else {
       draw(
         pieces[this.grabBag[i]].tetro,
         pieces[this.grabBag[i]].x - 2.5,
-        pieces[this.grabBag[i]].y + 2 + i * 3,
+        pieces[this.grabBag[i]].y + 2 + (i-1) * 3,
         previewCtx,
       );
     }

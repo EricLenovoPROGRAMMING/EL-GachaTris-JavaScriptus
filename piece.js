@@ -138,10 +138,10 @@ Piece.prototype.new = function(index) {
       
     // Check for blockout.
     if (!this.moveValid(0, 0, this.tetro)) {
-        endgame(TransText('blockout'), 9, true)
-
+        endgame(TransText('blockout'), 9, true, stack.valid?'lose':void 0)
+       
         playsfx('KO')
-    
+     
     }
     
     if (this.index !== 0&&this.index !==7) {
@@ -171,7 +171,7 @@ Piece.prototype.rotate = function(direction) {
 
             }
         }
-    } else {
+    } else if (direction===1){
 
 
         for (var i = 0; i < this.tetro.length; i++) {
@@ -182,8 +182,18 @@ Piece.prototype.rotate = function(direction) {
             }
         }
 
-
     }
+/*if (direction === 2) {
+
+ for(var ttt=0;ttt<direction;ttt++)
+ for (var i = 0; i < this.tetro.length; i++) {
+ 
+  rotated[i] = [];
+  for (var row = this.tetro.length - 1; row >= 0; row--) {
+   rotated[i][row] = this.tetro[row][this.tetro.length - 1 - i];
+  }
+ }
+}*/
 
 
     // Goes thorugh kick data until it finds a valid move.
