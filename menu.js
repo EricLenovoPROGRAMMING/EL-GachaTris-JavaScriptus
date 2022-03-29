@@ -1,4 +1,4 @@
-var version = '0.8a.1L Gachatris Plus';
+var version = '0.8a.2M Gachatris';
 var setLoop;
 var sfx
 var arrowReleased = true;
