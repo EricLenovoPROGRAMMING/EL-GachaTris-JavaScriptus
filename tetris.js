@@ -337,7 +337,7 @@ var setting = {
   return array;
  })(),
  'Lock Delay': range(0, 101),
- Previews: range(0,10),
+ Previews: range(0,5),
 //Slowdown: [60, 1, 6, 8, 10, 40],
  Size: ['Auto', 'Small', 'Medium', 'Large'],
  Character: ['No Character', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf', 'LeoSnowy', 'DaWildOne', 'ItsBreezeyFears'],
