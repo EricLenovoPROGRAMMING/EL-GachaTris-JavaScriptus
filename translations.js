@@ -27,6 +27,9 @@ function TransText(_TEXT, _INPUT) {
    discordB: "Gachatris JavaScriptus Discord Server",
    tetrjsB: "Simon Laroche's Tetr.JS",
 
+  playername:"Player Name:",
+  maxname:"All names must be 20 bytes long. Mind not changing the name from the original replay data or shorten it to the correct length.",
+
 
    pc: "PERFECT CLEAR",
    frenzy: "FRENZY",
@@ -174,6 +177,11 @@ function TransText(_TEXT, _INPUT) {
    discordB: "Gachatris JavaScriptus Discord Server",
    tetrjsB: "Tetr.JS ni Simon Laroche",
 
+playername:"Pangalan ng manlalaro:",
+  maxname:"Ang lahat ng mga pangalan ay dapat na 20 mga karakter ang haba. Huwag baguhin ang pangalan mula sa orihinal na replay data o paikliin ito sa tamang haba.",
+
+
+
    pc: "UBOS ANG AREA",
    frenzy: "FRENZY",
 
@@ -318,6 +326,11 @@ function TransText(_TEXT, _INPUT) {
    about2: "L'Original Tetr.JS a été conçu et réalisé par Simon Laroche sous licence MIT ; Gacha Club et les autres jeux Gacha sont des marques déposées de Lunime ; 'Gachatris JavaScriptus' est abrégé en 'GT.JS'",
    discordB: "Discord Server de Gachatris JavaScriptus",
    tetrjsB: "Tetr.JS de Simon Laroche",
+
+playername:"Nom de joueur:",
+  maxname:"Tous les noms doivent avoir une longueur de 20 octets. Veillez à ne pas modifier le nom des données de relecture d'origine ou à le raccourcir à la bonne longueur.",
+
+
 
    pc: "CLAIR PARFAIT",
    frenzy: "FRÉNÉSIE!",
@@ -554,6 +567,8 @@ textGUI('charName', TransText('charName'))
  textGUI('master-lineheader', TransText('linelimit'))
  textGUI('master-levelheader', TransText('master_level'))
  textGUI('master-linereqheader', TransText('master_linereq'))
+ textGUI('playername', TransText('playername'))
+ 
  $iH('feverTXT', TransText('frenzy'))
 
  buttonGUI('returnCAP', `<--  ${TransText('return').toUpperCase()}`);

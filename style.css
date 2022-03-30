@@ -193,6 +193,23 @@ nav a:hover{
 	background: #444
 }
 
+
+#nameplate {
+ font: 1.25em 'ColorFont';
+ position: absolute
+ ;float:center;
+ overflow:hidden;
+ width: 50%;
+ height:3%;
+ color: #fff;
+ border: 1.5pt solid #fff;
+ border-radius: 100px;
+ line-height:0;
+ margin: 0em;
+ background: #111;
+ 
+}
+
 select{
  width:30%;
  height:40%;
@@ -237,7 +254,7 @@ select{
 /* Content */
 #content {
   display: table;
-  margin: auto;
+  /*margin: auto;/**/
   background: rgba(0,0,0,0);
 /* transform:rotateY(50deg) rotateX(30deg);*/
   /*animation: rotatee 2s infinite linear*/

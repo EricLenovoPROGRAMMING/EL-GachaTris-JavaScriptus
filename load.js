@@ -36,7 +36,7 @@ function loadSFX(){
   b2b_end: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2b-end.ogg` , preload: false}),
  
   ready: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/state-ready.ogg` , preload: false}),
-  ready2: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/state-ready2.ogg` , preload: false}),
+  ready2: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/state-ready2.ogg` , preload: false, html5:true}),
   start: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/state-go.ogg` , preload: false}),
  
   win: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/game-win.ogg` , preload: false}),
@@ -50,7 +50,7 @@ function loadSFX(){
   rotatepiece: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/rotate.ogg` , preload: false}),
   movesound: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/moves.ogg` , preload: false}),
   //IHS and inithold are DIFFERENT
-  noninithold: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/nith.ogg` , preload: false}),
+  noninithold: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/nith.ogg` , preload: false, html5:true}),
   inithold: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/ith.ogg` , preload: false}),
   lockse: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/lock.ogg` , preload: false}),
   alertsoundslow: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/alertsound.ogg`, loop: true , preload: false}),
@@ -60,7 +60,7 @@ function loadSFX(){
   timer: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/timerwarn.ogg`, html5: true , preload: false}),
   linedown: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/linedown.ogg`, html5: true , preload: false})
  }
- for(let t in SoundFX) SoundFX[t].load()
+ 
  for(let E=2; E<6;E++){
   
   SoundFX[`b2bs${E}`].once(`loaderror`,function(){
@@ -69,7 +69,8 @@ function loadSFX(){
   })
  }
  SoundFX[`inithold`].once(`loaderror`,function(){
-  SoundFX[`inithold`]=SoundFX[`noninithold`]
+  SoundFX[`inithold`]=new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/nith.ogg` , preload: false,html5:true})
+  SoundFX[`inithold`].load()
  })
  var lineClear=[`onespin`,`twospin`,`threespin`]
  var spinZero=[`spinzero`,`minizero`]
@@ -101,7 +102,7 @@ function loadSFX(){
  SoundFX[`hdsound`].once(`loaderror`, function() {
   SoundFX[`hdsound`] = new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/lock.ogg` , preload: true})
  })
- 
+ for(let t in SoundFX) SoundFX[t].load()
  /*for(var i =0;i<lineClear.length;i++){
   for(var ie=0;ie<lineClear.length;ie++)
   SoundFX[lineClear[i]].once(`loaderror`, function() {
@@ -126,7 +127,6 @@ function loadSFX(){
    })
   })
  }
-
  }
  if(currentPSFX!==settings.PieceSFX){
   currentPSFX=settings.PieceSFX

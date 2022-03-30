@@ -683,7 +683,7 @@ Stack.prototype.addPiece = function(tetro) {
     varseqvoice++
     if (requirelines <= 0) {
      if (frame < replayKeys.DAParams['timeframe'] + 101)
-       {
+      while (varpiecedelay < frame) {
        varpiecedelay = frame + 100
        ClearSuccess = true
        for (var g = 0, y = 0; g < 10; g++) {
@@ -717,11 +717,11 @@ Stack.prototype.addPiece = function(tetro) {
     varseqvoice++
     if (requirelines <= 0) {
      if (frame < feverTime) {
-       
+      while (varpiecedelay < frame) {
        varpiecedelay = frame + 100
        ClearSuccess = true
-      
-     }
+      }
+     } else {}
 
     }
    }

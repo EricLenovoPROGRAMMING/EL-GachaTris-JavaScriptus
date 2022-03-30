@@ -14,11 +14,7 @@ var submessage = document.getElementById('msgr2')
 // assuming cleartextren and varren are declared
 
 // helper to get the Nth letter
-function toCapitalLetter(n) {
- this.letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
- return letters[n];
- // could be compacted, but I'd rather have readable code
-}
+
 
 
 
@@ -317,6 +313,7 @@ var settings = {
  Grid: 0,
  Outline: 0,
  Language: 0,
+ 
 };
 
 var setting = {
@@ -337,7 +334,7 @@ var setting = {
   return array;
  })(),
  'Lock Delay': range(0, 101),
- Previews: range(0,7),
+ Previews: range(0,10),
 //Slowdown: [60, 1, 6, 8, 10, 40],
  Size: ['Auto', 'Small', 'Medium', 'Large'],
  Character: ['No Character', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf', 'LeoSnowy', 'DaWildOne', 'ItsBreezeyFears'],
@@ -362,7 +359,9 @@ var setting = {
 //voices
 var characters_folder = 'NO CHAR'
 
-
+$d('playernamequery').oninput=()=>{
+ localStorage['playerName']=$d('playernamequery').value
+}
 
 
 
@@ -446,6 +445,7 @@ function resize() {
  var mainmenu = document.getElementById('menumain')
  var iconCHAR=$d('iconCHAR')
  let selectorS=(args)=>{return $d(`selector${args}`)}
+ var nameplate=$d('nameplate')
  // TODO Finalize this.
  // Aspect ratio: 1.024
  var screenHeight = window.innerHeight - 34;
@@ -460,16 +460,17 @@ function resize() {
 
  var padnum = (window.innerHeight - (cellSize * 20 + 2)) / 2;
  var padnum2 = (window.innerHeight - (cellSize * 20 + 4)) / 2
+var padnum3 = (window.innerHeight - (cellSize * 20)) / 2
 
  var pad = padnum + 'px'
- content.style.padding = pad + ' 0';
+ content.style.padding = `${pad} 0`;
  stats.style.bottom = padnum2 + 'px';
  stats.style.left = /*(cellSize*0.003)*/ /**/ d.style.marginLeft * padnum + 'px'
  mainmenu.style.height = 100 + '%'
- mainmenu.style.width = 100 + '%'
+ mainmenu.style.width = 100 + '%' 
  // Size elements
  a.style.padding = '0 0.5rem ' + ~~(cellSize / 2) + 'px';
-
+ 
 
  stackCanvas.width = activeCanvas.width = bgStackCanvas.width = cellSize * 10;
  stackCanvas.height = activeCanvas.height = bgStackCanvas.height =
@@ -484,6 +485,10 @@ function resize() {
  GM2.style.height = 100 + '%';
  FM.style.width = cellSize * 0.5 + 'px';
  FM.style.height = 100 + '%';
+ 
+ nameplate.style.top=stackCanvas.height+padnum3+5+'px'
+ nameplate.style.width=b.style.width
+ nameplate.style.height=cellSize*1+'px'
  
 iconCHAR.style.height=$d('selectorICON').style.height = /* (cellSize * 5) + 'px';*/ `${cellSize*5}px`
 
@@ -556,6 +561,9 @@ function init(gt, gamep) {
   watchingReplay = false;
 
   replayKeys = {};
+  if($d('playernamequery').value.trim()!==''){
+  replayKeys.name=$d('playernamequery').value.trim()
+  }else replayKeys.name=``
   replayKeys.keys = {}
   if (gt == 115) {
    replayKeys.garbagesend = {}
@@ -613,6 +621,7 @@ function init(gt, gamep) {
   document.getElementById('b').style.animation = "clear"
   document.getElementById('active_FM').style.animation = "clear"
 
+ $d('nameplayer').innerHTML=replayKeys.name==''?`??? (${setting.Character[settings.Character]})`: replayKeys.name
 
 
   IRStime = 0
@@ -1307,6 +1316,8 @@ function init(gt, gamep) {
     }
    }
    if (e.keyCode === binds.retry) {
+   
+    if(!(moremodeselect[1].classList.contains('on')||menus[1].classList.contains('on')))
     init(gametype);
    }
    if (!watchingReplay) {
@@ -2048,12 +2059,12 @@ function init(gt, gamep) {
     cleartext = ''
     cleartextpc = ''
    }
-
+lini.innerText=$d('d').style.marginLeft
    //	lini.innerHTML=setPattern + ' \| ' + piececolor + ' \| ' + flip
    //lini.innerHTML = startPauseTime + ' \| ' + pauseTime + ' \| ' + gametime + ' \| ' + gamediff
    //lini.innerHTML=spinCheckCount + ' \| ' + miniSpinCount + ' \| ' + mini2SpinCount  + ' \| ' + mini3SpinCount  + ' \| ' +  mini3REVSpinCount
    ////$iH('DEBUGTEXT',"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""))
-  } catch (e) {
+  } catch (e) {j
    //document.write('INTERNAL ERROR!!! ')
    //  endgame('NOPE', 3)
 
@@ -2171,6 +2182,11 @@ function init(gt, gamep) {
 
 
    replayKeys = {}
+   if(parse.name!==void 0||parse.name.trim()==''){
+    if(parse.name.length<21){
+replayKeys.name=parse.name
+}else throw TransText('maxname')
+}else replayKeys.name=``
 
    replayKeys.seed = parse.seed
 
