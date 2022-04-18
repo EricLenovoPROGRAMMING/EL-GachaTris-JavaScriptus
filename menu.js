@@ -1,4 +1,4 @@
-var version = '0.8a.2M Gachatris';
+var version = '0.8a.4A Gachatris';
 var setLoop;
 var sfx
 var arrowReleased = true;
@@ -135,7 +135,9 @@ var key = {
 var menus = document.getElementsByClassName('menu')
 var moremodeselect = document.getElementsByClassName('moremodes');
 function menu(menuIndex) {
-    
+   /* if(menuIndex!==void 0&&menuIndex!==4&menuIndex!==5){
+     $d('NAVMENU').style.background='rgba(0,0,0,1)'
+    }/**/
   for (var i = 0, len = menus.length; i < len; i++) {
             menus[i].classList.remove('on');
             
@@ -148,8 +150,12 @@ function menu(menuIndex) {
       stopsfx('alarm')
       onealarm=false
       varalarm=false;
+      
+      if(menuIndex!==void 0)  playmfx('stop', 'start')
+        playmfx('stop', 'loop')
+
             
-      characterinit();
+      
       if (menuIndex==5&&!(watchingReplay)){
           replayKeys.keys[frame+3]='END'
       }
@@ -215,7 +221,7 @@ addEventListener(
       // Binds the key and saves the data.
       binds[currCell.id] = e.keyCode;
       currCell.innerHTML = key[e.keyCode];
-      localStorage.setItem('binds', JSON.stringify(binds));
+      localStorage.setItem('gtris_binds', JSON.stringify(binds));
       currCell = 0;
     }
   },
@@ -266,32 +272,33 @@ function right() {
  * LocalStorage functions
  */
 function saveSetting(s) {
-  localStorage['version'] = version;
+  localStorage['gtris_version'] = version;
 
   document.getElementById(s).getElementsByTagName('span')[0].innerHTML =
     setting[s][settings[s]];
 
-  localStorage['settingsse'] = JSON.stringify(settings);
-  localStorage['settings'] = JSON.stringify(settings)
+  localStorage['gtris_settingsse'] = JSON.stringify(settings);
+  localStorage['gtris_settings'] = JSON.stringify(settings)
   translate()
 }
 function loadLocalData() {
-      if (localStorage['binds']) {
-    binds = JSON.parse(localStorage.getItem('binds'));
+      if (localStorage['gtris_binds']) {
+    binds = JSON.parse(localStorage.getItem('gtris_binds'));
     for (var i = 0, len = controlCells.length; i < len; i++) {
       controlCells[i].innerHTML = key[binds[controlCells[i].id]];
     }
   }
   // TODO When new version just update with new stuff, rest stays unchanged.
-  if (localStorage['version'] !== version) {
+  if (localStorage['gtris_version'] !== version) {
       try{
           
-    localStorage.removeItem('settingsse');
-    localStorage.removeItem('binds');
+    localStorage.removeItem('gtris_settingsse');
+    localStorage.removeItem('gtris_binds');
     
-    var settingsload =JSON.parse(localStorage.getItem('settings'))
+    var settingsload =JSON.parse(localStorage.getItem('gtris_settings'))
 
-    for (var i in settings){
+    for (var i in settingsload){
+     if(!(i in settings))continue
         if (settingsload[i]!==void 0||settingsload[i]!==undefined){
         settings[i]=settingsload[i]
         }else if(setings[i]!==void 0){
@@ -300,8 +307,8 @@ function loadLocalData() {
     }
       }catch(e){/*alert(e)*/}
   }
-  if (localStorage['settingsse']) {
-      settings = JSON.parse(localStorage.getItem('settingsse'));
+  if (localStorage['gtris_settingsse']) {
+      settings = JSON.parse(localStorage.getItem('gtris_settingsse'));
   }
   translate()
 }
@@ -309,7 +316,12 @@ function loadLocalData() {
 loadLocalData();
 function loadsettinginit(){
  try{
-
+  try{
+  var playername=localStorage.getItem(gtris_playerName)
+ if(playername!==void 0&&playername!==undefined){
+  $d('playernamequery').value=playername
+ }
+  }catch(e){}
 for (let s in settings) {
  if(s=='Character')continue
  try{
@@ -333,7 +345,7 @@ for (let s in settings) {
   div.appendChild(span);
   div.appendChild(iRight);
  }catch(e){
-  localStorage['settingsse'][s]=undefined
+  localStorage['gtris_settingsse'][s]=undefined
  }
   
  }
@@ -362,8 +374,9 @@ for (let s in settings) {
   
   
   }
-  localStorage['settings']=null
-  localStorage['settingsse']=null; loadLocalData();
+  /*localStorage['gtris_settings']=null
+  localStorage['gtris_settingsse']=null;*/
+  loadLocalData();
   loadsettinginit()
   alert(e)
 }

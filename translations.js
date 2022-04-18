@@ -62,6 +62,8 @@ function TransText(_TEXT, _INPUT) {
    charvol: "Character Volume",
    comvol: "Commentary Volume",
    piecevol: "Piece Next Volume",
+   musicvol: "Music Volume",
+   uivol: "UI Volume",
    oc: "Gacha Club Character",
    selector: "Select a Gacha Character",
    charName: "You are now using:",
@@ -213,6 +215,8 @@ playername:"Pangalan ng manlalaro:",
    charvol: "Volume ng Karakter",
    comvol: "Volume ng Komentaryo",
    piecevol: "Volume ng Kasunod na Piraso",
+   musicvol: "Volume ng Kanta",
+   uivol: "Volume ng UI",
    oc: "Tao ng Gacha Club",
       selector: "Pumili ng Gacha Character",
        charName: "Ginagamit mo na ngayon si:",
@@ -364,6 +368,8 @@ playername:"Nom de joueur:",
    charvol: "Volume du Personnage",
    comvol: "Volume des Commentaires",
    piecevol: "Morceau Volume suivant",
+   musicvol: "Volume de la musique",
+   uivol: "Volume de l'interface utilisateur",
    oc: "Personnage du Gacha Club",
       selector: "Sélectionnez un personnage Gacha",
        charName: "Vous utilisez maintenant:",
@@ -512,6 +518,8 @@ function translate() {
  textGUI('SFXVP', TransText('vol'))
  textGUI('PNVP', TransText('piecevol'))
  textGUI('ComVP', TransText('comvol'))
+  textGUI('MFXVP', TransText('musicvol'))
+   textGUI('UISFXVP', TransText('uivol'))
  textGUI('character', TransText('oc'))
  textGUI('sprint', TransText('sprint'))
  textGUI('da', TransText('da'))
@@ -571,7 +579,7 @@ textGUI('charName', TransText('charName'))
  
  $iH('feverTXT', TransText('frenzy'))
 
- buttonGUI('returnCAP', `<--  ${TransText('return').toUpperCase()}`);
+ classGUI('RETURN', `<--  ${TransText('return').toUpperCase()}`);
  buttonGUI('menu', TransText('mainmenu'));
 
  var t = {

@@ -6,8 +6,8 @@ var SFTSlider = document.getElementById('SFTS')
 var LCKSlider = document.getElementById('LCKS')
 var SESlider = document.getElementById('SES')
 var CVSlider = document.getElementById('CVS')
-
-var SESET = document.getElementById('SECOM')
+/*
+var SESET = document.getElementById('SECOM')*/
 var CMVSlider = document.getElementById('CMVS')
 var PSVSlider = document.getElementById('PSVS')
 var TimeSlider = document.getElementById('timeset')
@@ -17,6 +17,8 @@ var MLSlider = document.getElementById('MLset')
 var TimeText = document.getElementById('timeheader')
 var MissText = document.getElementById('missheader')
 var MLText = document.getElementById('MLheader')
+var MFXSlider = document.getElementById('MFXset')
+var UISFXSlider = document.getElementById('UISFXset')
 
 
 'use strict';
@@ -37,6 +39,8 @@ function loadeasysettings() {
   CVSlider.value = settings.VFXVol;
   CMVSlider.value = settings.CMVol;
   PSVSlider.value = settings.PieceVol;
+  MFXSlider.value = settings.MFXVol;
+  UISFXSlider.value = settings.UIVol;
  } catch (e) { alert(e + e) }
 
 
@@ -123,6 +127,16 @@ PSVSlider.oninput = function() {
  settings.PieceVol = ~~(this.value)
 
  saveSetting('PieceVol')
+}
+MFXSlider.oninput = function() {
+ settings.MFXVol = ~~(this.value)
+
+ saveSetting('MFXVol')
+}
+UISFXSlider.oninput = function() {
+ settings.UIVol = ~~(this.value)
+
+ saveSetting('UIVol')
 }
 TimeSlider.oninput = TimeValueF
 function TimeValueF() {

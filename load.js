@@ -1,6 +1,14 @@
 function loadSFX(){
  if(currentSFX!==settings.SoundType){
  currentSFX=settings.SoundType
+ try{
+  for(let c in SoundFX)SoundFX[c].unload()
+ }catch(r){}
+ try {
+  for (let c in REN) REN[c].unload()
+ } catch (r) {}
+
+
  SoundFX = {
   renend: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/endren.ogg` , preload: false}),
   b2bs: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2b.ogg` , preload: false}),
@@ -58,7 +66,16 @@ function loadSFX(){
   levelUp: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/levelup.ogg`, html5: true , preload: false}),
  
   timer: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/timerwarn.ogg`, html5: true , preload: false}),
-  linedown: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/linedown.ogg`, html5: true , preload: false})
+  linedown: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/linedown.ogg`, html5: true , preload: false}),
+  
+  b2bfourline: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2btetris.ogg`, html5: true , preload: false}),
+  b2bonespin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspin1.ogg`, html5: true , preload: false}),
+  b2btwospin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspin2.ogg`, html5: true , preload: false}),
+  b2bthreespin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspin3.ogg`, html5: true , preload: false}),
+  b2bonemini: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bmini1.ogg`, html5: true , preload: false}),
+
+  b2bspin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspinLine.ogg`, html5: true , preload: false}),
+
  }
  
  for(let E=2; E<6;E++){
@@ -69,10 +86,11 @@ function loadSFX(){
   })
  }
  SoundFX[`inithold`].once(`loaderror`,function(){
-  SoundFX[`inithold`]=new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/nith.ogg` , preload: false,html5:true})
-  SoundFX[`inithold`].load()
+  SoundFX[`inithold`]=new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/nith.ogg` , preload:true})
+ 
  })
  var lineClear=[`onespin`,`twospin`,`threespin`]
+ 
  var spinZero=[`spinzero`,`minizero`]
  /*for (var i of lineClear){
   SoundFX[`${i}line`].once(`loaderror`,function(){
@@ -83,15 +101,27 @@ function loadSFX(){
   })
  }/**/
    SoundFX[`onemini`].once(`loaderror`, function() {
-    SoundFX[`onemini`] = new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/spin0.ogg` , preload: true})
+    SoundFX[`onemini`] = new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/spinLine.ogg` , preload: true})
+    
+   })
+   SoundFX[`b2bonemini`].once(`loaderror`, function() {
+    SoundFX[`b2bonemini`] = new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/mini1.ogg`, preload: true })
+   
+   })
+   SoundFX[`b2bfourline`].once(`loaderror`, function() {
+    SoundFX[`b2bfourline`] = new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/tetris.ogg`, preload: true })
+   
+   
    })
  for (let u of lineClear){
   
   SoundFX[u].once(`loaderror`, function() {
-   SoundFX[u] = new Howl({ src: [`sounds/${setting.SoundType[currentSFX]}/spinLine.ogg`] , preload: true})
+   SoundFX[u] = new Howl({ src: [`sounds/${setting.SoundType[currentSFX]}/spinLine.ogg`] , preload: false,html5:true})
    SoundFX[u].load()
+   
   })
  }
+ 
  for (let u of spinZero) {
   
    SoundFX[u].once(`loaderror`, function() {
@@ -102,7 +132,35 @@ function loadSFX(){
  SoundFX[`hdsound`].once(`loaderror`, function() {
   SoundFX[`hdsound`] = new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/lock.ogg` , preload: true})
  })
+ 
  for(let t in SoundFX) SoundFX[t].load()
+ for (let I of lineClear) {
+  SoundFX[`b2b${I}`].once(`loaderror`, function() {
+   SoundFX[`b2b${I}`] /*= new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/${
+    {
+    onespin:'spin1',
+    twospin:'spin2',
+    threespin:'spin3',
+    }[I]}.ogg`, preload: true })
+  })/**/=SoundFX[`${I}`]
+   SoundFX[`b2b${I}`].load()
+  })
+  
+ }/**/
+ for (let I of lineClear) {
+  SoundFX[`b2bspin`].once(`load`, function() {
+   SoundFX[`b2b${I}`] /*= new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/${
+    {
+    onespin:'spin1',
+    twospin:'spin2',
+    threespin:'spin3',
+    }[I]}.ogg`, preload: true })
+  })/**/=SoundFX[`b2bspin`]
+   SoundFX[`b2b${I}`].load()
+  })
+  
+ }/**/
+ 
  /*for(var i =0;i<lineClear.length;i++){
   for(var ie=0;ie<lineClear.length;ie++)
   SoundFX[lineClear[i]].once(`loaderror`, function() {
@@ -115,17 +173,18 @@ function loadSFX(){
   REN[k] = new Howl({
        src: [`sounds/${setting.SoundType[currentSFX]}/ren/ren${k}.mp3`],
   })
-    var tloadk =
+    
    /*new Howl({
     src: [`sounds` + reninit + `ren` + k + `.mp3`],
    })*/
+      REN[k].once(`loaderror`, function() {
+       REN[k] = new Howl({
+        src: [`sounds/${setting.SoundType[currentSFX]}/ren/ren${k}.ogg`],
+   
+       })
+      })
    REN[k].load()
-   REN[k].once(`loaderror`, function() {
-   REN[k] = new Howl({
-    src: [`sounds/${setting.SoundType[currentSFX]}/ren/ren${k}.ogg`],
- 
-   })
-  })
+
  }
  }
  if(currentPSFX!==settings.PieceSFX){
@@ -153,7 +212,7 @@ function loadSFX(){
  }
  
  for (let en in piecesound)
- var t=piecesound[en].load()
+ piecesound[en].load()
 }
 }
 var currentSFX = null

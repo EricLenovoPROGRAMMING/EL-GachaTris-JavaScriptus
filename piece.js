@@ -14,29 +14,30 @@ function Piece() {
     this.held = false;
     this.finesse = 0;
     this.dirty = false;
+    this.spinX = 0
+    this.spinY = 0
+    this.landed
 }
-var spinX = 0
-var spinY = 0
-var miniSpinCount;
-var spinCheckCount;
+
+
 try {
     Piece.prototype.spinning=function() {
-    	if (piece.index==5&&landed){
-        if (miniSpinCount >= 1 && spinCheckCount >= 0.7 && spinX == piece.x && spinY == piece.y) {
-            if (miniSpinCount == 2) {
+    	if (piece.index==5&&this.landed){
+        if (stack.miniSpinCount >= 1 && stack.spinCheckCount >= 0.7 && this.spinX == piece.x && this.spinY == piece.y) {
+            if (stack.miniSpinCount == 2) {
                 playsfx('spinsound')
                 
 
 
             }
-            if (miniSpinCount == 1 && spinCheckCount >= 1) {
+            if (stack.miniSpinCount == 1 && stack.spinCheckCount >= 1) {
                 playsfx('minispinsound')
                 
 
 
             }
         }
-        if (miniSpinCount == 1 && spinCheckCount == 1 && mini2SpinCount <= 1 && spinX == piece.x && spinY == piece.y) {
+        if (stack.miniSpinCount == 1 && stack.spinCheckCount == 1 && stack.mini2SpinCount <= 1 && this.spinX == piece.x && this.spinY == piece.y) {
             playsfx('minispinsound')
            
 
@@ -110,7 +111,7 @@ Piece.prototype.new = function(index) {
 
     this.lockLimit=0
     //TODO change this
-    landed = false;
+    this.landed = false;
     
     // TODO Do this better. Make clone object func maybe.
     //for property in pieces, this.prop = piece.prop
@@ -223,19 +224,19 @@ Piece.prototype.rotate = function(direction) {
     };
     if (rotatefail == false) {
         playsfx('rotatepiece');
-        if(landed)
+        if(this.landed)
         this.lockLimit-=replayKeys.LCK*0.0001
-        spinX = Math.floor(piece.x);
-        spinY = Math.floor(piece.y);
+        this.spinX = Math.floor(piece.x);
+        this.spinY = Math.floor(piece.y);
         moved = false
-        isSpin = false;
-        isMini = false;
-        spinCheck();
+        stack.isSpin = false;
+        stack.isMini = false;
+        stack.spinCheck();
         rotatespin = true
     } else {
      
     }
-    while (rotatespin == true&&landed) {
+    while (rotatespin == true&&this.landed) {
      rotatespin = false
      this.spinning()
     }
@@ -370,14 +371,14 @@ if (piece.y>-10){
 
 
 
-            miniSpinCount + 9
-            isMini = false
-            isSpin = false
+            stack.miniSpinCount + 9
+            stack.isMini = false
+            stack.isSpin = false
         }
-        //landed = false
-        miniSpinCount + 9
-        isMini = false
-        isSpin = false
+        //this.landed = false
+        stack.miniSpinCount + 9
+        stack.isMini = false
+        stack.isSpin = false
     }
 }
 };
@@ -452,16 +453,16 @@ var harddropenabled=false
 
 Piece.prototype.hardDrop = function() {
 if (piece.y>-10){
-    if (landed == false) {
-        isSpin = false;
-        isMini = true;
-        spinCheck()
+    if (this.landed == false) {
+        stack.isSpin = false;
+        stack.isMini = true;
+        stack.spinCheck()
     }
-    spinCheck()
+    stack.spinCheck()
     this.y += this.getDrop(95)
     harddropenabled=true
    
-       // if (landed== false)
+       // if (this.landed== false)
     dropscore += instank
     this.lockDelay = replayKeys.LCK*7;
     /*for (var i = 0;; i++) {
@@ -509,7 +510,7 @@ Piece.prototype.getDrop = function(distance) {
         
         
         
-        if (!this.moveValid(0, i, this.tetro)) { spinCheck();return i - 1;; instank*=0; break}
+        if (!this.moveValid(0, i, this.tetro)) { stack.spinCheck();return i - 1;; instank*=0; break}
         instank = twicescore * 2
         softg = twicescore
         
@@ -517,10 +518,10 @@ Piece.prototype.getDrop = function(distance) {
     }
 
     return i - 1;
-    if (landed == false) {
-        spinCheck()
-        isSpin = false;
-        isMini = false;
+    if (this.landed == false) {
+        stack.spinCheck()
+        stack.isSpin = false;
+        stack.isMini = false;
     }
 };
 Piece.prototype.hold = function() {
@@ -530,7 +531,7 @@ if (piece.y>-10&&gametype!==116&&feverAble==false&&feverActivate==false){
     if (!this.held) {
         if (hold.piece !== void 0) {
             hold.piece = this.index;
-            this.new(temp);
+            this.initNew(temp);
             playsfx('noninithold')
         } else {
             hold.piece = this.index;
@@ -574,7 +575,7 @@ Piece.prototype.moveValid = function(cx, cy, tetro) {
             }
         }
     }
-    if(!landed){
+    if(!this.landed){
     //this.lockDelay -=(this.lockDelay>=0?replayKeys.LCK/3:0)
 }else{
  this.lockLimit+=replayKeys.LCK*0.0025
@@ -587,19 +588,19 @@ Piece.prototype.moveValid = function(cx, cy, tetro) {
 Piece.prototype.update = function() {
 	if(this.y!==undefined){
 
-    spinCheck()
+    stack.spinCheck()
 
 if (piece.y>-10){
     if (this.moveValid(0, 1, this.tetro)) {
       
-        isSpin = false;
-        isMini = false;
+        stack.isSpin = false;
+        stack.isMini = false;
         spinrecog = false
-        spinCheckCount = 9383827
-        spinCheck()
+        stack.spinCheckCount = 9383827
+        stack.spinCheck()
        
         
-        landed = false;
+        this.landed = false;
         if (replayKeys.GRAV&&gametype!==117) {
             var grav = gravityArr[replayKeys.GRAV - 1];
             if (grav > 1) {this.y += this.getDrop(grav)}
@@ -619,17 +620,17 @@ if (piece.y>-10){
         }
 
     } else {
-       if (landed==false){
+       if (this.landed==false){
        	if(!harddropenabled){
        	playsfx('pieceLand')
        	instank*=0
 }
-        landed = true;
+        this.landed = true;
         
        }
        var yceil=Math.ceil(this.y)
-        this.y = Math.floor(this.y);
-        spinCheck()
+       this.y = Math.floor(this.y);
+        stack.spinCheck()
         
         if (yceil > 0) {
             checkvalid = true;
@@ -652,9 +653,12 @@ if (true){
     
             stack.addPiece(this.tetro);
             piece.y=-33
+            
            if(gametype!=116&&!feverActivate||piece.y==-10){piece.initNew(preview.next())} else piece.y=-38;
             piece.draw();
             piece.drawGhost()
+            if(hold.piece!==void 0)
+            hold.draw()
              
 } 
                            
@@ -663,7 +667,7 @@ if (true){
         } else {
            this.lockDelay+=1+this.lockLimit+(gametype!==118?0:(masterParameter.activity.LEVEL-1)*0.02)
 
-            if (isSpin) {
+            if (stack.isSpin) {
                 var rando = Math.random()
                 var a = 1
                 var b = 125 * rando
@@ -672,7 +676,7 @@ if (true){
                 activeCtx.fillRect(0, 0, activeCanvas.width, activeCanvas.height);
                 activeCtx.globalCompositeOperation = 'source-over';
                 this.lockDelay
-            } else if (isMini) {
+            } else if (stack.isMini) {
                 var rando = Math.random(0, 1)
                 var a = 0.2
 

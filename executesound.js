@@ -20,10 +20,11 @@ function playsfx(sound) {
   soundname.stop()
   soundname.play()
 
-  return soundname
+  
 
 
  }
+ return soundname
 
 }
 function sfxRETURN(detect){
@@ -51,6 +52,7 @@ function stopsfxJSO(varname) {
 }
 
 function playvoice(voicename) {
+ try{
  if (gamediff == undefined || gamediff < 50)
   if (settings.Voice == 1 && settings.VFXVol !== 0) {
    {
@@ -66,11 +68,13 @@ function playvoice(voicename) {
    }
 
   }
+ }catch(o){}
 }
 
 function playpiecesfx(jsonname) {
- var vol = settings.PieceVol / 100
  try{
+ var vol = settings.PieceVol / 100
+ 
  if (gamediff == undefined || gamediff < 4)
   if (settings.PieceVol !== 0 && settings.PieceSFX !== 0) {
    piecesound[jsonname].volume(vol)

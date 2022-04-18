@@ -1,40 +1,61 @@
 function Stack() {
  //this.grid;
  this.valid=false
+ this.varren = 0;
+ this.neutralline = 0
+ this.garbagenumber = 0
+ this.voicegarbage = false
+ this.voicestrength = 0;
+ this.varpiecedelayadd = 100
+ this.varpiecedelay=0
+ this.clearrows = []
+ this.b2b = 0;
+ this.B2BTemp=0
+ this.linevoice = 0;
+ this.isSpin = false;
+ this.isMini = false;
+ this.spinCheckCount = 0
+ this.miniSpinCount = 0
+ this.mini2SpinCount = 0
+ this.mini3SpinCount = 0
+ this.mini3REVSpinCount = 0
+ this.enablespin = false;
+ this.spinrecog = false;
+ this.spinrecogmini = false;
+ this.linespinrecog = false;
+ this.minispinrecog = false;
+ this.once=false
+ this.sensespin
+ this.perfectboolvoice = false
+ this.gtrisinput = false
+ this.gtrisenable = false
+ this.gtrisenableplus = false
+ this.renstrengthinit = 0
+ this.countervoice=false
 };
 
 
-var neutralline = 0
-var garbagenumber = 0
+
+
 var garbvoice = 0
-var voicegarbage = false
-var landed;
 var linesend = 0
 var minoesdetect;
 var minoes;
 var MAX_REN;
-var sensespin = 0;
-var linesdetect = 0;
-var boolline = 0;
-var booldetect = false
-var b2b = 0;
-var varren = 0;
+
+
 var renenable = 0;
 var minispinrecog = false;
-var linevoice = 0;
-var voicestrength = 0;
-var renvoiceinit = 0;
-var enablespin = false;
-var linespinrecog = false;
 
-var spinrecog = false;
+
+var renvoiceinit = 0;
+
+
 
 var TSD;
 
 var failTSD
 //for TSD ONLY mode
-var nontsdcondition = gametype == 111 && ![linespinrecog == true && linesdetect == 2]
-var tsdcondition = linespinrecog == true && linesdetect == 2
 
 var alertsoundactive = false;
 
@@ -93,17 +114,17 @@ Stack.prototype.newTemp = function(x, y) {
     cells[it][i] = undefined
    }
   }*/
- StackTemp = cells;
+ this.StackTemp = cells;
 };
 
 /**
  * Adds tetro to the stack, and clears lines if they fill up.
  */
-function testSpace(x, y) {
+Stack.prototype.testSpace=function(x, y){
 
- if (stack.grid[x] !== undefined && stack.grid[x] !== 0) {
+ if (this.grid[x] !== undefined && this.grid[x] !== 0) {
   if (y < 22) {
-   if (stack.grid[x][y] !== undefined && stack.grid[x][y] !== 0) {
+   if (this.grid[x][y] !== undefined && this.grid[x][y] !== 0) {
     return true;
    } else {
     return false;
@@ -120,9 +141,8 @@ function testSpace(x, y) {
 
 
 
-var isSpin = false;
-var isMini = false;
-var spinrecogmini = false;
+
+
 var movedowntwt = 0
 
 function showclear() {
@@ -134,128 +154,127 @@ function showclear() {
 
 }
 
-var lineARE
 
-var spinCheckCount = 0
-var miniSpinCount = 0
-var mini2SpinCount = 0
-var mini3SpinCount = 0
-var mini3REVSpinCount = 0
+
+
+
 //GARBAGE NEUTRALIZATION
 var booldetect = false
 
-function spinCheck() {
- isSpin = false;
- isMini = false;
- if (landed == true && moved == false) {
+Stack.prototype.spinCheck=function() {
+ var booldetect=false
+ var boolline= 0
+ this.isSpin = false;
+ this.isMini = false;
+ 
+ if (piece.landed == true && moved == false) {
   if (piece.index == 5) {
 
-   spinCheckCount = 0;
-   var spinCount = spinCheckCount
-   miniSpinCount = 0
-   mini2SpinCount = 0
-   mini3SpinCount = 0
-   mini3REVSpinCount = 0
+   this.spinCheckCount = 0;
+   var spinCount = this.spinCheckCount
+ this.miniSpinCount= 0
+   this.mini2SpinCount = 0
+   this.mini3SpinCount = 0
+   this.mini3REVSpinCount = 0
    for (var i = 0; i < pieces[5].spin.highX[0].length; i++) {
-    if ((testSpace(piece.x + pieces[5].spin.highX[piece.pos][i], piece.y + pieces[5].spin.highY[piece.pos][i])) == true && landed == true) {
+    if ((this.testSpace(piece.x + pieces[5].spin.highX[piece.pos][i], piece.y + pieces[5].spin.highY[piece.pos][i])) == true && piece.landed == true) {
 
-     miniSpinCount++;
+     this.miniSpinCount++;
 
     }
    }
 
    for (var i = 0; i < pieces[5].spin.lowX[0].length * pieces[5].spin.highY[0].length; i++) {
-    if ((!testSpace(piece.x + pieces[5].spin.lowY[i][piece.pos], piece.y - 1 + pieces[5].spin.highY[i][piece.pos])) && landed == true) {
+    if ((!this.testSpace(piece.x + pieces[5].spin.lowY[i][piece.pos], piece.y - 1 + pieces[5].spin.highY[i][piece.pos])) && piece.landed == true) {
 
-     mini3SpinCount += 0.25 + (mini2SpinCount * 0.5) + (miniSpinCount * spinCheckCount / 0.1);
+     this.mini3SpinCount += 0.25 + (this.mini2SpinCount * 0.5) + (this.miniSpinCount * this.spinCheckCount / 0.1);
 
     }
    }
    for (var i = 0; i < pieces[5].spin.lowX[0].length * pieces[5].spin.highY[0].length; i++) {
-    if ((!testSpace(piece.x + (pieces[5].spin.lowY[i][piece.pos] * -1), piece.y - 1 + pieces[5].spin.highY[i][piece.pos])) && landed == true) {
+    if ((!this.testSpace(piece.x + (pieces[5].spin.lowY[i][piece.pos] * -1), piece.y - 1 + pieces[5].spin.highY[i][piece.pos])) && piece.landed == true) {
 
-     mini3REVSpinCount += 0.25 + (mini2SpinCount * 0.5) + (miniSpinCount * spinCheckCount / 0.1);
+     this.mini3REVSpinCount += 0.25 + (this.mini2SpinCount * 0.5) + (this.miniSpinCount * this.spinCheckCount / 0.1);
 
     }
    }
    for (var i = 0; i < pieces[5].spin.highX[0].length * pieces[5].spin.lowY[0].length; i++) {
-    if ((testSpace(piece.x + pieces[5].spin.highX[i][piece.pos], piece.y + pieces[5].spin.lowY[i][piece.pos])) == false && landed == true) {
+    if ((this.testSpace(piece.x + pieces[5].spin.highX[i][piece.pos], piece.y + pieces[5].spin.lowY[i][piece.pos])) == false && piece.landed == true) {
 
-     mini2SpinCount += 0.5 + (miniSpinCount * .2) * (spinCheckCount / 0.2);
+     this.mini2SpinCount += 0.5 + (this.miniSpinCount * .2) * (this.spinCheckCount / 0.2);
 
     }
    }
 
    for (var i = 0; i < pieces[5].spin.lowX[0].length; i++) {
-    if ((testSpace(piece.x + pieces[5].spin.lowX[piece.pos][i], piece.y + pieces[5].spin.lowY[piece.pos][i])) == true && landed == true) {
-     spinCheckCount += 0.8
+    if ((this.testSpace(piece.x + pieces[5].spin.lowX[piece.pos][i], piece.y + pieces[5].spin.lowY[piece.pos][i])) == true && piece.landed == true) {
+     this.spinCheckCount += 0.8
 
      ;
 
 
     }
    }
-   if (miniSpinCount >= 1 && spinCheckCount >= 0.7 && spinX == piece.x && spinY == piece.y) {
-    if (miniSpinCount == 2) {
-     isSpin = true;
-     spinrecog = isSpin
-     isMini = false
-     spinrecogmini = isMini
+   if (this.miniSpinCount >= 1 && this.spinCheckCount >= 0.7 && piece.spinX == piece.x && piece.spinY == piece.y) {
+    if (this.miniSpinCount == 2) {
+     this.isSpin = true;
+     this.spinrecog = this.isSpin
+     this.isMini = false
+     this.spinrecogmini = this.isMini
 
 
     }
-    if (miniSpinCount == 1 && spinCheckCount >= 1) {
-     isSpin = false;
-     spinrecog = isSpin
-     isMini = true
-     spinrecogmini = isMini
+    if (this.miniSpinCount == 1 && this.spinCheckCount >= 1) {
+     this.isSpin = false;
+     this.spinrecog = this.isSpin
+     this.isMini = true
+     this.spinrecogmini = this.isMini
 
 
     }
    }
-   if (miniSpinCount == 1 && spinCheckCount >= 1 && mini2SpinCount <= 1 && spinX == piece.x && spinY == piece.y) {
-    isSpin = false;
-    spinrecog = isSpin
-    isMini = true
-    spinrecogmini = isMini
+   if (this.miniSpinCount == 1 && this.spinCheckCount >= 1 && this.mini2SpinCount <= 1 && piece.spinX == piece.x && piece.spinY == piece.y) {
+    this.isSpin = false;
+    this.spinrecog = this.isSpin
+    this.isMini = true
+    this.spinrecogmini = this.isMini
    }
 
   }
-  spinrecog = isSpin;
-  spinrecogmini = isMini;
-  if (boolline == 0 && sensespin == 1) {
-   isSpin = false;
-   spinrecog = false;
-   isMini = false;
-  }
+  this.spinrecog = this.isSpin;
+  this.spinrecogmini = this.isMini;
+  /*if (boolline == 0 && this.sensespin == 1) {
+   this.isSpin = false;
+   this.spinrecog = false;
+   this.isMini = false;
+  }*/
  } else {
-  isSpin = false
-  isMini = false
-  spinrecog = isSpin
-  spinrecogmini = isMini
+  this.isSpin = false
+  this.isMini = false
+  this.spinrecog = this.isSpin
+  this.spinrecogmini = this.isMini
  }
 }
 
-var varpiecedelayadd = 100
+
 var boolwarning;
 var whiletrigger;
 var minoesdetectwarning = 0
-var clearrows = []
-lineARE = 0
 Stack.prototype.addPiece = function(tetro) {
 
- try {
+ //try {
+ this.countervoice = false;
   whiletrigger = true
 
-  booldetect = false
-  var sensespin = 1
-  var enablespin = spinrecog;
-  var enablemini = spinrecogmini;
-  var once = false;
+ var booldetect = false
+  this.sensespin = 1
+  this.enablespin = this.spinrecog;
+  this.enablemini = this.spinrecogmini;
+  this.once = false;
+ var linesdetect=0
 
-
-  landed = true
-  spinCheck()
+piece.landed = true
+  this.spinCheck()
 
   // Add the piece to the stack.
   var range = [];
@@ -266,9 +285,9 @@ Stack.prototype.addPiece = function(tetro) {
     if (tetro[x][y]) {
      this.grid[x + piece.x][y + piece.y] = tetro[x][y];
      // Get column for finesse
-     if (!once || x + piece.x < column) {
+     if (!this.once || x + piece.x < column) {
       column = x + piece.x;
-      once = true;
+      this.once = true;
      }
      // Check which lines get modified
      if (range.indexOf(y + piece.y) === -1) {
@@ -296,7 +315,7 @@ Stack.prototype.addPiece = function(tetro) {
 
 
 
-  spinCheck();
+  this.spinCheck();
 
 
 
@@ -314,10 +333,7 @@ Stack.prototype.addPiece = function(tetro) {
 
      count++;
      if (count > 9) {
-      if (gametype == 116 || feverActivate||gametype==118) {
-       clearrows.push(row)
-
-      }
+      
 
      }
 
@@ -325,9 +341,13 @@ Stack.prototype.addPiece = function(tetro) {
    }
    // Clear the line. This basically just moves down the stack.
    // TODO Ponder during the day and see if there is a more elegant solution.
-   if (count > 9) { //varpiecedelay=frame+varpiecedelayadd+40
+   if (count > 9) { //this.varpiecedelay=frame+this.varpiecedelayadd+40
     if (settings.Bounciness !== 0) {
      movedowntwt += 40 * settings.Bounciness * 0.69
+    }
+    if (gametype == 116 || feverActivate || gametype == 118) {
+     this.clearrows.push(row)
+    
     }
     if (gametype == 113) {
 
@@ -352,7 +372,7 @@ Stack.prototype.addPiece = function(tetro) {
     if (gametype == 118) {
      masterParameter.activity.LINESREQ--
     }
-    var boolline = 1; // NOTE stats
+    boolline = 1; // NOTE stats
     renenable = 3;
     booldetect = true;
     if (gametype === 3) {
@@ -393,7 +413,7 @@ Stack.prototype.addPiece = function(tetro) {
   }
 
   var linis = this.grid;
-  //lini.innerHTML = clearrows.toString()
+  //lini.innerHTML = this.clearrows.toString()
   if (gametype !== 116 && !feverActivate) {
    linos = linis.toString().replace(/0/g, '').replace(/\,/g, '').length
   }
@@ -407,30 +427,30 @@ Stack.prototype.addPiece = function(tetro) {
 
   if (gametype == 0) statsLines.innerHTML = lineLimit - lines;
   if (gametype == 3) statsLines.innerHTML = digLines.length;
-  /*if (varpiecedelay <= frame)*/
+  /*if (this.varpiecedelay <= frame)*/
   this.draw();
   //if(feverActivate==false&&setting.Character[settings.Character]=='Agate Loran')gachatrises+=1
 
 
-  if (enablespin == true && linesdetect >= 1) {
-   while (isSpin == true) {
-    linespinrecog = true;
-    enablespin = false;
+  if (this.enablespin == true && linesdetect >= 1) {
+   while (this.isSpin == true) {
+    this.linespinrecog = true;
+    this.enablespin = false ;
     //console.log('spinenabled');
-    spinrecog = false;
-    isSpin = false;
-    isMini = false
+    this.spinrecog = false;
+    this.isSpin = false;
+    this.isMini = false
    }
 
   }; //GARBAGE TO FIELD
   if (gametype == 112 || gametype == 115) {
    if (linesdetect == 0 && !feverActivate) {
-    if (garbagenumber > 0) {
+    if (this.garbagenumber > 0) {
      playsfx('garbageup')
      if (gametype == 112)
       var randomHAR = Math.round(~~(rng.next() * 10));
-     while (garbagenumber > 0) {
-      garbagenumber--
+     while (this.garbagenumber > 0) {
+      this.garbagenumber--
 
       garbvoice++
       if (gametype == 115) {
@@ -458,25 +478,25 @@ Stack.prototype.addPiece = function(tetro) {
 
      }
     }
-    voicegarbage = true
+    this.voicegarbage = true
     this.draw()
    }
   }
 
   if (booldetect == true) {
-   while (isMini == true || enablemini == true) {
-    minispinrecog = true;
-    enablespin = false
-    enablemini = false;
+   while (this.isMini == true || this.enablemini == true) {
+    this.minispinrecog = true;
+    this.enablespin = false
+    this.enablemini = false;
     //console.log('spinenabled');
-    spinrecog = false;
-    isMini = false;
-    spinrecogmini = false
-    spinCheckCount = 0;
-    miniSpinCount = 0
+    this.spinrecog = false;
+    this.isMini = false;
+    this.spinrecogmini = false
+    this.spinCheckCount = 0;
+    this.miniSpinCount = 0
    }
-   spinCheckCount = 0;
-   miniSpinCount = 0
+   this.spinCheckCount = 0;
+   this.miniSpinCount = 0
   }
 
 
@@ -487,25 +507,25 @@ Stack.prototype.addPiece = function(tetro) {
 
 
 
-  if (enablespin == true || spinrecogmini == true && linesdetect == 0) {
-   while (enablespin == true) {
+  if (this.enablespin == true || this.spinrecogmini == true && linesdetect == 0) {
+   while (this.enablespin == true) {
     playsfx('spinzero');
 
-    spinrecog = false;
+    this.spinrecog = false;
     comset(0, true, false, false, false)
-    enablespin = false;
+    this.enablespin = false;
     stackscore += 400 * (gametype !== 118 ? marathonParameter.activity.LEVEL : masterParameter.activity.LEVEL)
     cleartext = TransText('tspin0')
     showclear();
    }
-   while (enablemini == true && minispinrecog == false) {
+   while (this.enablemini == true && this.minispinrecog == false) {
     playsfx('minizero');
 
-    spinrecogmini = false;
+    this.spinrecogmini = false;
     comset(0, false, true, false, false)
 
-    enablespin = false;
-    enablemini = false
+    this.enablespin = false;
+    this.enablemini = false
     stackscore += 100 * (gametype !== 118 ? marathonParameter.activity.LEVEL : masterParameter.activity.LEVEL)
     cleartext = TransText('mini0')
     showclear();
@@ -513,19 +533,19 @@ Stack.prototype.addPiece = function(tetro) {
   }
 
 
-  var spinenable = isSpin;
-  var spinmini = isMini;
-  var piececount = stack.grid.length
+  var spinenable = this.isSpin;
+  var spinmini = this.isMini;
+  var piececount = this.grid.length
   if (linesdetect == 0) {
-   while (voicegarbage == true) {
-    voicegarbage = false
+   while (this.voicegarbage == true) {
+    this.voicegarbage = false
     if (garbvoice >= 2 && garbvoice <= 3) {
      playvoice('damage1')
 
     }
     if (garbvoice >= 4) {
      playvoice('damage2')
-
+    rectAnimations.fire('damage')
     }
     garbvoice = 0
    }
@@ -534,15 +554,15 @@ Stack.prototype.addPiece = function(tetro) {
   if (gametype == 116) {
    if (frame < replayKeys.DAParams['timeframe'] + 101) {
     if (booldetect == false) {
-     while (varpiecedelay <= frame) {
+     while (this.varpiecedelay <= frame) {
       varseqvoice = 0
-      varpiecedelay = frame + 100
+      this.varpiecedelay = frame + 100
       piece.y = -505
       failsDA++
       if (failsDA >= replayKeys.DAParams['maxmiss']) {
        failToClear = false
        endgame(TransText('DAfailed'), 9, true,'lose')
-       varpiecedelay = -1
+       this.varpiecedelay = -1
        playvoice('fail')
        IRScount = 0
        break
@@ -551,7 +571,7 @@ Stack.prototype.addPiece = function(tetro) {
       }
       for (var y = 0; y < 22; y++)
        for (var x = 0; x < 10; x++) {
-        if (stack.grid[x][y]) stack.grid[x][y] = 8;
+        if (this.grid[x][y]) this.grid[x][y] = 8;
        }
       stack.draw()
      }
@@ -568,7 +588,7 @@ Stack.prototype.addPiece = function(tetro) {
     failToClear = false
     playsfx('timeup')
     ClearSuccess = false
-    varpiecedelay = -9
+    this.varpiecedelay = -9
     timewarning = false
     if (requirelines <= 0) {
      successesDA++
@@ -584,13 +604,13 @@ Stack.prototype.addPiece = function(tetro) {
   if (feverActivate) {
    if (frame < feverTime) {
     if (booldetect == false) {
-     while (varpiecedelay <= frame) {
+     while (this.varpiecedelay <= frame) {
       varseqvoice = 0
-      varpiecedelay = frame + 100
+      this.varpiecedelay = frame + 100
       failToClear = true
       for (var y = 0; y < 22; y++)
        for (var x = 0; x < 10; x++) {
-        if (stack.grid[x][y]) stack.grid[x][y] = 8;
+        if (this.grid[x][y]) this.grid[x][y] = 8;
        }
       stack.draw()
      }
@@ -600,7 +620,7 @@ Stack.prototype.addPiece = function(tetro) {
     	
 
     		playvoice('fail')
-    		varpiecedelay=frame+50
+    		this.varpiecedelay=frame+50
     		
     }
     	}*/
@@ -609,7 +629,7 @@ Stack.prototype.addPiece = function(tetro) {
     failToClear = false
     playsfx('timeup')
     ClearSuccess = false
-    varpiecedelay = frame + 5
+    this.varpiecedelay = frame + 5
     feverAble = true
     //if(setting.Character[settings.Character]=='EricLenovo')for(let i=0;i=7200,gameState==0;i++)gameLoop();
 
@@ -623,7 +643,7 @@ Stack.prototype.addPiece = function(tetro) {
 
   if (gametype == 118) {
    piece.y = -89
-   varpiecedelay=frame+ARERestrict(30,masterParameter.activity.LEVEL)
+   this.varpiecedelay=frame+ARERestrict(30,masterParameter.activity.LEVEL)
    dropscore=0
   }
 
@@ -632,7 +652,11 @@ Stack.prototype.addPiece = function(tetro) {
   while (booldetect) {
 
 
-
+if (gametype == 118) {
+ piece.y = -89
+ this.varpiecedelay = frame + ARERestrict(30, masterParameter.activity.LEVEL)
+ dropscore = 0
+}
 
    if (linos <= 0 && gametype !== 116 && !feverActivate) {
     playsfx('perfectclear');
@@ -641,18 +665,18 @@ Stack.prototype.addPiece = function(tetro) {
     allclearshow()
     linesend = 10;
    };
-   clear_line(boolline, linesdetect, linespinrecog, minispinrecog, perfectbool, (gametype !== 118 ? marathonParameter.activity.LEVEL : masterParameter.activity.LEVEL))
+   this.clear_line(boolline, linesdetect, this.linespinrecog, this.minispinrecog, perfectbool, (gametype !== 118 ? marathonParameter.activity.LEVEL : masterParameter.activity.LEVEL))
 
-   comset(linesdetect, enablespin || linespinrecog, enablemini || minispinrecog, perfectbool, b2b >= 1)
+   comset(linesdetect, this.enablespin || this.linespinrecog, this.enablemini || this.minispinrecog, perfectbool, this.b2b >= 1)
 
    if (!feverActivate && gametype !== 116 && gachatrises >= gachatrismax) {
-    varpiecedelay = frame + 100
+    this.varpiecedelay = frame + 100
     feverAble = true
    }
    //frenzy
 
    if (requirelines > 0 && gametype == 116 || requirelines > 0 && feverActivate) {
-    varpiecedelay = frame + 30
+    this.varpiecedelay = frame + 30
     piece.y = -28
 
 
@@ -664,7 +688,7 @@ Stack.prototype.addPiece = function(tetro) {
       stackCtx.fillStyle = `rgba(255,255,255,${(((10-y)/10))})`
 
       for (var l = 0; l < 10; l++) {
-       for (let i of clearrows) {
+       for (let i of this.clearrows) {
         stackCtx.clearRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
 
         stackCtx.fillRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
@@ -679,12 +703,12 @@ Stack.prototype.addPiece = function(tetro) {
     for (var Y = 0; Y < pieces[piece.index].tetro.length; Y++)
      for (var color = 0; color < pieces[piece.index].tetro[Y].length; color++)
       if (pieces[piece.index].tetro[color][Y] !== 0) $("#fevercolor").css('background-color', colorDA[pieces[piece.index].tetro[color][Y]][0])
-    b2b = -1
+    this.b2b = -1
     varseqvoice++
     if (requirelines <= 0) {
      if (frame < replayKeys.DAParams['timeframe'] + 101)
-      while (varpiecedelay < frame) {
-       varpiecedelay = frame + 100
+      while (this.varpiecedelay < frame) {
+       this.varpiecedelay = frame + 100
        ClearSuccess = true
        for (var g = 0, y = 0; g < 10; g++) {
         let j = g * 40
@@ -693,7 +717,7 @@ Stack.prototype.addPiece = function(tetro) {
          stackCtx.fillStyle = `rgba(0,255,0,${(((10-y)/10))})`
 
          for (var l = 0; l < 10; l++) {
-          for (let i of clearrows) {
+          for (let i of this.clearrows) {
            stackCtx.clearRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
 
            stackCtx.fillRect((l) * cellSize, (i) * cellSize - (2 * cellSize), cellSize, cellSize)
@@ -712,13 +736,13 @@ Stack.prototype.addPiece = function(tetro) {
     for (var Y = 0; Y < pieces[piece.index].tetro.length; Y++)
      for (var color = 0; color < pieces[piece.index].tetro[Y].length; color++)
       if (pieces[piece.index].tetro[color][Y] !== 0) $("#fevercolor").css('background-color', colorDA[pieces[piece.index].tetro[color][Y]][0])
-    b2b = -1
+    this.b2b = -1
     // $("bgFEVER").css("animation","feverrotate 1s infinite linear")
     varseqvoice++
     if (requirelines <= 0) {
      if (frame < feverTime) {
-      while (varpiecedelay < frame) {
-       varpiecedelay = frame + 100
+      while (this.varpiecedelay < frame) {
+       this.varpiecedelay = frame + 100
        ClearSuccess = true
       }
      } else {}
@@ -738,11 +762,15 @@ Stack.prototype.addPiece = function(tetro) {
      if (varseqvoice >= 5)
       playvoice('initv5')
     } else {
-     if (frenzydifficulty >= 0 && frenzydifficulty < 4)
+     if (frenzydifficulty >= 0 && frenzydifficulty < 4){
       playvoice('spellv1')
-     if (frenzydifficulty >= 4 && frenzydifficulty < 7)
+      rectAnimations.fire('spell1')
+     }
+     if (frenzydifficulty >= 4 && frenzydifficulty < 7){
       playvoice('spellv2')
-     if (frenzydifficulty >= 7 && frenzydifficulty < 10)
+      rectAnimations.fire('spell2')
+     }
+     if (frenzydifficulty >= 7 && frenzydifficulty < 10){
       for (var reee = 0; reee < 2; reee++) {
        function repeatspell5() {
         playvoice('spellv3')
@@ -751,7 +779,9 @@ Stack.prototype.addPiece = function(tetro) {
        let reee2 = reee * 200
        setTimeout(repeatspell5, reee2)
       }
-     if (frenzydifficulty >= 10 && frenzydifficulty < 13)
+      rectAnimations.fire('spell3')
+     }
+     if (frenzydifficulty >= 10 && frenzydifficulty < 13){
       for (var reee = 0; reee < 3; reee++) {
        function repeatspell5() {
         playvoice('spellv4')
@@ -760,7 +790,9 @@ Stack.prototype.addPiece = function(tetro) {
        let reee2 = reee * 100
        setTimeout(repeatspell5, reee2)
       }
-     if (frenzydifficulty >= 13)
+      rectAnimations.fire('spell4')
+     }
+     if (frenzydifficulty >= 13){
       for (var reee = 0; reee < 4; reee++) {
        function repeatspell5() {
         playvoice('spellv5')
@@ -768,19 +800,21 @@ Stack.prototype.addPiece = function(tetro) {
        let reee2 = reee * 100
        setTimeout(repeatspell5, reee2)
       }
+      rectAnimations.fire('spell5')
+    }
     }
    }
 
-   linesdetect = 0
+   var linesdetect = 0
 
-   boolline = 0
-   linespinrecog = false;
-   minispinrecog = false;
-   while (minispinrecog == true) {
-    linespinrecog = false;
-    minispinrecog = false;
+   var boolline = 0
+   this.linespinrecog = false;
+   this.minispinrecog = false;
+   while (this.minispinrecog == true) {
+    this.linespinrecog = false;
+    this.minispinrecog = false;
     enablemini = false
-    isMini = false
+    this.isMini = false
    }
    booldetect = false
    perfectbool = false
@@ -790,45 +824,45 @@ Stack.prototype.addPiece = function(tetro) {
 
 
   if ([renenable >= 0.5] && boolline == 0) {
-   if (varren >= 1) {
+   if (this.varren >= 1) {
     if (gametype !== 116 && !feverActivate)
-     comboren(varren)
-    stackscore += 50 * varren * (gametype !== 118 ? marathonParameter.activity.LEVEL : masterParameter.activity.LEVEL)
-    cleartextren = `${(varren < 10 ? '0' : '')}${varren} ${TransText('renInt')}`
-    /*	cleartextren =varren<27 ? `${(function(){
+     comboren(this.varren)
+    stackscore += 50 * this.varren * (gametype !== 118 ? marathonParameter.activity.LEVEL : masterParameter.activity.LEVEL)
+    cleartextren = `${(this.varren < 10 ? '0' : '')}${this.varren} ${TransText('renInt')}`
+    /*	cleartextren =this.varren<27 ? `${(function(){
     	 var a='ABCDEFGHIJKLMNOPQRSTUVWXYZ' //25
     	 var ji=[]
     	 for (var i=0;i<27;i++){
     	  ji[i]=a.charAt(i-1)
     	 }
     	 return ji
-    	 })()[varren]} REN` : varren/**/
+    	 })()[this.varren]} REN` : this.varren/**/
 
 
 
     // updating cleartextren 
     /*
-    if(varren < 27)
-        cleartextren = `${toCapitalLetter(varren - 1)} REN`;
+    if(this.varren < 27)
+        cleartextren = `${toCapitalLetter(this.varren - 1)} REN`;
     else
-        cleartextren = varren; 
+        cleartextren = this.varren; 
     */
 
    } else cleartextren = '';
   };
   if (renenable <= 0.4) {
-   if (varren >= 2) {
+   if (this.varren >= 2) {
     playsfx('renend');
 
    }
    cleartextren = '';
-   varren = -1
+   this.varren = -1
 
   };
   //GAMETYPE 113 IS REN C4W MODE
   if (gametype == 113) {
-   while (varren > MAX_REN) {
-    MAX_REN = varren
+   while (this.varren > MAX_REN) {
+    MAX_REN = this.varren
     statsLines.innerHTML = MAX_REN;
    }
   }
@@ -888,84 +922,90 @@ flipgridcreate([
 
   if (gametype !== 116 && boolline == 0 && !feverActivate) {
 
-   if (linevoice >= 5) {
-    voicestrength = 5;
+   if (this.linevoice >= 5) {
+    this.voicestrength = 5;
    };
-   if (linevoice == 4) {
-    voicestrength = 4;
+   if (this.linevoice == 4) {
+    this.voicestrength = 4;
    };
-   if (linevoice == 1) {
-    voicestrength = 0
+   if (this.linevoice == 1) {
+    this.voicestrength = 0
    };
-   if (linevoice == 2) {
-    voicestrength = 1
+   if (this.linevoice == 2) {
+    this.voicestrength = 1
    };
-   if (linevoice == 3) {
-    voicestrength = 2
+   if (this.linevoice == 3) {
+    this.voicestrength = 2
    };
 
 
-   if (varren <= 0) {
-    renstrengthinit = 0
+   if (this.varren <= 0) {
+    this.renstrengthinit = 0
    };
-   if (varren == 1) {
-    renstrengthinit = 1
+   if (this.varren == 1) {
+    this.renstrengthinit = 1
    };
-   if (varren >= 2 && varren <= 3) {
-    voicestrength += 1
+   if (this.varren >= 2 && this.varren <= 3) {
+    this.voicestrength += 1
    };
-   if (varren >= 4 && varren <= 5) {
-    voicestrength += 2
+   if (this.varren >= 4 && this.varren <= 5) {
+    this.voicestrength += 2
    };
-   if (varren >= 6 && varren <= 7) {
-    voicestrength += 3
+   if (this.varren >= 6 && this.varren <= 7) {
+    this.voicestrength += 3
    };
-   if (varren >= 8 && varren <= 10) {
-    voicestrength += 4
+   if (this.varren >= 8 && this.varren <= 10) {
+    this.voicestrength += 4
    };
-   if (varren >= 11) {
-    voicestrength += 5
+   if (this.varren >= 11) {
+    this.voicestrength += 5
    };
-   if (b2b >= 1) {
-    voicestrength += 1
+   if (this.b2b >= 1) {
+    this.voicestrength += 1
    };
    //voices
-   if (voicestrength == 0) {
-    if (renstrengthinit == 0) {
+   if (this.voicestrength == 0) {
+    if (this.renstrengthinit == 0) {
      playvoice('initv1');
-
+     
     };
-    if (renstrengthinit == 1) {
+    if (this.renstrengthinit == 1) {
      playvoice('initv2');
 
     };
    };
-   if (voicestrength == 1) {
+   if (this.countervoice) {
+    playvoice('counter')
+    rectAnimations.fire('counter')
+   }else{
+   if (this.voicestrength == 1) {
     playvoice('spellv1')
-
+    rectAnimations.fire('spell1')
    };
-   if (voicestrength == 2) {
+   if (this.voicestrength == 2) {
     playvoice('spellv2')
-
+    rectAnimations.fire('spell2')
    };
-   if (voicestrength == 3) {
+   if (this.voicestrength == 3) {
     playvoice('spellv3')
-
+   rectAnimations.fire('spell3')
    };
-   if (voicestrength == 4) {
-    if (gtrisenable && linevoice == 4 && gtrisinput)
+   if (this.voicestrength == 4) {
+    rectAnimations.fire('spell4')
+    if (this.gtrisenable && this.linevoice == 4 && this.gtrisinput)
      playvoice('gachatris')
-    else if (gtrisenableplus && linevoice >= 5 && gtrisinput)
+    else if (this.gtrisenableplus && this.linevoice >= 5 && this.gtrisinput)
      playvoice('gachatrisplus')
     else
      playvoice('spellv4')
 
    };
-   if (voicestrength >= 5) {
-    if (perfectboolvoice == false) {
-     if (gtrisenable && linevoice == 4 && gtrisinput)
+   if (this.voicestrength >= 5) {
+    rectAnimations.fire('spell5')
+    if (this.perfectboolvoice == false) {
+     if (this.gtrisenable && this.linevoice == 4 && this.gtrisinput)
       playvoice('gachatris')
-     else if (gtrisenableplus && linevoice >= 5 && gtrisinput)
+     else if (this.gtrisenableplus && this.linevoice >= 5 && this.gtrisinput)
       playvoice('gachatrisplus')
      else
       playvoice('spellv5')
@@ -973,9 +1013,9 @@ flipgridcreate([
 
     } else {
 
-     while (perfectboolvoice == true) {
-      perfectboolvoice = false;
-      if (gtrisenable && gtrisinput) {
+     while (this.perfectboolvoice == true) {
+      this.perfectboolvoice = false;
+      if (this.gtrisenable && this.gtrisinput) {
        function repeatspell5() {
         playvoice('gachatris')
 
@@ -997,11 +1037,13 @@ flipgridcreate([
        }
      }
     }
-   };
+   }
+   }
   }
-  enablespin = false
-  linespinrecog = false
-  isSpin = false
+ // lini.innerHTML=this.voicestrength
+  this.enablespin = false
+  this.linespinrecog = false
+  this.isSpin = false
   if (preview.grabBag.length == 0) endgame(TransText('noqueue'), 5, true)
 
   /*	function scorecheck() {
@@ -1022,11 +1064,464 @@ flipgridcreate([
     endgame(TransText('digfinish'), 1,void 0,'win')
    }
   }
- } catch (e) {
-  var wt = 'error NOPE '
-  alert(e)
+ }
+
+Stack.prototype.clear_line = function(boollinevv, LNSDTCT, LSR, MSR, PC, Multiplier) {
+ if (boollinevv !== 0) {
+  this.varren++
+ }
+ if ((!MSR&&!LSR)&&(LNSDTCT<=3)&&this.b2b>=3)playsfx('b2b_end')
+
+ if (LNSDTCT >= 4) {
+  this.gtrisinput = true
+  gachatrises += 0
+ } else {
+  this.gtrisinput = false
+ }
+
+ if (boollinevv == 1 && LNSDTCT === 1) {
+  //SINGLE
+  // 10
+  //GAMETYPE 111 IS TSPIN DOUBLE ONLY MODE
+  // IF THIS LINE CLEAR IS MADE IN GAMETYPE 111,
+  // FAILTSD GOES TRUE AND CAUSES THE GAME TO END
+  if (gametype == 111) {
+   failTSD = true
+  }
+  /*LSR MEANS NORMAL LINE SPIN RECOGNITION IF
+  REGULAR, 3-CORNER T-SPINS ARE RECOGNIZED, MSR MEANS
+  MINI SPIN RECOGNITION IF MINI, 2-CORNER T-SPINS
+  ARE RECOGNIZED. IF LSR AND MSR === FALSE
+  (if (!(LSR) && !(MSR))), THEN IT'S A REGULAR
+  LINE CLEAR*/
+  if (LSR === false && MSR === false) {
+   //REGULAR SINGLE
+   playsfx('oneline');
+   this.b2b = -1
+   /*this.varren++*/
+   ;
+   stackscore += 100 * Multiplier;
+
+   this.linevoice = LNSDTCT;
+   linesend = 0;
+   cleartext = TransText('single')
+  }
+  else /*if (LSR === true || MSR === true)*/ {
+   if (LSR == true && MSR == false) {
+    /*IF LSR IS ONLY TRUE, IT IS DECLARED AS
+    A REGULAR T-SPIN SINGLE*/
+    this.b2b++
+    if(this.b2b>=1){
+    playsfx('b2bonespin');
+    }
+    else playsfx('onespin');
+    cleartext = TransText('tspin1')
+    /*this.varren++*/
+    ;this.linevoice=3
+    
+    if (this.b2b < 1)
+     stackscore += 800 * Multiplier;;
+    linesend = 2
+    
+    //in case a back-to-back clear is achieved,
+    //every difficult line clear, TSpins and quads,
+    //adds up by half of their score as a bonus
+    if (this.b2b >= 1) {
+     stackscore += 1200 * Multiplier
+     //    playsfx('this.b2bs');;
+     //   cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+    };
+   }
+   else if (LSR == false && MSR == true) {
+    /*IF MSR IS TRUE, IT'S DECLARED AS A 
+    MINI T-SPIN*/
+    this.b2b++
+    if (this.b2b >= 1) {
+     playsfx('b2bonemini');
+    }
+    else
+    playsfx('onemini');
+    cleartext = TransText('mini1')
+    boollinevv = 0;
+    /*this.varren++*/
+    ;
+   
+    if (this.b2b < 1)
+     stackscore += 200 * Multiplier
+
+    this.linevoice = LNSDTCT;
+    linesend = 0
+    if (this.b2b >= 1) {
+     stackscore += 300 * Multiplier
+     //   playsfx('this.b2bs');;
+     //   cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+    };
+
+   }
+  }
+ }
+ if (boollinevv == 1 && LNSDTCT === 2) {
+  // 20
+  if (LSR === false && MSR === false) {
+   if (gametype == 111) {
+    failTSD = true
+   }
+   this.b2b = -1
+   if (this.b2b < 1)
+    stackscore += 300 * Multiplier
+   playsfx('twoline');
+
+
+   /*this.varren++*/
+   ;
+
+   this.linevoice = LNSDTCT;
+   linesend = 2
+
+   cleartext = TransText('double')
+  }
+  else {
+   if (gametype == 111) {
+    failTSD = false
+    TSD++
+    statsLines.innerHTML = TSD
+   }
+   this.b2b++
+   if (this.b2b < 1)
+    stackscore += 1200 * Multiplier
+    if (this.b2b >= 1) {
+     playsfx('b2btwospin');
+    }
+    else
+   playsfx('twospin');
+
+
+
+   /*this.varren++*/
+   ;
+
+
+
+   this.linevoice = 4;
+   linesend = 4
+
+   cleartext = TransText('tspin2')
+   if (this.b2b >= 1) {
+    stackscore += 1800 * Multiplier
+    //  playsfx('this.b2bs');;
+    // cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+   };
+
+  }
+ };
+ if (boollinevv == 1 && LNSDTCT === 3) {
+  // 30
+  if (gametype == 111) {
+   failTSD = true
+  }
+  if (LSR === false && MSR === false) {
+   playsfx('threeline');
+   this.b2b = -1
+   if (this.b2b < 1)
+    /*this.varren++*/
+   ;
+   stackscore += 500 * Multiplier
+
+   this.linevoice = LNSDTCT;
+   linesend = 3
+
+   cleartext = TransText('triple')
+  } else {
+if (this.b2b >= 1) {
+ playsfx('b2bthreespin');
+}
+else
+   playsfx('threespin');
+   this.b2b++
+   if (this.b2b < 1)
+    stackscore += 1600 * Multiplier
+
+   /*this.varren++*/
+   ;
+
+   ;
+   this.linevoice = 6;
+   linesend = 6;;
+
+   cleartext = TransText('tspin3')
+   if (this.b2b >= 1) {
+    stackscore += 2400 * Multiplier
+
+
+    //   playsfx('this.b2bs');;
+    //  cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+   };
+
+  }
+ };
+ if (boollinevv == 1 && LNSDTCT == 4) {
+  // 40
+  if (gametype == 111) {
+
+   failTSD = true
+  }
+  this.b2b++
+  if (this.b2b < 1)
+   stackscore += 800 * Multiplier
+   if (this.b2b >= 1) {
+    playsfx('b2bfourline');
+   }
+   else
+  playsfx('fourline');
+
+
+
+  /*this.varren++*/
+  ;
+
+
+
+  this.linevoice = LNSDTCT;
+  linesend = 4
+
+  if (settings.Character !== 0) {
+   cleartext = 'Gachatris'
+  } else {
+   cleartext = TransText('quad')
+  }
+  if (this.b2b >= 1) {
+
+   stackscore += 1200 * Multiplier;
+   //  playsfx('this.b2bs');
+
+
+   //  cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+  }
+ };
+ if (boollinevv == 1 && LNSDTCT >= 5) {
+  // 10 * LNSDTCT
+  if (gametype == 111) {
+
+   failTSD = true
+  }
+  this.b2b++
+  if (this.b2b < 1)
+   stackscore += 1000
+  playsfx('fourline');
+
+
+
+  /*this.varren++*/
+  ;
+
+
+
+  this.linevoice = LNSDTCT;
+  linesend = 4
+
+  if (settings.Character !== 0) {
+   cleartext = 'Gachatris Plus'
+  } else {
+   cleartext = TransText('quadplus')
+  }
+  if (this.b2b >= 1) {
+
+   stackscore += 500;
+   //  playsfx('this.b2bs');
+
+
+   //  cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+  }
+ };
+ if (this.b2b > 0) {
+  cleartextpc = (this.b2b!==1?
+   `${TransText('b2b')} X${this.b2b}`:
+ TransText('b2b'))
+ 
+ 
+  playsfx((function(b){
+   if(b<3) return 'b2bs';
+   if(b>=3&&b<8) return 'b2bs2';
+   if(b>=8&&b<24) return 'b2bs3';
+   if(b>=24&&b<63) return 'b2bs4';
+   if(b>=63) return 'b2bs5'
+  })(this.b2b))
+  //tetr.io style b2b sounding
+  if(this.b2b==3){playsfx('b2b1')}
+  if(this.b2b==8){playsfx('b2b2')}
+  if(this.b2b==24){playsfx('b2b3')}
+  if(this.b2b==63){playsfx('b2b4')}
+  
+  if(this.b2b==3||this.b2b==8||this.b2b==24||this.b2b==63){
+   $d('clearstatspc').style.opacity=1
+   $d('clearstatspc').style.animation='B2Bblink 0.3s infinite linear'
+   setTimeout(function(){
+   $d('clearstatspc').style.opacity=1;
+   $d('clearstatspc').style.animation='clear'
+}, 700)
+  }
+  
+  
+  
+ } else {
+  cleartextpc = ''
+ }
+ showclear()
+
+
+ if (gametype == 111) {
+
+  while (failTSD == true) {
+
+   endgame(TransText('nottsd'), 9, true, 'lose')
+
+   failTSD = false;
+  }
+ }
+ if (gametype == 115)
+  if (frame in replayKeys.garbagesend)
+   for (var i = 0; i < replayKeys.garbagesend[frame]; i++) {
+
+    if ((this.garbagenumber <= 0)) {
+     if (garbrowcount > 0) {
+      for (var y = 22; y >= -1; y--) {
+       if (garbrowcount == 0) break
+
+       for (var x = 0; x < 10; x++) {
+        if (!feverActivate)
+        {
+         this.grid[x][22] = 0
+
+         this.grid[x][y] = this.grid[x][y - 1];
+        }
+        else {
+         StackTemp[x][22] = 0
+
+         StackTemp[x][y] = StackTemp[x][y - 1];
+        }
+       }
+      }
+      this.draw()
+      garbrowcount--
+     } else { this.garbagenumber-- } {}
+
+    } else { this.garbagenumber-- }
+   }
+
+
+
+
+ if (gametype == 112 || (gametype == 115 && watchingReplay == false)) {
+  if (PC) {
+   this.neutralline = 10
+  } else {
+
+   if (linesend == 6) {
+    this.neutralline = 6;
+   };
+   if (linesend == 4) {
+    this.neutralline = 4;
+   };
+   if (linesend == 3) {
+    this.neutralline = 2
+   }
+   if (linesend <= 1) {
+    this.neutralline = 0
+   };
+   if (linesend == 2) {
+    this.neutralline = 1
+   };
+   if (linesend == 3) {
+    this.neutralline = 2
+   }
+  }
+  if (feverActivate && frame > feverTime) {
+   this.neutralline += 140
+  }
+
+
+
+
+  if (this.varren >= 2 && this.varren <= 3) {
+   this.neutralline += 1
+  };
+  if (this.varren >= 4 && this.varren <= 5) {
+   this.neutralline += 2
+  };
+  if (this.varren >= 6 && this.varren <= 7) {
+   this.neutralline += 3
+  };
+  if (this.varren >= 8 && this.varren <= 10) {
+   this.neutralline += 4
+  };
+  if (this.varren >= 11) {
+   this.neutralline += 5
+  };
+  if (this.b2b >= 1) {
+   this.neutralline += 1
+  };
+  
+  if(this.neutralline>this.garbagenumber&&!PC&&LNSDTCT>=3&&this.garbagenumber>0){
+   this.countervoice=true
+  }
+  
+  if (watchingReplay == false && gametype == 115)
+   replayKeys.garbagesend[frame] = 0
+  while (this.neutralline > 0) {
+   if (this.garbagenumber > 0)
+    this.garbagenumber--
+
+   if (!watchingReplay && gametype == 115) { replayKeys.garbagesend[frame]++ }
+
+   /*     if (gametype==115){
+        if (this.garbagenumber<0) {
+                
+                } 
+                
+        }*/
+   this.neutralline--
+
+  }
+
+
+
+
+
+
+  /*if (garbrowcount>0){
+                     for (var y = 22; y >= -1; y--) {
+                       if (garbrowcount==0) break
+                         for (var x = 0; x < 10; x++) {
+                             {
+                             }
+                             this.grid[x][y] = this.grid[x][y - 1];
+                         }
+                     }
+                     this.draw()
+                     garbrowcount--
+                 } 
+               else */
+
+
+
+
+
+
+ }
+
+
+
+ MSR = false
+ this.isMini = false;
+ this.isSpin = false
+ if (PC) {
+  this.perfectboolvoice = true;
+  this.linevoice = 10;
  }
 }
+
+
+
 /**
  * Draws the stack.
  */

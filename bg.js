@@ -25,7 +25,7 @@ var bgCanvas = document.getElementById('bg');
 var vidAr = bgCanvas.offsetWidth / bgCanvas.offsetHeight;
 function bgResize() {
   var ar = window.innerWidth / window.innerHeight;
-
+  
   if (ar > vidAr) {
     bgCanvas.style.height = 'auto';
     bgCanvas.style.width = window.innerWidth + 'px';

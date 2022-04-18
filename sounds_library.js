@@ -146,7 +146,7 @@ var feverActivate = false
 var feverAble = false
 var feverTimeEnable = false
 var feverTime = 0
-var B2BTemp = -1
+
 
 function comset(line, spin, mini, pc, b2b) {
  if (pc === true) {
@@ -258,7 +258,7 @@ var fieldimg3 = new Image()
 var fieldimg2 = new Image()
 var feverChar = new Image()
 
-function characterinit() {
+function characterinit(NEW) {
  /*
  for (var UNLOAD in comvoice)
  if(UNLOAD in comvoice) comvoice[UNLOAD].unload()
@@ -314,8 +314,8 @@ function characterinit() {
 
  var settingchar = settings.Character.toString()
  characters_folder;
- if (settingchar == '0') { characters_folder = NaN }
- else characters_folder = setting.Character[settings.Character];
+ if (currentCharacter == '0') { characters_folder = NaN }
+ else characters_folder = setting.Character[currentCharacter];
 
  fieldwarningload = 'characters/'.concat(characters_folder, '/fieldwarning.png')
  fieldload = 'characters/'.concat(characters_folder, '/field.png')
@@ -369,7 +369,15 @@ function characterinit() {
   document.getElementById('divFEVERI').style.opacity = 1
   document.getElementById('divFEVER').style.visibility = "visible";
  }
-
+ rectAnimations.loadRA=true
+ var eee = ['spell1', 'spell2', 'spell3', 'spell4', 'spell5', 'counter', 'damage']
+ for (let i of eee) {
+  $d(i).src=`characters/${characters_folder}/rectAnimations/${i}.png`
+  rectAnimations.preload[i]=new Image()
+  rectAnimations.preload[i].src=`characters/${characters_folder}/rectAnimations/${i}.png`
+  rectAnimations.preload[i].onloaderror=()=>{rectAnimations.loadRA=fail}
+ }
+ rectAnimations.preloader()
 
 
  if (feverenable) {
@@ -392,6 +400,7 @@ function characterinit() {
   voiceset['success'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/frenzysuccess.ogg') });
   voiceset['fail'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/frenzyfail.ogg') });
   voiceset['frenzystart'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/frenzy.ogg') });
+  voiceset['counter'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/counterspell.ogg') });
 
   voiceset['spellv1'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/spell1.ogg') });
   voiceset['spellv2'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/spell2.ogg') });
@@ -406,10 +415,10 @@ function characterinit() {
  } catch (e) {
   // alert(e)
  }
- voiceset['gachatris'].once('loaderror', function() { gtrisenable = false })
- voiceset['gachatris'].once('load', function() { gtrisenable = true })
- voiceset['gachatrisplus'].once('loaderror', function() { gtrisenableplus = false })
- voiceset['gachatrisplus'].once('load', function() { gtrisenableplus = true })
+ voiceset['gachatris'].once('loaderror', function() { NEW.gtrisenable = false })
+ voiceset['gachatris'].once('load', function() { NEW.gtrisenable = true })
+ voiceset['gachatrisplus'].once('loaderror', function() { NEW.gtrisenableplus = false })
+ voiceset['gachatrisplus'].once('load', function() { NEW.gtrisenableplus = true })
 }
 }
 
@@ -423,10 +432,9 @@ function warningalarm() {
  if (linosbool && !paused && gameState == 0 && gametype !== 113 &&gametype!==116 || timewarning) {
 
   if (!alertsoundactive) {
-   sfxRETURN('alertsoundslow').off('end', function() {
-    stopsfx('alertsoundslow')
-   }) /**/
+   
    playsfx('alertsoundslow');
+   
 
    alertsoundactive = true;
    document.getElementById('b').style.border = "0.2em solid #f00"
@@ -465,9 +473,10 @@ function warningalarm() {
      document.getElementById('bgFIELD').style = "width:100%;height:100%"
     }
 
-    sfxRETURN('alertsoundslow').once('end', function() {
-     stopsfx('alertsoundslow')
-    }) /**/
+  //  while(sfxRETURN('alertsoundslow').playing())
+     
+     sfxRETURN('alertsoundslow').fade(1,0,500)
+     /**/
    }
 
   }
@@ -522,436 +531,6 @@ var gachatrismax = 40
 
 
 
-
-function clear_line(boollinevv, LNSDTCT, LSR, MSR, PC, Multiplier) {
- if (boollinevv !== 0) {
-  varren++
- }
- if ((!MSR&&!LSR)&&(LNSDTCT<=3)&&b2b>=3)playsfx('b2b_end')
-
- if (LNSDTCT >= 4) {
-  gtrisinput = true
-  gachatrises += 0
- } else {
-  gtrisinput = false
- }
-
- if (boollinevv == 1 && LNSDTCT === 1) {
-  //SINGLE
-  minoes -= 10
-  //GAMETYPE 111 IS TSPIN DOUBLE ONLY MODE
-  // IF THIS LINE CLEAR IS MADE IN GAMETYPE 111,
-  // FAILTSD GOES TRUE AND CAUSES THE GAME TO END
-  if (gametype == 111) {
-   failTSD = true
-  }
-  /*LSR MEANS NORMAL LINE SPIN RECOGNITION IF
-  REGULAR, 3-CORNER T-SPINS ARE RECOGNIZED, MSR MEANS
-  MINI SPIN RECOGNITION IF MINI, 2-CORNER T-SPINS
-  ARE RECOGNIZED. IF LSR AND MSR === FALSE
-  (if (!(LSR) && !(MSR))), THEN IT'S A REGULAR
-  LINE CLEAR*/
-  if (LSR === false && MSR === false) {
-   //REGULAR SINGLE
-   playsfx('oneline');
-   b2b = -1
-   /*varren++*/
-   ;
-   stackscore += 100 * Multiplier;
-
-   linevoice = LNSDTCT;
-   linesend = 0;
-   cleartext = TransText('single')
-  }
-  else /*if (LSR === true || MSR === true)*/ {
-   if (LSR == true && MSR == false) {
-    /*IF LSR IS ONLY TRUE, IT IS DECLARED AS
-    A REGULAR T-SPIN SINGLE*/
-    playsfx('onespin');
-    cleartext = TransText('tspin1')
-    /*varren++*/
-    ;
-    b2b++
-    if (b2b < 1)
-     stackscore += 800 * Multiplier;;
-    linevoice = 3;
-    linesend = 3
-    //in case a back-to-back clear is achieved,
-    //every difficult line clear, TSpins and quads,
-    //adds up by half of their score as a bonus
-    if (b2b >= 1) {
-     stackscore += 1200 * Multiplier
-     //    playsfx('b2bs');;
-     //   cleartext += '<br/>Back-to-back X'.concat(b2b.toString(), '')
-    };
-   }
-   else if (LSR == false && MSR == true) {
-    /*IF MSR IS TRUE, IT'S DECLARED AS A 
-    MINI T-SPIN*/
-    playsfx('onemini');
-    cleartext = TransText('mini1')
-    boollinevv = 0;
-    /*varren++*/
-    ;
-    b2b++
-    if (b2b < 1)
-     stackscore += 200 * Multiplier
-
-    linevoice = LNSDTCT;
-    linesend = 0
-    if (b2b >= 1) {
-     stackscore += 300 * Multiplier
-     //   playsfx('b2bs');;
-     //   cleartext += '<br/>Back-to-back X'.concat(b2b.toString(), '')
-    };
-
-   }
-  }
- }
- if (boollinevv == 1 && LNSDTCT === 2) {
-  minoes -= 20
-  if (LSR === false && MSR === false) {
-   if (gametype == 111) {
-    failTSD = true
-   }
-   b2b = -1
-   if (b2b < 1)
-    stackscore += 300 * Multiplier
-   playsfx('twoline');
-
-
-   /*varren++*/
-   ;
-
-   linevoice = LNSDTCT;
-   linesend = 2
-
-   cleartext = TransText('double')
-  }
-  else {
-   if (gametype == 111) {
-    failTSD = false
-    TSD++
-    statsLines.innerHTML = TSD
-   }
-   b2b++
-   if (b2b < 1)
-    stackscore += 1200 * Multiplier
-   playsfx('twospin');
-
-
-
-   /*varren++*/
-   ;
-
-
-
-   linevoice = 4;
-   linesend = 4
-
-   cleartext = TransText('tspin2')
-   if (b2b >= 1) {
-    stackscore += 1800 * Multiplier
-    //  playsfx('b2bs');;
-    // cleartext += '<br/>Back-to-back X'.concat(b2b.toString(), '')
-   };
-
-  }
- };
- if (boollinevv == 1 && LNSDTCT === 3) {
-  minoes -= 30
-  if (gametype == 111) {
-   failTSD = true
-  }
-  if (LSR === false && MSR === false) {
-   playsfx('threeline');
-   b2b = -1
-   if (b2b < 1)
-    /*varren++*/
-   ;
-   stackscore += 500 * Multiplier
-
-   linevoice = LNSDTCT;
-   linesend = 3
-
-   cleartext = 'Triple'
-  } else {
-
-   playsfx('threespin');
-   b2b++
-   if (b2b < 1)
-    stackscore += 1600 * Multiplier
-
-   /*varren++*/
-   ;
-
-   ;
-   linevoice = 6;
-   linesend = 6;;
-
-   cleartext = TransText('tspin3')
-   if (b2b >= 1) {
-    stackscore += 2400 * Multiplier
-
-
-    //   playsfx('b2bs');;
-    //  cleartext += '<br/>Back-to-back X'.concat(b2b.toString(), '')
-   };
-
-  }
- };
- if (boollinevv == 1 && LNSDTCT == 4) {
-  minoes -= 40
-  if (gametype == 111) {
-
-   failTSD = true
-  }
-  b2b++
-  if (b2b < 1)
-   stackscore += 800 * Multiplier
-  playsfx('fourline');
-
-
-
-  /*varren++*/
-  ;
-
-
-
-  linevoice = LNSDTCT;
-  linesend = 4
-
-  if (settings.Character !== 0) {
-   cleartext = 'Gachatris'
-  } else {
-   cleartext = TransText('quad')
-  }
-  if (b2b >= 1) {
-
-   stackscore += 1200 * Multiplier;
-   //  playsfx('b2bs');
-
-
-   //  cleartext += '<br/>Back-to-back X'.concat(b2b.toString(), '')
-  }
- };
- if (boollinevv == 1 && LNSDTCT >= 5) {
-  minoes -= 10 * LNSDTCT
-  if (gametype == 111) {
-
-   failTSD = true
-  }
-  b2b++
-  if (b2b < 1)
-   stackscore += 1000
-  playsfx('fourline');
-
-
-
-  /*varren++*/
-  ;
-
-
-
-  linevoice = LNSDTCT;
-  linesend = 4
-
-  if (settings.Character !== 0) {
-   cleartext = 'Gachatris Plus'
-  } else {
-   cleartext = TransText('quadplus')
-  }
-  if (b2b >= 1) {
-
-   stackscore += 500;
-   //  playsfx('b2bs');
-
-
-   //  cleartext += '<br/>Back-to-back X'.concat(b2b.toString(), '')
-  }
- };
- if (b2b > 0) {
-  cleartextpc = (b2b!==1?
-   `${TransText('b2b')} X${b2b}`:
- TransText('b2b'))
- 
-  playsfx((function(b){
-   if(b<3) return 'b2bs';
-   if(b>=3&&b<8) return 'b2bs2';
-   if(b>=8&&b<24) return 'b2bs3';
-   if(b>=24&&b<63) return 'b2bs4';
-   if(b>=63) return 'b2bs5'
-  })(b2b))
-  //tetr.io style b2b sounding
-  if(b2b==3){playsfx('b2b1')}
-  if(b2b==8){playsfx('b2b2')}
-  if(b2b==24){playsfx('b2b3')}
-  if(b2b==63){playsfx('b2b4')}
-  
-  if(b2b==3||b2b==8||b2b==24||b2b==63){
-   $d('clearstatspc').style.opacity=1
-   $d('clearstatspc').style.animation='B2Bblink 0.3s infinite linear'
-   setTimeout(function(){
-   $d('clearstatspc').style.opacity=1;
-   $d('clearstatspc').style.animation='clear'
-}, 700)
-  }
-  
-  
-  
- } else {
-  cleartextpc = ''
- }
- showclear()
-
-
- if (gametype == 111) {
-
-  while (failTSD == true) {
-
-   endgame(TransText('nottsd'), 9, true, 'lose')
-
-   failTSD = false;
-  }
- }
- if (gametype == 115)
-  if (frame in replayKeys.garbagesend)
-   for (var i = 0; i < replayKeys.garbagesend[frame]; i++) {
-
-    if ((garbagenumber <= 0)) {
-     if (garbrowcount > 0) {
-      for (var y = 22; y >= -1; y--) {
-       if (garbrowcount == 0) break
-
-       for (var x = 0; x < 10; x++) {
-        if (!feverActivate)
-        {
-         stack.grid[x][22] = 0
-
-         stack.grid[x][y] = stack.grid[x][y - 1];
-        }
-        else {
-         StackTemp[x][22] = 0
-
-         StackTemp[x][y] = StackTemp[x][y - 1];
-        }
-       }
-      }
-      stack.draw()
-      garbrowcount--
-     } else { garbagenumber-- } {}
-
-    } else { garbagenumber-- }
-   }
-
-
-
-
- if (gametype == 112 || (gametype == 115 && watchingReplay == false)) {
-  if (PC) {
-   neutralline = 10
-  } else {
-
-   if (linesend == 6) {
-    neutralline = 6;
-   };
-   if (linesend == 4) {
-    neutralline = 4;
-   };
-   if (linesend == 3) {
-    neutralline = 2
-   }
-   if (linesend <= 1) {
-    neutralline = 0
-   };
-   if (linesend == 2) {
-    neutralline = 1
-   };
-   if (linesend == 3) {
-    neutralline = 2
-   }
-  }
-  if (feverActivate && frame > feverTime) {
-   neutralline += 140
-  }
-
-
-
-
-  if (varren >= 2 && varren <= 3) {
-   neutralline += 1
-  };
-  if (varren >= 4 && varren <= 5) {
-   neutralline += 2
-  };
-  if (varren >= 6 && varren <= 7) {
-   neutralline += 3
-  };
-  if (varren >= 8 && varren <= 10) {
-   neutralline += 4
-  };
-  if (varren >= 11) {
-   neutralline += 5
-  };
-  if (b2b >= 1) {
-   neutralline += 1
-  };
-  if (watchingReplay == false && gametype == 115)
-   replayKeys.garbagesend[frame] = 0
-  while (neutralline > 0) {
-   if (garbagenumber > 0)
-    garbagenumber--
-
-   if (!watchingReplay && gametype == 115) { replayKeys.garbagesend[frame]++ }
-
-   /*     if (gametype==115){
-        if (garbagenumber<0) {
-                
-                } 
-                
-        }*/
-   neutralline--
-
-  }
-
-
-
-
-
-
-  /*if (garbrowcount>0){
-                     for (var y = 22; y >= -1; y--) {
-                       if (garbrowcount==0) break
-                         for (var x = 0; x < 10; x++) {
-                             {
-                             }
-                             stack.grid[x][y] = stack.grid[x][y - 1];
-                         }
-                     }
-                     stack.draw()
-                     garbrowcount--
-                 } 
-               else */
-
-
-
-
-
-
- }
-
-
-
- MSR = false
- isMini = false;
- isSpin = false
- if (PC) {
-  perfectboolvoice = true;
-  linevoice = 10;
- }
-
-}
-var perfectboolvoice = false
 var GARBSEQ = 0
 var garbrowcount = 0
 var PENDTXT = document.getElementById('pendin')
@@ -997,7 +576,7 @@ function flashfield() {
  document.getElementById('fieldflash').style.opacity = 1
  document.getElementById('fieldflash').style.transition = "opacity 0s linear"
  document.getElementById('b').style.animation = "flashThing 1s infinite linear"
- document.getElementById('active_FM').style.animation = "flashThing2 1s infinite linear"
+ document.getElementById('active_FM').style.animation = "flashThing2 1s  linear"
  document.getElementById('bgFEVER').style.animation = "feverrotate 2.4s infinite linear"
  $("#feverIMG").animate({ top: '0%', opacity: 1 }, 10)
  $("#feverIMG").animate({ top: '-3%', opacity: 1 }, 800)

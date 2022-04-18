@@ -16,7 +16,7 @@ Preview.prototype.init = function() {
 Preview.prototype.next = function() {
     
   var next;
-  if (varpiecedelay<=frame){
+  if (stack.varpiecedelay<=frame){
   next = this.grabBag.shift();
   
      this.grabBag.push.apply(this.grabBag, this.gen());
