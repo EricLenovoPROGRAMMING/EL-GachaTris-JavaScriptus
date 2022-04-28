@@ -434,10 +434,10 @@ function characterinit(NEW) {
  } catch (e) {
   // alert(e)
  }
- voiceset['gachatris'].once('loaderror', function() { NEW.gtrisenable = false })
- voiceset['gachatris'].once('load', function() { NEW.gtrisenable = true })
- voiceset['gachatrisplus'].once('loaderror', function() { NEW.gtrisenableplus = false })
- voiceset['gachatrisplus'].once('load', function() { NEW.gtrisenableplus = true })
+ voiceset['gachatris'].once('loaderror', function() { stack.gtrisenable = false })
+ voiceset['gachatris'].once('load', function() { stack.gtrisenable = true })
+ voiceset['gachatrisplus'].once('loaderror', function() { stack.gtrisenableplus = false })
+ voiceset['gachatrisplus'].once('load', function() { stack.gtrisenableplus = true })
 }
 
 if ('1v1params' in replayKeys) {
@@ -588,7 +588,7 @@ function warningalarm() {
 
   //  while(sfxRETURN('alertsoundslow').playing())
      if(!('1v1params'in replayKeys))
-     sfxRETURN('alertsoundslow').fade(settings.Volume,0,0)
+     sfxRETURN('alertsoundslow').fade(1,0,500)
      /**/
    }
 

@@ -654,8 +654,8 @@ iconCHAR.style.height=iconCHARAI.style.height=$d('selectorICON').style.height = 
  if (settings.Grid === 1) {
   bg(bgStackCtx);
   bg(bgStackCtx2);
-
  }
+
  if (gameState === 0) {
   piece.drawGhost();
   piece.draw();
@@ -821,7 +821,7 @@ if('1v1params' in replayKeys){
        gamediff = gametime - (replaytime + 1 + frame) //(startPauseTime - startTime - (pauseTime) / (1000 / 60));
        for (i = 0; i < gamediff; i++) gameLoop()
       } else {
-    /*  if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
+    //  if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
       }
      }, 1000 / 60 /*setting.Slowdown[settings.Slowdown]/**/ )
@@ -855,9 +855,6 @@ if('1v1params' in replayKeys){
   lineLimit = (replayKeys.sprintParams !== undefined ? replayKeys.sprintParams.lineLimit : 40);
 
   //Reset
-statsLines.innerHTML=
-PENDTXT.innerHTML=
-PENDNUM.innerHTML=''
   column = stack2.column = 0;
   
   keysDown = 0;

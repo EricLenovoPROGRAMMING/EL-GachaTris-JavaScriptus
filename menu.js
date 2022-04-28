@@ -1,4 +1,4 @@
-var version = '0.9a.3 Gachatris';
+var version = '0.9a.4 Gachatris Quickfix';
 var setLoop;
 var sfx
 var arrowReleased = true;
@@ -287,25 +287,25 @@ function saveSetting(s) {
   document.getElementById(s).getElementsByTagName('span')[0].innerHTML =
     setting[s][settings[s]];
 
-  localStorage['gtris_settingsse'] = JSON.stringify(settings);
-  localStorage['gtris_settings'] = JSON.stringify(settings)
+  localStorage['gtris333_settingsse'] = JSON.stringify(settings);
+  localStorage['gtris333_settings'] = JSON.stringify(settings)
   translate()
 }
 function loadLocalData() {
-      if (localStorage['gtris_binds']) {
-    binds = JSON.parse(localStorage.getItem('gtris_binds'));
+      if (localStorage['gtris333_binds']) {
+    binds = JSON.parse(localStorage.getItem('gtris333_binds'));
     for (var i = 0, len = controlCells.length; i < len; i++) {
       controlCells[i].innerHTML = key[binds[controlCells[i].id]];
     }
   }
   // TODO When new version just update with new stuff, rest stays unchanged.
-  if (localStorage['gtris_version'] !== version) {
+  if (localStorage['gtris333_version'] !== version) {
       try{
           
-    localStorage.removeItem('gtris_settingsse');
-    localStorage.removeItem('gtris_binds');
+    localStorage.removeItem('gtris333_settingsse');
+    localStorage.removeItem('gtris333_binds');
     
-    var settingsload =JSON.parse(localStorage.getItem('gtris_settings'))
+    var settingsload =JSON.parse(localStorage.getItem('gtris333_settings'))
 
     for (var i in settingsload){
      if(!(i in settings))continue
@@ -317,8 +317,8 @@ function loadLocalData() {
     }
       }catch(e){/*alert(e)*/}
   }
-  if (localStorage['gtris_settingsse']) {
-      settings = JSON.parse(localStorage.getItem('gtris_settingsse'));
+  if (localStorage['gtris333_settingsse']) {
+      settings = JSON.parse(localStorage.getItem('gtris333_settingsse'));
   }
   translate()
 }
