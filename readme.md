@@ -30,6 +30,6 @@ Controls are configurable
 - Configurable gravity
 - Delay Automatic Shift (DAS) and Auto Repeat Rate (ARR) settings
 - Adaptable game size
-- Matrix bounciness control
+- VS AI mode
 - Configurable sounds
 - Last game replay and REPLAY CONSOLE
