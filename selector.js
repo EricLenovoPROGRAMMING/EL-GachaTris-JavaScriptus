@@ -20,8 +20,8 @@ setChar.appendChild(ul)
 
 loadCharacters()
 
-function loadChapter(){
- /*//(!)TO PREVENT JS CONSOLE USERS FROM ACCESSING THE ADVENTURE MODE WIP AS IT IS STILL BEING WORKED IN PROGRESS. BUT IN ADVENTURE.JS AND OTHER ADVENTURE.JS-CONNECTED FILES AND DIRECTORIES, YOU CAN SNEAK IN THEM TO KNOW WHAT IS WITH IT. THE GACHA SERIES GOVERNED BY THE ADVENTURE MODE IS "THE EPIC TETROGACHA REVOLUTION ADVENTURES."
+function loadChapter(){/*
+ //(!)TO PREVENT JS CONSOLE USERS FROM ACCESSING THE ADVENTURE MODE WIP AS IT IS STILL BEING WORKED IN PROGRESS. BUT IN ADVENTURE.JS AND OTHER ADVENTURE.JS-CONNECTED FILES AND DIRECTORIES, YOU CAN SNEAK IN THEM TO KNOW WHAT IS WITH IT. THE GACHA SERIES GOVERNED BY THE ADVENTURE MODE IS "THE EPIC TETROGACHA REVOLUTION ADVENTURES."
  for (let i = 0; i < document.getElementsByClassName("chapterSELECTOR").length; i++) {
    if (document.getElementsByClassName("chapterSELECTOR")[i].className == "chapterSELECTOR") {
         document.getElementsByClassName('chapterSELECTOR')[i].parentNode.removeChild(document.getElementsByClassName("chapterSELECTOR")[i]);
@@ -87,6 +87,49 @@ function loadLevel(number) {
 
 
 
+function loadCharactersAI(){
+ for (let t = 0; t < document.getElementsByClassName('ZSELECTOR').length; t++)
+   try {
+    document.getElementsByClassName('ZSELECTOR')[t].classList.remove('ACTIVE')
+   } catch (e) {}
+ for (let i = 0; i < document.getElementsByClassName("ZSELECTOR").length; i++) {
+  try{for(var tr=0;tr<84;tr++)
+   //if (document.getElementsByClassName("levelSELECTOR")[i].className == "levelSELECTOR") {
+        //document.getElementsByClassName('ZSELECTOR')[i].parentNode.removeChild(document.getElementsByClassName("ZSELECTOR")[i].parentNode);
+
+        document.getElementsByClassName('ZSELECTOR')[i].parentNode.removeChild(document.getElementsByClassName("ZSELECTOR")[i]);
+           //}
+           
+  }catch(e){}
+        //  textGUI('adventurelevel',`Chapter ${adventureParameter.selectorchapter} Levels (${Object.keys(adventureParameter.localStorageSession[`chapter${adventureParameter.selectorchapter}`]).length}/${Object.keys(CutscenePages[`chapter${adventureParameter.selectorchapter}`].levels).length} UNLOCKED)`)
+
+}
+ 
+ 
+ 
+ 
+ var ul = document.createElement('ul')
+ var setChar = $d("selectorCHARAI")
+for(let C=1;C<setting.Character.length+1;C++){
+
+ let li =document.createElement('li')
+ let a =document.createElement('a')
+ a.className='ZSELECTOR'
+ a.addEventListener('click',function(){setCharAI(C-1);setCharAITest()},false)
+ a.innerHTML=setting.Character[C-1]
+ 
+ ul.appendChild(li)
+li.appendChild(a)
+ 
+ 
+}
+setChar.appendChild(ul)
+menu(16)
+setCharAITest()
+}
+
+
+
 function selectorSection(){
  setCharTest()
  
@@ -103,7 +146,11 @@ function subChar(){
 function setCharS(index){
  settings.Character=index
  localStorage['gtris_settingsse']=localStorage['gtris_settings']=JSON.stringify(settings)
-
+}
+function setCharAI(index) {
+ vsParameter.CHARACTER = index
+ saveVSSetting()
+ 
 }
 function setLevelS(index) {
  adventureParameter.selectorlevel = index
@@ -116,6 +163,21 @@ function setChapterS(index) {
   textGUI('adventurelevel',`Chapter ${adventureParameter.selectorchapter} Levels (${Object.keys(adventureParameter[`localStorageSession`][`chapter${adventureParameter.selectorchapter}`]).length}/${Object.keys(CutscenePages[`chapter${adventureParameter.selectorchapter}`].levels).length} UNLOCKED)`)
 
 }
+function setCharAITest(){
+ if(vsParameter.CHARACTER==0){$d('selectorICONAI').style.opacity=0;}else {$d('selectorICONAI').style.opacity=1}
+  for(let t=0;t<document.getElementsByClassName('ZSELECTOR').length;t++)
+  try{
+document.getElementsByClassName('ZSELECTOR')[t].classList.remove('ACTIVE')
+}catch(e){}
+ document.getElementsByClassName('ZSELECTOR')[vsParameter.CHARACTER].classList.add('ACTIVE')
+ $d("iconCHARAI").src=`characters/${setting.Character[vsParameter.CHARACTER]}/icon.png`
+ $iH('charNameAI', setting.Character[vsParameter.CHARACTER])
+$d('vs-characterheader').innerHTML=vsParameter.CHARACTER!=0?setting.Character[vsParameter.CHARACTER]:'---'
+
+ 
+}
+
+
 function saveChar(){
  menu(1)
 }

@@ -88,6 +88,12 @@ Piece.prototype.initNew = function(index){
        }}
    }
    this.y+=this.getDrop(Math.floor(gravity))
+   if (!this.moveValid(0, 0, this.tetro)) {
+    endgame(TransText('blockout'), 9, true, stack.valid ? 'lose' : void 0)
+   
+    playsfx('KO')
+   
+   }
 
 }
 /**
@@ -138,12 +144,7 @@ Piece.prototype.new = function(index) {
    
       
     // Check for blockout.
-    if (!this.moveValid(0, 0, this.tetro)) {
-        endgame(TransText('blockout'), 9, true, stack.valid?'lose':void 0)
-       
-        playsfx('KO')
-     
-    }
+    
     
     if (this.index !== 0&&this.index !==7) {
         this.y = this.getDrop(1)//-garbrowcount
@@ -705,14 +706,14 @@ if (true){
 };
 Piece.prototype.draw = function() {
 	try{
-	if(gamediff<51||gamediff==undefined){
+	if(gamediff<510||gamediff==undefined){
     draw(this.tetro, this.x, this.y, activeCtx);
 }
 }catch(i){}
 }
 Piece.prototype.drawGhost = function() {
 	try{
-	if(gamediff<15||gamediff==undefined){
+	if(gamediff<510||gamediff==undefined){
     if (!settings.Ghost) {
     	activeCtx.globalAlpha = 0.3
         draw(this.tetro, this.x, this.y + this.getDrop(22), activeCtx, 0);

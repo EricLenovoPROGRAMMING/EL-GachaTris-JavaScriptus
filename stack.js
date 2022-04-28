@@ -3,7 +3,7 @@ function Stack() {
  this.valid=false
  this.varren = 0;
  this.neutralline = 0
- this.garbagenumber = 0
+ this.garbagenumber = []
  this.voicegarbage = false
  this.voicestrength = 0;
  this.varpiecedelayadd = 100
@@ -80,6 +80,8 @@ var perfectbool = false
 function makeArrayLength(int) {
  var i = []
  i.length = int
+ for(var e=0;e<int-1;e++)
+ i[e]=0
  return i
 }
 
@@ -96,7 +98,7 @@ Stack.prototype.new = function(x, y) {
   }*/
  var cells = makeArrayLength(x)
  for (var i = 0; i < x; i++) {
-  cells[i] = new Array(y)
+  cells[i] = makeArrayLength(y)
  }
  this.grid = cells
 };
@@ -443,14 +445,13 @@ piece.landed = true
    }
 
   }; //GARBAGE TO FIELD
-  if (gametype == 112 || gametype == 115) {
+  if (gametype == 112 || gametype == 115||gametype==119) {
    if (linesdetect == 0 && !feverActivate) {
-    if (this.garbagenumber > 0) {
+    if (this.garbagenumber.length > 0) {
      playsfx('garbageup')
-     if (gametype == 112)
-      var randomHAR = Math.round(~~(rng.next() * 10));
-     while (this.garbagenumber > 0) {
-      this.garbagenumber--
+     if (gametype == 112||gametype==119){
+       while(this.garbagenumber.length>0) {
+      
 
       garbvoice++
       if (gametype == 115) {
@@ -469,20 +470,19 @@ piece.landed = true
       for (var x = 0; x < 10; x++) {
 
        this.grid[x][21] = 8;
-       if (gametype == 112)
-        this.grid[randomHAR][21] = 0
+       if (gametype == 112||gametype==119)
+        this.grid[this.garbagenumber[0]][21] = 0
 
       }
-
-      if (gametype == 115 && garbvoice == 8) break
-
+this.garbagenumber.shift()
+      
      }
     }
     this.voicegarbage = true
     this.draw()
    }
   }
-
+}
   if (booldetect == true) {
    while (this.isMini == true || this.enablemini == true) {
     this.minispinrecog = true;
@@ -1121,7 +1121,7 @@ Stack.prototype.clear_line = function(boollinevv, LNSDTCT, LSR, MSR, PC, Multipl
     
     if (this.b2b < 1)
      stackscore += 800 * Multiplier;;
-    linesend = 2
+    linesend = 3
     
     //in case a back-to-back clear is achieved,
     //every difficult line clear, TSpins and quads,
@@ -1403,15 +1403,15 @@ else
       }
       this.draw()
       garbrowcount--
-     } else { this.garbagenumber-- } {}
+     } else {} {}
 
-    } else { this.garbagenumber-- }
+    } else { this.garbagenumber.shift() }
    }
 
 
 
 
- if (gametype == 112 || (gametype == 115 && watchingReplay == false)) {
+ if (gametype == 112 || gametype == 119|| (gametype == 115 && watchingReplay == false)) {
   if (PC) {
    this.neutralline = 10
   } else {
@@ -1461,18 +1461,20 @@ else
    this.neutralline += 1
   };
   
-  if(this.neutralline>this.garbagenumber&&!PC&&LNSDTCT>=3&&this.garbagenumber>0){
+  if(this.neutralline>this.garbagenumber.length&&!PC&&LNSDTCT>=3&&this.garbagenumber>0){
    this.countervoice=true
   }
   
   if (watchingReplay == false && gametype == 115)
    replayKeys.garbagesend[frame] = 0
+   var OOO=0
   while (this.neutralline > 0) {
-   if (this.garbagenumber > 0)
-    this.garbagenumber--
+   if (this.garbagenumber.length > 0)
+    this.garbagenumber.splice(0,1)
+    else if (gametype==119) OOO++
 
    if (!watchingReplay && gametype == 115) { replayKeys.garbagesend[frame]++ }
-
+  console.log(this.garbagenumber)
    /*     if (gametype==115){
         if (this.garbagenumber<0) {
                 
@@ -1482,6 +1484,8 @@ else
    this.neutralline--
 
   }
+  if(OOO>0)
+  stack2.sendGarbage(OOO,rng.next(),30)
 
 
 
@@ -1520,13 +1524,21 @@ else
  }
 }
 
+Stack.prototype.sendGarbage=function(count,x,time){
+ for(let i=0;i<count;i++){
+ /*for(var is in this.garbagenumber)
+  /**/
 
+ this.garbagenumber.push(Math.floor(x * 10))
 
+}
+
+}
 /**
  * Draws the stack.
  */
 Stack.prototype.draw = function() {
- if (gamediff < 51 || gamediff == undefined) {
+ if (gamediff < 501 || gamediff == undefined) {
   clear(stackCtx);
   draw(this.grid, 0, 0, stackCtx);
 

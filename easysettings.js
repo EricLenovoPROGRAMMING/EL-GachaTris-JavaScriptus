@@ -19,10 +19,38 @@ var MissText = document.getElementById('missheader')
 var MLText = document.getElementById('MLheader')
 var MFXSlider = document.getElementById('MFXset')
 var UISFXSlider = document.getElementById('UISFXset')
+var VSInputs={}
+ VSInputs.speed=document.getElementById('vs-PPSset'),
+ VSInputs.keyspeed=document.getElementById('vs-KPSset'),
+ VSInputs.name= document.getElementById('AIname'),
+ VSInputs.savestate={
+  speed:0,
+  keyspeed:0,
+  name:'',
+ }
+
 
 
 'use strict';
 
+
+VSInputs.speed.oninput=function(){
+ $d('vs-speedheader').innerHTML=this.value!=='701'?`${(~~(this.value)*0.01).toFixed(2)}PPS`:'MAX'
+ vsParameter.PPSLIMIT=this.value!=='701'?(~~(this.value)*0.01):''
+ VSInputs.savestate.speed=this.value
+ saveVSSetting()
+ saveSLIDERVS()
+ 
+}
+VSInputs.keyspeed.oninput=function(){
+ $d('vs-kpsheader').innerHTML=`${(60/~~(this.value))}KPS`
+ vsParameter.KEYSPEED=~~(this.value)
+ saveVSSetting()
+}
+VSInputs.name.oninput = function() {
+ vsParameter.NAME = this.value
+ saveVSSetting()
+}
 
 
 function loadeasysettings() {
@@ -230,7 +258,6 @@ var sprintParameter =
  LINELIMIT: 40
 }
 
-MarLevelValueF
 
 var marathonParameter={
  LEVEL: 1,
@@ -250,7 +277,7 @@ function ARERestrict(a,i){
 var QUEUE = {
  0: [0, 1, 2, 3, 4, 5, 6],
  1: [0, 0, 0, 0, 0, 0, 0],
- 2: [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]
+ 2: [1, 2, 3, 4, 5, 6]
 }
 
 function loadTHTD(Tvalue){
@@ -287,7 +314,31 @@ $d('master-levelheader').innerHTML =  ` ${$dvalue('master-level')}`;
 $d('master-linereqheader').innerHTML = ` ${$dvalue('master-linereq')}`;
 
 }
+ if (menuIndexe == 15) {
+  try{
+ VSInputs.speed.value=VSInputs.savestate.speed
+  VSInputs.keyspeed.value=vsParameter.KEYSPEED
+  $d('AIname').value=vsParameter.NAME
+  }catch(i){}
+  
+  
+ $d('vs-speedheader').innerHTML=VSInputs.speed.value!=='701'?`${(~~(VSInputs.speed.value)*0.01).toFixed(2)}PPS`:'MAX'
  
+ 
+ 
+
+
+ $d('vs-kpsheader').innerHTML=`${(60/~~(VSInputs.keyspeed.value))}KPS`
+ $d('vs-characterheader').innerHTML=vsParameter.CHARACTER!=0?setting.Character[vsParameter.CHARACTER]:'---'
+ 
+
+
+ 
+
+
+
+  
+   }
  menu(menuIndexe)
 }
 
@@ -299,6 +350,20 @@ var masterParameter={
   LEVEL: 1,
   LINESREQ: 10
  }
+}
+
+var vsParameter = {
+PPSLIMIT:8,
+KEYSPEED:1,
+'NAME':'AI of Gachatris',
+CHARACTER:1,
+}
+
+function saveVSSetting(){
+ localStorage['gtris333_vsSettings']=JSON.stringify(vsParameter)
+}
+function saveSLIDERVS() {
+ localStorage['gtris333_vsSliderSettings'] = JSON.stringify(VSInputs.savestate)
 }
 
 var gameSetting={

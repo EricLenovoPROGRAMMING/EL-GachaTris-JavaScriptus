@@ -1,4 +1,4 @@
-var version = '0.8a.4A Gachatris';
+var version = '0.9a.3 Gachatris';
 var setLoop;
 var sfx
 var arrowReleased = true;
@@ -10,12 +10,18 @@ var alertsoundactive;
 var cleardetail=document.getElementById('clearstats')
 var cleardetailren=document.getElementById('clearstatsren')
 var cleardetailpc=document.getElementById('clearstatspc')
+
+var cleardetail2=document.getElementById('clearstats2')
+var cleardetail2ren=document.getElementById('clearstats2ren')
+var cleardetail2pc=document.getElementById('clearstats2pc')
+
+
 try{
 
 
 
 window.onblur=function(){
-    if (gameState==0||gameState==2&&!paused)
+    if ((gameState==0||gameState==2)&&!paused)
     pause()
 }
 /*
@@ -145,9 +151,13 @@ function menu(menuIndex) {
   if (menuIndex !== void 0) {menus[menuIndex].classList.add('on');} 
   for (var MMM=0; MMM<3; MMM++){
       moremodeselect[MMM].classList.remove('on')}
-      
+     try{
+      if(typeof SoundFX['alertsoundslow'!=='undefined'])
       stopsfx('alertsoundslow')
+      if(typeof SoundFX['alarm'!=='undefined'])
+
       stopsfx('alarm')
+     }catch(U){}
       onealarm=false
       varalarm=false;
       
@@ -312,6 +322,16 @@ function loadLocalData() {
   }
   translate()
 }
+if(localStorage['gtris333_vsSettings']!==null&&typeof localStorage['gtris333_vsSettings'] !=='undefined')
+vsParameter=JSON.parse(localStorage.getItem("gtris333_vsSettings"))
+else
+localStorage['gtris333_vsSettings']=JSON.stringify(vsParameter)
+
+if(localStorage['gtris333_vsSliderSettings']!==null&&typeof localStorage['gtris333_vsSliderSettings'] !=='undefined')
+VSInputs.savestate=JSON.parse(localStorage.getItem("gtris333_vsSliderSettings"))
+else
+localStorage['gtris333_vsSliderSettings']=JSON.stringify(VSInputs.savestate)
+
 
 loadLocalData();
 function loadsettinginit(){
@@ -323,7 +343,7 @@ function loadsettinginit(){
  }
   }catch(e){}
 for (let s in settings) {
- if(s=='Character')continue
+ if(s=='Character'||typeof s == 'object')continue
  try{
   var div = document.createElement('div');
   var b = document.createElement('b');

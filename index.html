@@ -17,7 +17,7 @@
      <li><a onclick=menu(2) id=gui_controls>Controls</a>
      <li><a onclick=morefunction(1) class=guiclass_replaycon>ReplayCon</a>
      <li><a onclick=menu(3) class=guiclass_about>About</a>
- <!--    <li><a onclick=loadChapter()>Adventure</a>-->
+     <!--<li><a onclick=loadChapter()>Adventure</a><!---->
 <!--menu(11)-->
      <li><a onclick=menu(1) id=gui_settings><i class=icon-cog></i>Settings</i></a>
     </ul>
@@ -33,7 +33,7 @@
      <li><a onclick=init(112) id=gui_gf>Garbage Fire</a>
      <li><a onclick=init(113) id=gui_renc4w>REN C4W</a>
      <li><a onclick=init(114) id=gui_2mu>2-minute Ultra</a>
-      <!-- <li><a onclick=init(115)>Garbage Ultra</a>-->
+     <li><a onclick=menuS(15) id=gui_vs>Versus AI</a><!---->
      <li><a onclick=menuS(6) id=gui_da>Downstack Attack</a>
      <li><a onclick=menuS(8) id=gui_marathon>Marathon</a></li>
      <li><a onclick=menuS(9) id=gui_master>Master</a></li>
@@ -47,7 +47,7 @@
     <h6 id=guitext_settingsNote>EricLenovo's note to you: some settings are not fully developed yet! *cries*</h6>
     <div id=settings>
     </div>
-    <h3 id=guitext_playername>Player Name: </h3> <textarea id="playernamequery" spellcheck="false" maxlength="18" style="width:40%;height:1em;;background:#232323;color:#fff"></textarea>
+    <h3 id=guitext_playername>Player Name: </h3> <textarea id="playernamequery" spellcheck="false" maxlength="20" style="width:40%;height:1em;;background:#232323;color:#fff"></textarea>
 
     <div style=clear:both><a class=button onclick=morefunction(2) id=gui_easysettings>Easy Settings</a></div>
     <div style=clear:both><a class=button onclick=menu(10) id=guitext_character>Gacha Club Characters</a></div>
@@ -127,7 +127,7 @@
    </nav>
    <nav class='moremodes'>
     <h1 class=guiclass_replaycon>ReplayCon</h1>
-    <textarea id="replaydata" spellcheck="false" style="width:100%;height:90%;;background:#232323;color:#fff"></textarea>
+    <textarea class = 'editable unresizable' id="replaydata" spellcheck="false" style="width:100%;height:90%;;background:#232323;color:#fff"></textarea>
     <ul>
      <li><a onclick=executereplay() id=gui_watch>Watch</a>
      <li><a onclick=downloadreplay() id=gui_savereplay>Save as .GTRD</a>
@@ -450,6 +450,78 @@
 
 
    </nav>
+   <!--menu 15-->
+      <nav class='menu'>
+       <h1 id=guitext_vs>Versus AI</h1>
+
+       
+       <div class=layoutcenter style="display:flex;justify-content:center;width:100%">
+        <div style="width:90%;height:90%;">
+                <div style="height:40px;width:100%;display:flex;justify-content:center">
+                 <h6 id=guitext_vs-note style="vertical-align: center;line-height: 1em"></h6>
+                </div>
+         <table>
+          <tr>
+           <th id=guitext_vs-speedheader>Speed Limit: </th>
+           <td id=vs-speedheader>2.00PPS</td>
+          </tr>
+         </table>
+         <input type=range class=slider min=1 max=701 value=200 id=vs-PPSset></input>
+         <table>
+          <tr>
+           <th id=guitext_vs-kpsheader>Interval (Keypresses Per Second): </th>
+           <td id=vs-kpsheader>30 KPS</td>
+          </tr>
+         </table>
+         <input type=range class=slider min=1 max=120 value=13 id=vs-KPSset></input>
+         <table>
+          <tr>
+           <th id=guitext_vs-nameheader>AI Name: </th>
+          </tr>
+         </table>
+             <textarea class = 'editable unresizable' id="AIname" spellcheck="false" maxlength=20 style="width:100%;height:10%;;background:#232323;color:#fff"></textarea>
+                <table>
+                 <tr>
+                  <th id=guitext_vs-characterheader>Current Character: </th>
+                  <td id=vs-characterheader></td>
+                 </tr>
+                </table>
+                            <li><a onclick=loadCharactersAI() id=gui_pickAIChar>Gacha Club Character</a>
+
+        </div>
+       </div>
+       <ul>
+        <li><a onclick='startMode("VS AI")' class=guiclass_start>Start</a>
+        <li><a onclick=backtomoremodes() class=guiclass_return>Back</a>
+       </ul>
+      </nav>
+
+   <nav class='menu ' style='overflow:hidden;'>
+
+    <h1 id=guitext_selectorAI>Select a character for the AI</h1>
+
+    <!--   <div class=layoutcenter style="display:flex;justify-content:center;">-->
+    <div style="width:100%; height:80%">
+     <div id=selectorCHARAI style="height:70%; background:rgba(255,255,255,0.5);width:100%;overflow-y:scroll;overflow-x:hidden;padding: 0 0"></div>
+     <div id=selectorICONAI style="height:20%; background:rgba(255,255,255,0.1);width:100%;overflow-y:hidden;overflow-x:hidden;">
+
+      <img id=iconCHARAI src='icon.png' style="float:right; z-index:3" />
+      <div style=float:left;height:100%;margin-left:5%>
+       <h4 style=float:left id=guitext_charNameAI>You now let the AI use:</h4>
+
+       <h1 style=float:bottom id=charNameAI></h1>
+
+      </div>
+     </div>
+    </div>
+    <ul>
+     <li><a onclick=menu(15) class=guiclass_return>Back</a>
+     </li>
+
+
+   </nav>
+
+
 
    </nav>
 
@@ -461,7 +533,7 @@
 
 
    <div style="display:flex;justify-content:center">
-    <div style="">
+    <div style="display:flex;justify-content: center;">
      <div id=content style="display:flex;justify-content:center">
       <!-- Canvases -->
       <div id=d>
@@ -542,7 +614,7 @@
         </div>
         <div id=SHOWFEVER style="width:100%;height:100%;position:absolute;;display:flex;justify-content: center;visibility: hidden;z-index:-4">
 
-         <img src="sketch-1645536901709.png" id=bgFEVER style=" width: auto; height:200%;position: absolute;transform:translateY(-25%);" />
+         <img src="feverBG.png" id=bgFEVER style=" width: auto; height:200%;position: absolute;transform:translateY(-25%);" />
 
          <div id=fevercolor style="background-color:rgba(200,4,0,1);opacity: 0.4;position:absolute;width:100%;height:100%;z-index:1"></div>
         </div>
@@ -596,7 +668,138 @@
       <div id="readybardiv">
        <progress id="readybar" value="0" max="100" style="display:none"></progress>
       </div>
-      <!--  <div id=contento>
+      <!--  <div id=coo>
+                                     <nav class='menu on'>
+                                         <h1>Tetr.js GTJS</h1>
+                                         <h6>Gachatris JavaScriptus</h6>
+                                         <ul>
+                                             <li><a onclick=morefunction(0)>Play!</a>
+                                             <li><a onclick=menu(2)><i class=></i>Controls</a>
+                                             <li><a onclick=morefunction(1)>ReplayCon</a>
+                                             <li><a onclick=menu(1)><i class=icon-cog></i>Settings</a>
+                                         </ul>
+                                     </nav>
+  </div>--->
+     
+  
+    </div>
+   <div id=content2 style="display:flex;justify-content:center">
+      <!-- Canvases -->
+      <div id=d2>
+       <h3 id=guitext_hold2>Hold</h3>
+       <div id=a2>
+        <canvas id=hold2></canvas>
+       </div>
+       <ul id=replay style=display:none>
+        <li><a onclick=replay(-1)>prev</a>
+        <li><a onclick=replay()>Play/Pause</a>
+        <li><a onclick=replay(1)>next</a>
+       </ul>
+             <table id=stats2 style=position:absolute;float:center>
+              <tr>
+               <td id=pendum2>
+               <th id=pendin2>
+              </tr>
+              <tr>
+               <td id=line2>
+               <th id='linetsd2'>
+              <tr>
+               <td id=piece2>0
+               <th id='guitext_piece2'>PIECE(S)
+               <th id='pps2'> 0.00 PPS
+              <tr>
+               <th id=time2>00:00.00
+              <tr>
+               <td id='score2'>00000000
+             </table>
+      </div>
+
+      <div id=b2>
+       <div>
+        <div style="z-index:5">
+         <canvas id=bgStack2> </canvas>
+         <canvas id=stack2>
+         </canvas>
+         <canvas id=active2></canvas>
+         <p id=msg2>
+
+          <!--        <nav class='menu on'>
+                      <h1>Tetr.js GTJS</h1>
+                      <h6>Gachatris JavaScriptus</h6>
+                      <ul>
+                          <li><a onclick=morefunction(0)>Play!</a>
+                          <li><a onclick=menu(2)><i class=></i>Controls</a>
+                          <li><a onclick=morefunction(1)>ReplayCon</a>
+                          <li><a onclick=menu(1)><i class=icon-cog></i>Settings</a>
+                      </ul>
+                  </nav>-->
+
+        </div>
+
+        <!--
+                                                                  <div id=fieldflash style="width:100%;height:100%;z-index:37;background-color: #fff;position: absolute">
+                                                                  	<!--  	<canvas id=fieldflash></canvas>
+                
+                                                                  </div>
+                                                                  <div id=divFEVER style="width:100%;height:100%;position:absolute; z-index:30; overflow:hidden">
+                                                                  	<div id=divFEVERI style="width:100%; height:100%;position:absolute">
+                                                                  		<img id=feverIMG style=" width: 100%; height: 100%;position: absolute" />
+                                                                  	</div>
+                                                                  	<p id=feverTXT>FRENZY!</p>
+                
+                                                                  </div>-->
+        <div id="divclear2" style="z-index:188; position:absolute">
+         <p id=clearstats2>
+         <p id=clearstats2pc>
+         <p id=clearstats2ren>
+        </div>
+
+       </div>
+       <div id=bA2 style='position:absolute'>
+        <div id=SHOWFIELD2 style="width:100%;height:100%;position:absolute;z-index:-5">
+         <img id=bgFIELD2 style=" width: 100%; height: 100%;position: absolute" />
+
+        </div>
+
+
+        <div style="width:100%;height:100%">
+         <p id=allcleartext2>PERFECT<br />CLEAR</p>
+        </div>
+
+       </div>
+       <div id=garbagemeter2 style='background-color:#000000;height:100%;;float:right;position:relative;z-index:-2; background-color:#22vD'>
+        <div id=active_GM2 style='background-color:#ff0000;height:1;width:1;top:100%;position:absolute;z-index:-1.5;opacity:0.7'>
+        </div>
+        <div id=active_FM2 style='background-color:#00ff00;height:1;width:1;top:100%;position:absolute;z-index:-1.45; opacity:0.5'>
+        </div>
+       </div>
+      </div>
+              <div id=rectAnimationDIV2>
+                 <div id=rectAnimationTransition2 style="height:50%;width:100%">
+ 
+               <canvas id=rectAnimations2></canvas>
+                 </div>
+              </div>
+      <div id=nameplate2 style="display:flex;justify-content: center">
+       <p style=align-self:center id=nameplayer2></p>
+      </div>
+      <div id=c2>
+       <h3 id=nextTXT2>Next</h3>
+       <div id=previewDIV2>
+        <canvas id=preview22></canvas>
+        <canvas id=preview20></canvas>
+       </div>
+      </div>
+      <div>
+       <table>
+        <tr>
+         <th id='DEBUGTEX' style="display:none">
+       </table>
+      </div>
+      <div id="readybardiv2">
+       <progress id="readybar2" value="0" max="100" style="display:none"></progress>
+      </div>
+      <!--  <div id=coto>
                                      <nav class='menu on'>
                                          <h1>Tetr.js GTJS</h1>
                                          <h6>Gachatris JavaScriptus</h6>
@@ -609,7 +812,6 @@
                                      </nav>
   </div>--->
      </div>
-    </div>
    </div>
   </div>
   <canvas id=sprite></canvas>
@@ -628,8 +830,11 @@
    </div>
    
   <script type="text/javascript" src=howler.js> </script>
-  <!--  <script type="text/javascript" src=database.js> </script>
--->
+    <script type="text/javascript" src=ai_predict.js></script>
+    <script type="text/javascript" src=ai_polyfill.js></script>
+
+    <script type="text/javascript" src=ai.js> </script>
+
   <script type="text/javascript" src=music.js> </script>
   
   <script type="text/javascript" src='jQuery.js'> </script>
@@ -654,8 +859,15 @@
   <script type="text/javascript" src=selector.js></script>
     <script type="text/javascript" src=adventure.js></script>
       <script type="text/javascript" src=interactionfixedHover.js></script>
-
   <script type="text/javascript" src=rectAnimations.js></script>
+  
+    <script type="text/javascript" src=p2/piece.js></script>
+  <script type="text/javascript" src=p2/stack.js></script>
+  <script type="text/javascript" src=p2/hold.js></script>
+  <script type="text/javascript" src=p2/preview.js></script>
+  <script type="text/javascript" src=p2/rectAnimations.js></script>
+
+  
   <script>
    /*
       _gaq = [['_setAccount', 'UA-30472693-1'], ['_trackPageview']];

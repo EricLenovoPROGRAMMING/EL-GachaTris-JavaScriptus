@@ -37,13 +37,15 @@ var randomGARBAGE = 0
 var alertsoundactive = false;
 var frameSkipped
 let linosbool
-var linos;
+var scorestats2 = $d('score2')
+var stats2Piece=$d('piece2')
+var linos, linos2
 var cleartext
 var cleartextren
 var cleartextpc;
 var disappearduration;
 var spinCount
-var statsscore
+var statsscore, statsscore2
 var TSD;
 var cellSize;
 var column;
@@ -51,12 +53,15 @@ var failTSD;
 /**
  * Get html elements.
  */
-var msg = document.getElementById('msg');
+ var msg = document.getElementById('msg');
 var stats = document.getElementById('stats');
 var statsTime = document.getElementById('time');
+var msg2 = document.getElementById('msg2');
+var stats2 = document.getElementById('stats2');
+var statsTime2 = document.getElementById('time2');
 var statsType = document.getElementById('linetsd')
-var statsLines = document.getElementById('line');
-var statsPiece = document.getElementById('piece');
+var statsLines = document.getElementById('line'),statsLines2 = document.getElementById('line2');
+var statsPiece = document.getElementById('piece'),statsPiece2 = document.getElementById('piece2');
 var h3 = document.getElementsByTagName('h3');
 var set = document.getElementById('settings');
 
@@ -70,6 +75,16 @@ var activeCanvas = document.getElementById('active');
 var previewCanvas = document.getElementById('preview');
 var previewCanvas2 = document.getElementById('preview2');
 
+var holdCanvas2 = document.getElementById('hold2');
+var bgStackCanvas2 = document.getElementById('bgStack2');
+var stack2Canvas = document.getElementById('stack2');
+var rectAni2Canvas = document.getElementById('rectAnimations2');
+
+var activeCanvas2 = document.getElementById('active2');
+var preview2Canvas = document.getElementById('preview20');
+var preview2Canvas2 = document.getElementById('preview22');
+
+
 var spriteCanvas = document.getElementById('sprite');
 var spriteCustom = document.getElementById('customSprite');
 var spriteDIV = document.getElementById('customSpriteDiv');
@@ -82,6 +97,16 @@ var rectAniCtx = rectAniCanvas.getContext('2d');
 var activeCtx = activeCanvas.getContext('2d');
 var previewCtx = previewCanvas.getContext('2d');
 var previewCtx2 = previewCanvas2.getContext('2d');
+
+var holdCtx2 = holdCanvas2.getContext('2d');
+var bgStackCtx2 = bgStackCanvas2.getContext('2d');
+var stack2Ctx = stack2Canvas.getContext('2d');
+var rectAni2Ctx = rectAni2Canvas.getContext('2d');
+var activeCtx2 = activeCanvas2.getContext('2d');
+var preview2Ctx = preview2Canvas.getContext('2d');
+var preview2Ctx2 = preview2Canvas2.getContext('2d');
+
+
 
 var spriteCtx = spriteCanvas.getContext('2d');
 
@@ -176,7 +201,10 @@ var PieceJ = {
  y: 0,
  kickData: kickData,
  spin: SpinCheck0,
- tetro: [[2, 2, 0], [0, 2, 0], [0, 2, 0]],
+ tetro: [
+  [2, 2, 0], //1st column
+  [0, 2, 0],
+  [0, 2, 0]], //Lst column
 };
 var PieceL = {
  index: 2,
@@ -184,14 +212,19 @@ var PieceL = {
  y: 0,
  spin: SpinCheck0,
  kickData: kickData,
- tetro: [[0, 3, 0], [0, 3, 0], [3, 3, 0]],
+ tetro: [
+  [0, 3, 0], 
+  [0, 3, 0], 
+  [3, 3, 0]],
 };
 var PieceO = {
  index: 3,
  x: 4,
  y: 0,
  kickData: kickDataO,
- tetro: [[4, 4], [4, 4]],
+ tetro: [
+  [4, 4],
+  [4, 4]],
 };
 var PieceS = {
  index: 4,
@@ -272,7 +305,7 @@ var finesse = [
  * Gameplay specific vars.
  */
 var gravityUnit = /*0.00390625/**/ 1 / 256; //1/256
-var gravity;
+var gravity,gravity2;
 var gravityArr = (function() {
  var array = []
  array.push(0);
@@ -288,7 +321,7 @@ var settings = {
  'Soft Drop': 82,
  'Lock Delay': 30,
  Previews: 5,
-// Slowdown: 0,
+ //Slowdown: 0,
  '60FPS Sync':0,
  RectAnimations:0,
  Size: 0,
@@ -342,14 +375,14 @@ RectAnimations:['ON','OFF'],
  VFXVol: range(0, 101),
  SoundType: ['GTJS', 'TGM3','TetraLegends','Farter-Memes','TETR.IO','PPT','Nullpomino'],
  Volume: range(0, 101),
- Commentary: ['TTS', 'GTJS'],
+ Commentary: ['TTS', 'FloSpin Double'],
  CMVol: range(0, 101),
  PieceSFX: ['OFF', 'GTJS', 'TGM3'],
  PieceVol: range(0, 101),
  Music:['OFF','Korobeiniki'],
  MFXVol:range(0,101),
  UIVol:range(0,101),
- Block: ['Shaded', 'Solid', 'Glossy', 'Arika', 'World', 'Custom'],
+ Block: ['Shaded', 'Solid', 'Glossy', 'Arika', 'World', 'Block of Flotalendy','Gloss and JS'],
  Ghost: ['Normal', 'Colored', 'Off'],
  Grid: ['Off', 'On'],
  Outline: ['Off', 'On'],
@@ -391,26 +424,28 @@ var gameState = 3;
 var paused = false;
 var lineLimit = 40
 
-var replayKeys;
+var replayKeys={};
 var watchingReplay = false;
 var toGreyRow;
 var gametype;
 //TODO Make dirty flags for each canvas, draw them all at once during frame call.
 // var dirtyHold, dirtyActive, dirtyStack, dirtyPreview;
 var lastX, lastY, lastPos
+var lastX2, lastY2, lastPos2
 
 // Stats
 var lines;
 var statsFinesse;
 var piecesSet;
+var pieces2Set
 var startTime;
 var digLines;
 var minoes;
 
 // Keys
-var keysDown, keysDownKeyboard
-var lastKeys;
-var released;
+var keysDown, keysDown2, keysDownKeyboard
+var lastKeys, lastKeys2;
+var released, released2;
 
 var binds = {
  pause: 27,
@@ -446,16 +481,43 @@ function resize() {
  var FM = document.getElementById('active_FM');
  var mainmenu = document.getElementById('menumain')
  var iconCHAR=$d('iconCHAR')
+  var iconCHARAI=$d('iconCHARAI')
  let selectorS=(args)=>{return $d(`selector${args}`)}
  var nameplate=$d('nameplate')
  var diaDIV=$d('dialogueDLC')
  var aniDIV=$d('rectAnimationDIV')
+ 
+ var nameplate2 = $d('nameplate2')
+ var aniDIV2 = $d('rectAnimationDIV2')
+ 
+ var a2 = document.getElementById('a2');
+ var b2 = document.getElementById('b2');
+ var bA2 = document.getElementById('bA2');
+ var c2 = document.getElementById('c2');
+ var content2 = document.getElementById('content2');
+ var GMt = document.getElementById('garbagemeter2');
+ var GMt2 = document.getElementById('active_GM2');
+ 
+ 
  // TODO Finalize this.
  // Aspect ratio: 1.024
  var screenHeight = window.innerHeight - 34;
  var screenWidth = ~~(screenHeight * 2);
- if (screenWidth > window.innerWidth)
+ if (screenWidth > window.innerWidth){
   screenHeight = ~~(window.innerWidth / 1.024);
+  
+ }else{
+  
+ }
+ 
+ if(window.innerHeight>window.innerWidth||!('1v1params' in replayKeys)){
+  content2.style.display='none'
+  content.style.width='100%'
+ }else{
+  content2.style.display='flex'
+  content.style.width='50%'
+  content2.style.width='50%'
+ }
 
  if (settings.Size === 1 && screenHeight > 602) cellSize = 5;
  else if (settings.Size === 2 && screenHeight > 602) cellSize = 20;
@@ -467,18 +529,21 @@ function resize() {
 var padnum3 = (window.innerHeight - (cellSize * 20)) / 3
 
  var pad = padnum + 'px'
- content.style.padding = `${pad} 0`;
- stats.style.bottom = padnum2 + 'px';
+ content.style.padding = content2.style.padding = `${pad} 0`;
+ stats.style.bottom = stats2.style.bottom= padnum2 + 'px';
 // stats.style.left = /*(cellSize*0.003)*/ /**/ d.style.marginLeft * padnum + 'px'
  
  mainmenu.style.height = 100 + '%'
  mainmenu.style.width = 100 + '%' 
  // Size elements
- a.style.padding = '0 0.5rem ' + ~~(cellSize / 2) + 'px';
+ a.style.padding = a2.style.padding = '0 0.5rem ' + ~~(cellSize / 2) + 'px';
  
- rectAniCanvas.width=aniDIV.style.width=cellSize*11
- rectAniCanvas.height=aniDIV.style.height=cellSize*3
-rectAniCanvas.style.height=rectAniCanvas.style.width='100%'
+ rectAniCanvas.width=rectAni2Canvas.width=aniDIV.style.width=aniDIV2.style.width=cellSize*11
+ rectAniCanvas.height=rectAni2Canvas.height=aniDIV.style.height=aniDIV2.style.height=cellSize*3
+/*rectAniCanvas.style.height=rectAniCanvas.style.width='100%'
+rectAni2Canvas.style.height=rectAni2Canvas.style.width='100%'
+*/
+
  stackCanvas.width = activeCanvas.width = bgStackCanvas.width = cellSize * 10;
  stackCanvas.height = activeCanvas.height = bgStackCanvas.height =
   cellSize * 20;
@@ -498,10 +563,31 @@ rectAniCanvas.style.height=rectAniCanvas.style.width='100%'
  nameplate.style.height=cellSize*1+'px'
  aniDIV.style.top=stackCanvas.height+padnum3+5+'px'
 
+stack2Canvas.width = activeCanvas2.width = bgStackCanvas2.width = cellSize * 10;
+ stack2Canvas.height = activeCanvas2.height = bgStackCanvas2.height =
+  cellSize * 20;
+ b2.style.width = stack2Canvas.width + (cellSize * 0.5) + 'px';
+ b2.style.height = stack2Canvas.height + 'px';
+ bA2.style.width = stack2Canvas.width + 'px';
+ bA2.style.height = stack2Canvas.height + 'px';
+ GMt.style.width = cellSize * 0.5 + 'px';
+ GMt.style.height = stack2Canvas.height + 'px';
+ GMt2.style.width = cellSize * 0.5 + 'px';
+ GMt2.style.height = 100 + '%';
+ 
+ 
+ nameplate2.style.top=stack2Canvas.height+padnum3+5+'px'
+ nameplate2.style.width=b2.style.width
+ nameplate2.style.height=cellSize*1+'px'
+ aniDIV2.style.top=stack2Canvas.height+padnum3+5+'px'
+
+
+
+
 // diaDIV.style.marginBottom=~~(window.innerHeight)- diaDIV.style.height+'px'
  diaDIV.style.height=cellSize*3+'px'
  
-iconCHAR.style.height=$d('selectorICON').style.height = /* (cellSize * 5) + 'px';*/ `${cellSize*5}px`
+iconCHAR.style.height=iconCHARAI.style.height=$d('selectorICON').style.height = $d('selectorICONAI').style.height = /* (cellSize * 5) + 'px';*/ `${cellSize*5}px`
 
 //iconCHAR.style.height = $d('selectorICON').style.height;
 
@@ -523,9 +609,39 @@ iconCHAR.style.height=$d('selectorICON').style.height = /* (cellSize * 5) + 'px'
  msg.style.marginTop=`${cellSize*10}px`;
  msg.style.fontSize = ~~(stackCanvas.width / 6) + 'px';
  stats.style.fontSize = ~~(stackCanvas.width / 11) + 'px';
+ 
+ //(((((((((())))))))))
+ 
+ holdCanvas2.width = cellSize * 4;
+ holdCanvas2.height = cellSize * 2;
+ a2.style.width = holdCanvas2.width + 'px';
+ a2.style.height = holdCanvas2.height + 'px';
+//nameplate2.style.transform=`translateX(${a2.width}px)`
+
+
+ preview2Canvas.width = cellSize * 4;
+ preview2Canvas.height = stack2Canvas.height;
+ preview2Canvas2.width = cellSize * 4;
+ preview2Canvas2.height = cellSize * 2;
+ c2.style.width = previewCanvas2.width + 'px';
+ stats2.style.left=stack2Canvas.width
+ c2.style.height = b2.style.height;
+ 
+ // Scale the text so it fits in the thing.
+ // TODO get rid of extra font sizes here.
+ msg2.style.marginTop=`${cellSize*10}px`;
+ msg2.style.fontSize = ~~(stack2Canvas.width / 6) + 'px';
+ stats2.style.fontSize = ~~(stack2Canvas.width / 11) + 'px';
+
+ 
+ 
+ 
  document.documentElement.style.fontSize = ~~(stackCanvas.width / 16) + 'px';
 
  stats.style.width = a.style.width;
+ ;stats2.style.width = a2.style.width;
+// nameplate2.style.transform=`translateX(${a2.width}px)`
+
 
  for (var i = 0, len = h3.length; i < len; i++) {
   h3[i].style.lineHeight = a.style.height;
@@ -618,6 +734,24 @@ function init(gt, gamep) {
      lineLimit: masterParameter.LINELIMIT == 'infinity' ? 'infinity' : masterParameter.LINELIMIT,
      linesRequire: masterParameter.LINESREQ
     }
+    
+   }
+   if (gt==119) {
+    replayKeys['1v1params'] = {
+     DAS: 7,
+     ARR: 1,
+     GRAV: 0,
+     SFT: 32,
+     LCK: replayKeys.LCK,
+     PREV: 5,
+     keys: {},
+     seed: ~~(Math.random() * 2147483645),
+     character:vsParameter.CHARACTER,
+     name:`${vsParameter.NAME}`,
+     pps:vsParameter.PPSLIMIT,
+     kps:vsParameter.KEYSPEED
+    }
+    
    }
 
 
@@ -640,7 +774,13 @@ function init(gt, gamep) {
   document.getElementById('active_FM').style.animation = "clear"
 
  $d('nameplayer').innerHTML=replayKeys.name==''?`??? (${setting.Character[settings.Character]})`: replayKeys.name
+if('1v1params' in replayKeys){
+  $d('nameplayer2').innerHTML=replayKeys['1v1params'].name==''?`??? (${setting.Character[replayKeys['1v1params'].character]})`: replayKeys['1v1params'].name
+  gtrisAI.KPSCap=replayKeys['1v1params'].kps
+    gtrisAI.PPSLimit=replayKeys['1v1params'].pps
 
+
+}else $d('nameplayer2').innerHTML=''
 
   IRStime = 0
   failToClear = false
@@ -678,10 +818,10 @@ function init(gt, gamep) {
        gamediff = gametime - (replaytime + 1 + frame) //(startPauseTime - startTime - (pauseTime) / (1000 / 60));
        for (i = 0; i < gamediff; i++) gameLoop()
       } else {
-    /*  if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
+    //  if (settings.Slowdown !== 0) { if ((piece.y < -10 || piece.index == 'reset') && (gameState == 2 || gameState == 0)) { for (; piece.index == 'reset' || piece.y < -10;) { gameLoop() } } else gameLoop() } else /**/ gameLoop()
       }
       }
-     }, 1000 / /* setting.Slowdown[settings.Slowdown]/**/60 )
+     }, 1000 / 60 /*setting.Slowdown[settings.Slowdown]/**/ )
     }
     
    }
@@ -712,14 +852,16 @@ function init(gt, gamep) {
   lineLimit = (replayKeys.sprintParams !== undefined ? replayKeys.sprintParams.lineLimit : 40);
 
   //Reset
-  column = 0;
+  column = stack2.column = 0;
+  
   keysDown = 0;
+  keysDown2 = 0
   keysDownKeyboard = 0
-  lastKeys = 0;
-  released = 255;
+  lastKeys = lastKeys2 = 0;
+  released = released2 = 255;
   //TODO Check if needed.
-  piece.shiftDir = 0;
-  piece.shiftReleased = true;
+  piece.shiftDir = piece2.shiftDir = 0;
+  piece.shiftReleased = piece2.shiftReleased = true;
 
   startPauseTime = 0;
   pauseTime = 0;
@@ -737,18 +879,33 @@ function init(gt, gamep) {
    masterParameter.activity.LINESREQ = replayKeys.masterParams.linesRequire * replayKeys.masterParams.level
    masterParameter.activity.LEVEL = replayKeys.masterParams.level
   }
+  
 
   rng.seed = replayKeys.seed;
+  
+  if('1v1params' in replayKeys || gametype == 119)
+  rngp2.seed = replayKeys['1v1params'].seed;
+  
   rng2.seed = replayKeys.seed /**/ /*1641392488/**/ //1355396022
   toGreyRow = 21;
+  toGreyRow2 = 21
   frame = 0;
   frameSkipped = 0
   FAILS = 0
   whiletrigger = true
+  whiletrigger2 = true
   lastPos = 'reset';
   piece.index = 'reset'
+  
+  lastPos2 = 'reset';
+  piece2.index = 'reset'
+  
   stack.new(10, 22);
   stack.newTemp(10, 22);
+  
+  stack2.new(10, 22);
+  stack2.newTemp(10, 22);
+  
   IRScount = 0
   IHScount = 0
   HoldTemp = void 0
@@ -763,21 +920,31 @@ function init(gt, gamep) {
   feverTime = 0
   feverTimeNow = -1
   gachatrises = 0
-  hold.piece = void 0;
+  
+  hold.piece = hold2.piece = void 0;
   if (replayKeys.GRAV === 0 && gametype !== 117) { gravity = gravityUnit * 4; }
   if (gametype == 117) { gravity = gravityUnit * 4 + (marathonParameter.activity.LEVEL < 20 ? MarathonSpeed[marathonParameter.activity.LEVEL - 1] : 20) }
   if (gametype == 118) { gravity = gravityUnit * 4 + 22 }
 
+  if('1v1params' in replayKeys)
+  if (replayKeys['1v1params'].GRAV === 0) { gravity2 = gravityUnit * 4; }
+
+
   startTime = Date.now();
   stack.clearrows = []
   preview.init();
+  
+  stack2.clearrows = []
+  preview2.init();
   //preview.draw();
 
   statsFinesse = 0;
   lines = 0;
   piecesSet = 0;
+  pieces2Set=0
   gameState = 3
   statsPiece.innerHTML = piecesSet;
+  statsPiece2.innerHTML = pieces2Set;
   statsLines.innerHTML = lineLimit - lines;
   boardnum = 0
   failsDA = 0
@@ -786,6 +953,13 @@ function init(gt, gamep) {
   clear(stackCtx);
   clear(activeCtx);
   clear(holdCtx);
+  
+
+  
+    statistics2();
+    clear(stack2Ctx);
+    clear(activeCtx2);
+    clear(holdCtx2);
 
   if (varfieldenable) {
    document.getElementById('bgFIELD').src = fieldload
@@ -794,26 +968,51 @@ function init(gt, gamep) {
    document.getElementById('bgFIELD').style.opacity = 0
    document.getElementById('bgFIELD').style = "width:100%;height:100%"
   }
-  piece.y = -93
-  statsLines.style.color = "#fff"
+  
+    if (varfieldenable2) {
+     document.getElementById('bgFIELD2').src = fieldload2
+     document.getElementById('bgFIELD2').style = "width:100%;height:100%;opacity:1"
+    } else {
+     document.getElementById('bgFIELD2').style.opacity = 0
+     document.getElementById('bgFIELD2').style = "width:100%;height:100%"
+    }
+  
+  
+  piece.y = piece2.y = -93
+  statsLines.style.color =statsLines2.style.color= "#fff"
   timewarning = false
   stack.varpiecedelay = -80
   stack.b2b = -1;
   renenable = -4;
   stack.varren = -1;
+  
+  stack2.varpiecedelay = -80
+  stack2.b2b = -1;
+  stack2.renenable = -4;
+  stack2.varren = -1;
+  
   minoes = 0;
   stackscore = 0
   dropscore = 0
-  disappearduration = 0;
+  piece2.dropscore=0
+  disappearduration = 0;disappearduration2=-38
   statsscore = 0
+  statsscore2 = 0
   garbagesequence = 0
-  stack.garbagenumber = 0
+  stack.garbagenumber = []
+  
+  stackscore2 = 0
+  dropscore2 = 0
+  
+  stack2.garbagenumber = []
+  
   randomGARBAGE = 0
   framedelay = 0
-  disappearduration = -182
+  
 
 
   linos = 1
+  linos2 = 1
   if (gt == 117) {
    statsLines.innerHTML = `LV. ${marathonParameter.activity.LEVEL}`
    if (replayKeys.marathonParams.lineLimit !== 'infinity') {
@@ -829,6 +1028,9 @@ function init(gt, gamep) {
    } else {
     statsType.innerHTML = `${lines} ${TransText('line')}`
    }
+  }
+  if(gametype==119){
+   statsLines.innerHTML=''
   }
   if (gametype === 3) {
    // Dig Race
@@ -932,8 +1134,8 @@ function init(gt, gamep) {
    //TODO make into function or own file.
 
 
-   stack.garbagenumber = 0;
-   statsLines.innerHTML = stack.garbagenumber;
+   stack.garbagenumber = [];
+   statsLines.innerHTML = stack.garbagenumber.length;
 
    statsType.innerHTML = TransText('pending')
 
@@ -941,7 +1143,18 @@ function init(gt, gamep) {
 
 
 
+  if (window.innerHeight > window.innerWidth ||!('1v1params' in replayKeys)) {
+   $d('content2').style.display = 'none'
+   $d('content2').style.visibility = 'none'
 
+   $d('content').style.width = '100%'
+  } else {
+   $d('content2').style.visibility = 'show'
+
+   $d('content2').style.display = 'flex'
+   $d('content').style.width = '50%'
+   $d('content2').style.width = '50%'
+  }
   menu();
 
 
@@ -1045,6 +1258,17 @@ function init(gt, gamep) {
    return (this.seed = (this.seed * 16807) % 2147483647);
   };
  }();
+ 
+ var rngp2 = new function() {
+  this.seed = 1;
+  this.next = function() {
+   // Returns a float between 0.0, and 1.0
+   return this.gen() / 2147483647;
+  };
+  this.gen = function() {
+   return (this.seed = (this.seed * 16807) % 2147483647);
+  };
+ }();
 
  /**
   * Draws the stats next to the tetrion.
@@ -1060,6 +1284,18 @@ function init(gt, gamep) {
    document.getElementById('pps').innerHTML = pps.toFixed(2).concat(' PPS')
   }
  }
+ 
+  function statistics2() {
+   if (gameState == 0) {
+    var time = frame - 100
+    var seconds = ((time / 60) % 60).toFixed(2);
+    var minutes = (Math.floor((time) / 3600)).toFixed(0);
+    statsTime2.innerHTML =
+     minutes + (seconds < 10 ? ':0' : ':') + seconds;
+    var pps = pieces2Set / (time / 60)
+    document.getElementById('pps2').innerHTML = pps.toFixed(2).concat(' PPS')
+   }
+  }
 
  // ========================== View ============================================
 
@@ -1280,7 +1516,7 @@ function init(gt, gamep) {
       img.src = custom[1]
       img.width = cellSize
       img.height = cellSize*/
-
+    $d('customSprite').src=`tetrimino/${setting.Block[settings.Block]}.png`
     spriteCtx.drawImage(spriteCustom, /*x*cellSize*/ 0, 0, spriteCustom.width /**/ , spriteCustom.height /*  */ )
 
 
@@ -1430,7 +1666,7 @@ function keyUpDown(e) {
     }
   }
   if (e.type === "keydown" && e.keyCode === binds.retry) {
-   if(!(moremodeselect[1].classList.contains('on')||menus[1].classList.contains('on')||menus[11].classList.contains('on')))
+   if(!(moremodeselect[1].classList.contains('on')||menus[1].classList.contains('on')||menus[11].classList.contains('on')||menus[15].classList.contains('on')))
 
     init(gametype);
   }
@@ -1478,7 +1714,8 @@ addEventListener('keyup', keyUpDown, false);
    piece.finesse++;
   } else if (flags.rot180 & keysDown && !(lastKeys & flags.rot180)) {
    /* for (var u = 0; u < 2; u++) */
-   piece.rotate(2);
+   piece.rotate(1);
+   piece.rotate(1)
    piece.finesse++;
   }
 
@@ -1510,6 +1747,71 @@ addEventListener('keyup', keyUpDown, false);
   if (lastKeys !== keysDown) {
    lastKeys = keysDown;
   }
+  
+  
+ }
+ 
+ function update2() {
+ 
+  //TODO Das preservation broken.
+ 
+  if (lastKeys2 !== keysDown2 && !watchingReplay) {
+   replayKeys[`1v1params`].keys[frame] = keysDown2;
+  } else if (frame in replayKeys[`1v1params`].keys) {
+   keysDown2 = replayKeys['1v1params'].keys[frame];
+ 
+  };
+  if (replayKeys[`1v1params`].keys[frame] == 'END' && gameState == 0) {
+  
+  }
+ 
+  if (!(lastKeys2 & flags.holdPiece) && flags.holdPiece & keysDown2) {
+   piece2.hold();
+  }
+ 
+  if (flags.rotLeft & keysDown2 && !(lastKeys2 & flags.rotLeft)) {
+   piece2.rotate(-1);
+   piece2.finesse++;
+  } else if (flags.rotRight & keysDown2 && !(lastKeys2 & flags.rotRight)) {
+   piece2.rotate(1);
+   piece2.finesse++;
+  } else if (flags.rot180 & keysDown2 && !(lastKeys2 & flags.rot180)) {
+   /* for (var u = 0; u < 2; u++) */
+   piece2.rotate(1);
+   piece2.rotate(1)
+   piece2.finesse++;
+  }
+ 
+  piece2.checkShift();
+ 
+  if (flags.moveDown & keysDown2) {
+   piece2.shiftDown();
+   //piece.finesse++;
+  }
+  if (!(lastKeys2 & flags.hardDrop) && flags.hardDrop & keysDown2) {
+   piece2.hardDrop();
+  }
+ 
+  piece2.update();
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  // Win
+  // TODO
+ 
+ 
+  statistics2();
+ 
+  if (lastKeys2 !== keysDown2) {
+   lastKeys2 = keysDown2;
+  }
+ 
+ 
  }
  
  var piecenextbool = false
@@ -1523,16 +1825,22 @@ addEventListener('keyup', keyUpDown, false);
   if (!paused){
    frame += 1;
    rectAnimations.loop()
-  }
+   if('1v1params' in replayKeys)rectAnimations2.loop()
+   }
   var fps = 60
-  if (gametype == 112 || gametype == 115)
-   document.getElementById('active_GM').style.top = 100 - ((Math.min(stack.garbagenumber, 20) / 20) * 100) + '%'
+  if (gametype == 112 || gametype == 115||gametype ==119)
+   document.getElementById('active_GM').style.top = 100 - ((Math.min(stack.garbagenumber.length, 20) / 20) * 100) + '%'
   if (gametype == 0)
    document.getElementById('active_GM').style.top = (((Math.max(lineLimit - lines, 0)) / lineLimit) * 100) + '%'
   if (gametype == 3)
    document.getElementById('active_GM').style.top = 100 - ((digLines.length / 10) * 100) + '%'
   if (gametype == 111)
    document.getElementById('active_GM').style.top = 100 - ((Math.min(20, TSD) / 20) * 100) + '%'
+
+if(gametype==119)
+document.getElementById('active_GM2').style.top = 100 - ((Math.min(stack2.garbagenumber.length, 20) / 20) * 100) + '%'
+
+
 
   if (gametype == 117) {
    statsLines.innerHTML = `${TransText('level')} ${marathonParameter.activity.LEVEL}`
@@ -1582,6 +1890,7 @@ addEventListener('keyup', keyUpDown, false);
   /*if (watchingReplay == false)/**/
   //  if (frame == 1390 && setting.Character[settings.Character] == 'Alix') document.getElementById('bgFIELD').src = 'characters/Alix/what.png'
   statsscore = dropscore + stackscore
+  statsscore2 = piece2.dropscore + stackscore2
   // scorestats.innerHTML = statsscore
   //TODO check to see how pause works in replays.
   //TODO use ARE in downstack attack
@@ -1605,7 +1914,19 @@ addEventListener('keyup', keyUpDown, false);
   }
   else if (frame == 100) {
    piece.initNew(preview.next());
+   if('1v1params' in replayKeys || gametype == 119){
+    piece2.initNew(preview2.next());
+    gtrisAI.eval(piece2.index)/**/
+ 
+ 
+   }
   }
+
+if('1v1params' in replayKeys&&!watchingReplay&&frame>100){
+ gtrisAI.run()
+ //keysDown2=keysDown
+}
+
 
   if (!feverActivate && feverAble) {
 
@@ -1613,6 +1934,7 @@ addEventListener('keyup', keyUpDown, false);
     playvoice('frenzystart')
     StackTemp = stack.grid
     stack.new(10, 22)
+    gtrisAIPredictor.new(10,22)
     RENTemp = stack.varren
     PreviewGrabTemp = preview.grabBag
     HoldTemp = hold.piece
@@ -1878,44 +2200,12 @@ ctscmain.simultaneous(function(){
   }
 
 
-  try {
-   if (gametype == 115 && watchingReplay == true) {
-    if (frame in replayKeys['garbagereceive']) {
-     stack.garbagenumber += replayKeys['garbagereceive'][frame]
-
-    }
-    /*      if (frame-1 in replayKeys.garbagesend)
-          for (var i=0; i<replayKeys.garbagesend[frame-1]; i++){
-              
-          if ((stack.garbagenumber<=0)){
-      if (garbrowcount>0){
-                      for (var y = 22; y >= -1; y--) {
-                        if (garbrowcount==0) break
-                          for (var x = 0; x < 10; x++) {
-                              {
-                                  stack.grid[x][22]=0
-                              }
-                              stack.grid[x][y] = stack.grid[x][y - 1];
-                          }
-                      }
-                      stack.draw()
-                      garbrowcount--
-                  } else {stack.garbagenumber--}
-          {}
-          
-      }else {stack.garbagenumber--}
-      }*/
-   }
-  } catch (e)
-  {
-   document.write(e) //overwrites the whole HTML with error message
-   return
-  }
+  
   document.getElementById("readybar").value = frame + 50
 
   try {
    if (gametype == 112 && gameState == 0) {
-    statsLines.innerHTML = Math.max(stack.garbagenumber, 0)
+    statsLines.innerHTML = Math.max(stack.garbagenumber.length, 0)
     if (frame >= 500) {
 
      if (frame >= framedelay) {
@@ -1933,7 +2223,7 @@ ctscmain.simultaneous(function(){
       //garbagesequence++
       //}
       var randomGARBAGE = Math.round(~~(rng.next() * 5))
-      stack.garbagenumber += randomGARBAGE
+      stack.sendGarbage(randomGARBAGE,rng.next(),30)
      }
     }
    }
@@ -2093,7 +2383,8 @@ ctscmain.simultaneous(function(){
    }
 
 
-   linosbool = boolwarning == true || stack.garbagenumber * 9 + linos >= 120
+   linosbool = boolwarning == true || stack.garbagenumber.length * 9 + linos >= 120
+   linosbool2 = boolwarning2 == true || stack2.garbagenumber.length * 9 + linos2 >= 120
 
    while (whiletrigger == true && gametype !== 116 && !feverActivate) {
     minoesdetectwarning = 0;
@@ -2107,9 +2398,26 @@ ctscmain.simultaneous(function(){
     whiletrigger = false
 
    }
+   
+   if('1v1params' in replayKeys || gametype == 119)
+   while (whiletrigger2 == true && gametype !== 116 && !feverActivate) {
+    minoesdetectwarning2 = 0;
+    for (var x = 0; x < 10; x++) {
+     for (var y = 1; y < 8; y++) {
+      if (stack2.grid[x][y]) minoesdetectwarning2++;
+     }
+    }
+    if (minoesdetectwarning2 !== 0) { boolwarning2 = true } else { boolwarning2 = false }
+
+    whiletrigger2 = false
+
+   }
 
    if (frame > -1000) {
     warningalarm()
+    
+    if('1v1params' in replayKeys || gametype == 119)
+    warningalarm2()
 
    }
    if (gametype === 115) {
@@ -2134,6 +2442,21 @@ ctscmain.simultaneous(function(){
     cleartext = ''
     cleartextpc = ''
    }
+   if (frame <= disappearduration2) {
+    cleardetail2.innerHTML = cleartext2
+    cleardetail2ren.innerHTML = cleartext2ren
+    cleardetail2pc.innerHTML = cleartext2pc
+   
+   
+   }
+   else {
+   
+    cleardetail2.innerHTML = '';
+    cleardetail2ren.innerHTML = '';
+    cleardetail2pc.innerHTML = '';
+    cleartext2 = ''
+    cleartextpc2 = ''
+   }
 
    //	lini.innerHTML=setPattern + ' \| ' + piececolor + ' \| ' + flip
    //lini.innerHTML = startPauseTime + ' \| ' + pauseTime + ' \| ' + gametime + ' \| ' + gamediff
@@ -2150,6 +2473,7 @@ ctscmain.simultaneous(function(){
   }
 
   scorestats.innerHTML = `${(statsscore < 10000000 ? '0' : '')}${(statsscore < 1000000 ? '0' : '')}${(statsscore < 100000 ? '0' : '')}${(statsscore < 10000 ? '0' : '')}${(statsscore < 1000 ? '0' : '')}${(statsscore < 100 ? '0' : '')}${(statsscore < 10 ? '0' : '')}${statsscore}`
+  scorestats2.innerHTML = `${(statsscore2 < 10000000 ? '0' : '')}${(statsscore2 < 1000000 ? '0' : '')}${(statsscore2 < 100000 ? '0' : '')}${(statsscore2 < 10000 ? '0' : '')}${(statsscore2 < 1000 ? '0' : '')}${(statsscore2 < 100 ? '0' : '')}${(statsscore2 < 10 ? '0' : '')}${statsscore2}`
 
 
 
@@ -2158,6 +2482,8 @@ ctscmain.simultaneous(function(){
 
    if (!paused) {
     update();
+    if('1v1params' in replayKeys || gametype == 119)
+    update2()
    } else {
 
    }
@@ -2177,6 +2503,25 @@ ctscmain.simultaneous(function(){
    lastY = Math.floor(piece.y);
    lastPos = piece.pos;
    piece.dirty = false;
+   
+   
+   if('1v1params' in replayKeys || gametype == 119){
+   if (
+    piece2.x !== lastX2 ||
+    Math.floor(piece2.y) !== lastY2 ||
+    piece2.pos !== lastPos2 ||
+    piece2.dirty
+   ) {
+    clear(activeCtx2);
+    piece2.drawGhost();
+    piece2.draw();
+    
+   }
+   lastX2 = piece2.x;
+   lastY2 = Math.floor(piece2.y);
+   lastPos2 = piece2.pos;
+   piece2.dirty = false;
+}
 
   } else if (gameState === 2) {
    // Count Down
@@ -2208,6 +2553,26 @@ ctscmain.simultaneous(function(){
 
 
    // DAS Preload
+   if('1v1params' in replayKeys || gametype == 119){
+   if (lastKeys2 !== keysDown2 && !watchingReplay) {
+    replayKeys[`1v1params`].keys[frame] = keysDown2;
+   } else if (frame in replayKeys[`1v1params`].keys) {
+    keysDown2 = replayKeys[`1v1params`].keys[frame];
+   }
+   
+   if (keysDown2 & flags.moveLeft) {
+    lastKeys2 = keysDown2;
+    piece2.shiftDelay = replayKeys[`1v1params`].DAS;
+    piece2.shiftReleased = false;
+    piece2.shiftDir = -1;
+   } else if (keysDown2 & flags.moveRight) {
+    lastKeys2 = keysDown2;
+    piece2.shiftDelay = replayKeys[`1v1params`].DAS;
+    piece2.shiftReleased = false;
+    piece2.shiftDir = 1;
+   }
+   }
+   
    if (lastKeys !== keysDown && !watchingReplay) {
     replayKeys.keys[frame] = keysDown;
    } else if (frame in replayKeys.keys) {
@@ -2230,17 +2595,19 @@ ctscmain.simultaneous(function(){
     * Fade to grey animation played when player loses.
     */
    if (gameState !== 0 && gameState !== 2 && gameState !== 'wait') {
-    if (toGreyRow === 21) clear(activeCtx);
+    if (toGreyRow === 21&&!('1v1params'in replayKeys)) clear(activeCtx);
     if (frame % 30) {
      for (var x = 0; x < 10; x++) {
-      if (stack.grid[x][toGreyRow]) stack.grid[x][toGreyRow] = gameState - 1;
+      if (stack.grid[x][toGreyRow]&&!('1v1params'in replayKeys)) stack.grid[x][toGreyRow] = gameState - 1;
      }
      stack.draw();
      toGreyRow--;
     }
-    if(toGreyRow==0)gameRunning=false
+    if(toGreyRow<0){gameRunning=false
+     return false
+    }
    }
-   if (gameState == 'wait') clear(activeCtx)
+   //if (gameState == 'wait') clear(activeCtx)
   }
 
  }
@@ -2365,6 +2732,38 @@ replayKeys.name=parse.name
 
     }
    }
+   if (parse.gameparameter == 119) {
+    let arrayReq = [
+     'DAS',
+     'ARR',
+     'GRAV',
+     'SFT',
+     'LCK',
+     'PREV',
+     'keys',
+     'seed',
+     'character',
+     'name',
+     'pps',
+     'kps'
+    ]
+    let REQ_ERROR=[]
+    replayKeys['1v1params']={}
+    
+    if('1v1params' in parse){
+     for(let REQ of arrayReq){
+      if(REQ in parse['1v1params']){
+       replayKeys['1v1params'][REQ]=parse['1v1params'][REQ]
+      }
+      else REQ_ERROR.push(REQ)
+      }
+      if(REQ_ERROR.length!==0)throw TransText('vs_warn2',REQ_ERROR.toString().replace(/,/gm, ', '))
+
+    }else{
+     throw TransText('vs_warn1')
+     }
+    
+   }
 
 
   } catch (end) {
@@ -2406,6 +2805,32 @@ replayKeys.name=parse.name
    menu(5);
   
  }
+
+ function endgame2(TITLE, STATE, DOWNFALL, SOUND) {
+  gameState = STATE
+
+  msg.innerHTML = TITLE
+  playmfx('stop', 'start')
+  playmfx('stop', 'loop')
+  MusicParameter.active = true
+
+  if (!watchingReplay)
+   document.getElementById('replaydata').value = replaystring = JSON.stringify(replayKeys)
+  if (DOWNFALL !== void 0 && DOWNFALL == true) {
+   fallboard2()
+  }
+  var _SOUND = SOUND
+
+  if (_SOUND !== void 0) {
+   if (_SOUND == 'win') { playsfx('win') }
+   if (_SOUND == 'lose') { playsfx('lose') }
+
+  }
+  menu(5);
+
+ }
+
+
 
  var replaystring
 

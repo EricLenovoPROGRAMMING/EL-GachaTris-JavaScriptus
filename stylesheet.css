@@ -113,8 +113,10 @@ animation-name: flashThing;
 animation-duration: 0.1s;
 animation-iteration-count: 91;
 */
-
-#active_GM{
+.unresizable{
+ resize:none;
+}
+#active_GM,#active_GM2{
 	transition:top 0.1s ease;
 }
 
@@ -221,10 +223,11 @@ nav a:hover{
 }
 
 
-#nameplate {
+#nameplate{
  font: 1.25em 'ColorFont';
- position: absolute
- ;float:center;
+ position: absolute;
+ align-self:center;
+ 
  overflow:hidden;
  width: 50%;
  height:3%;
@@ -235,7 +238,24 @@ nav a:hover{
  margin: 0em;
  background: #111;
 }
-#rectAnimationDIV {
+
+#nameplate2 {
+ font: 1.25em 'ColorFont';
+ position: absolute;
+ align-self: center;
+ /*transform:translateX(50%);*/
+
+ overflow: hidden;
+ width: 50%;
+ height: 3%;
+ color: #fff;
+ border: 1.5pt solid #fff;
+ border-radius: 100px;
+ line-height: 0;
+ margin: 0em;
+ background: #111;
+}
+#rectAnimationDIV, #rectAnimationDIV2{
  
  position: absolute;
  float: center;
@@ -244,17 +264,21 @@ nav a:hover{
  margin: 0em;
  
 }
-#rectAnimations {
+#rectAnimations,#rectAnimations2 {
  transition: height 0.2s linear;
  background:rgba(0,0,0,0.0);
  
 }
-#rectAnimationTransition {
- transition: height 2s linear;}
+#rectAnimationTransition ,#rectAnimationTransition2{
+ transition: height 2s linear;
+ 
+}
 select{
  width:30%;
  height:40%;
 }
+
+
 
 .button {
   margin: 0;
@@ -293,9 +317,10 @@ select{
 			100%{transform:rotate(360deg)};
 }
 /* Content */
-#content {
-  display: table;
-  
+#content, #content2 {
+  display: flex;
+  justify-content: center;
+  width:50%;
   /*margin: auto;/**/
   background: rgba(0,0,0,0);
 /* transform:rotateY(50deg) rotateX(30deg);*/
@@ -363,12 +388,12 @@ select{
 
 
 
-#a {
+#a, #a2 {
   position: relative;
   overflow: hidden;
   float: left;
 }
-#b {
+#b, #b2 {
   border: 0.2em solid #fff;
   background-color: #000;
   
@@ -391,14 +416,21 @@ select{
 	transition:opacity 0s linear;
 
 }
-#c {
+#c, #c2 {
   padding: 0 0.5em;
   position: relative;
   overflow: hidden;
   float: left;
   
+  
 }
-  #bgStack {
+
+#bgFIELD2, #rectAnimationDIV2{
+ transform: rotateY(180deg)
+}
+
+
+  #bgStack, #bgStack2 {
     
     position: absolute;
     z-index: 2;
@@ -406,13 +438,17 @@ select{
   }
   #hold,
   #previewDIV,
-  #stack
+  #stack,
+    #hold2,
+  #previewDIV2,
+  #stack2
   {
     position: absolute;
     z-index: 2;
-    
+    display:grid;
+    columns:1 1px;
   }
-  #preview{
+  #preview, #preview20{
       background-color: #000;
       width: 45%;
       height: auto;
@@ -420,7 +456,7 @@ select{
       align-self: center;
       margin-left: 20%;
   }
-    #hold {
+    #hold, #hold2 {
      background-color: #000;
      width: 75%;
      height: auto;
@@ -428,10 +464,10 @@ select{
      align-self: center;
      margin-left: 2%;
     }
-  #preview{
+  #preview, #preview2,#preview20,#preview22{
    position:relative;
   }
-    #preview2 {
+    #preview2, #preview22 {
      position:relative;
      background-color: #000;
      width: 75%;
@@ -441,22 +477,28 @@ select{
      margin-left: 15%;
     }
   #hold h3,
-  #preview h3 {
+  #preview h3,
+    #hold2 h3,
+    #preview2 h3 {
       position: absolute;
       vertical-align: center;
   }
-  #preview h3{
+  #preview h3, #preview2 h3{
    margin-left:0%;
+  }
+  #previewDIV,#previewDIV2{
+   display:grid;
+   justify-content: center
   }
  #contento {
      position: absolute;
      z-index: 37
  }
-  #active {
+  #active, #active2 {
     position: absolute;
     z-index: 3;
   }
-  #msg {
+  #msg, #msg2 {
     font: 900 4rem 'Source Sans Pro', sans-serif;
     font-size: 4rem;
     color: #fff;
@@ -469,7 +511,7 @@ select{
     z-index: 4;
   }
 
-  #allcleartext {
+  #allcleartext, #allcleartext2 {
       font: 900 4rem 'Source Sans Pro', sans-serif;
       font-size: 4rem;
       color: #fff;
@@ -504,12 +546,12 @@ select{
       transition: top .3s cubic-bezier(0,0.5,0.75,1)
   }
 
-#d {
+#d, #d2 {
   float: left;
  
 }
 
-#divclear {
+#divclear, #divclear2 {
 
     font-size: 150%;
     
@@ -522,7 +564,7 @@ select{
     width:100%;
    transition: text-shadow 0.5s linear
 }
-#divclear{
+#divclear, #divclear2{
  top:-1%;
  left:3%;
 }
@@ -620,6 +662,53 @@ h6{
   font-size: 1.125em;
   display: block;
 }
+
+#stats2 {
+  display: block;
+  position: fixed;
+  float:right;
+}
+#stats2 tbody {
+  display: block;
+}
+#stats2 tr {
+  display: block;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+#stats2 th {
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'ColorFont';
+  width: 100%;
+  vertical-align: bottom;
+  text-align: left;
+  font-size: 60%;
+}
+#stats2 th2 {
+    text-transform: uppercase;
+    font-family: 'ColorFont';
+    display: inline-block;
+    width: 100%;
+    vertical-align: bottom;
+    font-size: 110%;
+}
+#stats2 td {
+  font-size: 110%;
+  font-family:'ColorRegular';
+ /* font-weight: 900;*/
+  text-align: left;
+  line-height: 1;
+  display: inline-block;
+  width: 100%;
+}
+#time2 {
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.125em;
+  display: block;
+}
+
 
 /* Menus */
 .menu {

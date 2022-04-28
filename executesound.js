@@ -13,7 +13,7 @@
 
 function playsfx(sound) {
  var soundname = SoundFX[sound]
- if ((settings.Sound == true && settings.Volume > 0) && (gamediff == undefined || gamediff < 50)) {
+ if ((settings.Sound == true && settings.Volume > 0) && (gamediff == undefined || gamediff < 500)) {
   {
    soundname.volume(settings.Volume / 100)
   }
@@ -32,7 +32,7 @@ function sfxRETURN(detect){
 }
 
 function playsfxJSO(soundname) {
- if ((settings.Sound == true && settings.Volume > 0) && (gamediff == undefined || gamediff < 50)) {
+ if ((settings.Sound == true && settings.Volume > 0) && (gamediff == undefined || gamediff < 500)) {
   {
    soundname.volume(settings.Volume / 100)
   }
@@ -53,7 +53,7 @@ function stopsfxJSO(varname) {
 
 function playvoice(voicename) {
  try{
- if (gamediff == undefined || gamediff < 50)
+ if (gamediff == undefined || gamediff < 500)
   if (settings.Voice == 1 && settings.VFXVol !== 0) {
    {
     var vol = settings.VFXVol / 100
@@ -71,11 +71,31 @@ function playvoice(voicename) {
  }catch(o){}
 }
 
+function playvoice2(voicename) {
+ try{
+ if (gamediff == undefined || gamediff < 500)
+  if (settings.Voice == 1 && settings.VFXVol !== 0) {
+   {
+    var vol = settings.VFXVol / 100
+    voiceset2[voicename].volume(vol)
+
+
+    voiceset2[voicename].stop()
+
+    voiceset2[voicename].play();
+
+
+   }
+
+  }
+ }catch(o){}
+}
+
 function playpiecesfx(jsonname) {
  try{
  var vol = settings.PieceVol / 100
  
- if (gamediff == undefined || gamediff < 4)
+ if (gamediff == undefined || gamediff < 500)
   if (settings.PieceVol !== 0 && settings.PieceSFX !== 0) {
    piecesound[jsonname].volume(vol)
    piecesound[jsonname].stop()
@@ -88,7 +108,7 @@ function playpiecesfx(jsonname) {
 
 function playcom(jsonname) {
  var vol = settings.CMVol / 100
- if (gamediff == undefined || gamediff < 50)
+ if (gamediff == undefined || gamediff < 500)
   if (settings.CMVol !== 0) {
    comvoice[jsonname].volume(vol)
    comvoice[jsonname].stop()

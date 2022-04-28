@@ -101,7 +101,7 @@ Preview.prototype.draw = function() {
     if (this.grabBag[i] === 0) {
       draw(
         pieces[this.grabBag[i]].tetro,
-        pieces[this.grabBag[i]].x - 2.6,
+        pieces[this.grabBag[i]].x - 3,
         pieces[this.grabBag[i]].y + 2 + (i-1) * 3,
         previewCtx,
       );

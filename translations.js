@@ -68,6 +68,8 @@ function TransText(_TEXT, _INPUT) {
    selector: "Select a Gacha Character",
    charName: "You are now using:",
    
+   
+   
    controls: "Controls",
    controlsnote: "Click on the control you want to change, then press any key.",
    left: "Move Left",
@@ -125,6 +127,18 @@ function TransText(_TEXT, _INPUT) {
    master_warn2: 'In Master Mode, level, linesRequire and lineLimit must ALL exist. Otherwise, if you change some of them for the said Mode from the original parameters in the replay data, something bad may happen.',
    master_warn1: 'In Master Mode, the \'masterParams\' parameter must exist by default.',
 
+  selectorAI: "Select a Gacha Character for the AI",
+   charNameAI: "You now let the AI use:",
+   vs_note:'TIP: widen the window or make the orientation landscape to enable 2-Player Window Arrangement.',
+   vs_pps:'Speed Limit:',
+   vs_kps:'Interval (Keypresses Per Second):',
+   vs_name:'AI Name:',
+   vs_characteruse:'Current Character:',
+   vs_pickChar:'Gacha Character for the AI',
+   vs_ai:'Versus AI',
+   vs_warn2:`In VS AI mode, you are missing one or more '1v1params' parameters: ${_INPUT}; Likewise, either if you change some of them for the said Mode from the original parameters in the replay data, something bad may happen, or if one or more parameters are missing, the replay data cannot be loaded.`,
+   vs_warn1: 'In VS AI mode, the \'1v1params\' parameter must exist by default.',
+   
 
    single: "Single",
    double: "Double",
@@ -277,6 +291,20 @@ playername:"Pangalan ng manlalaro:",
    master_warn2: 'Sa Master Mode, ang level, linesRequire at lineLimit ay dapat na LAHAT ay umiiral. Kung hindi, kung babaguhin mo ang ilan sa mga ito para sa nasabing Mode mula sa orihinal na mga parameter sa replay data, maaaring may mangyari na hindi maganda.',
    master_warn1: 'Sa Master Mode, dapat na umiiral ang parameter na \'masterParams\' bilang default.',
 
+selectorAI: "Pumili ng Gacha Character para sa AI",
+   charNameAI: "Hinahayaan mo na ngayon ang AI na gamitin si:",
+   
+   vs_note:'TIP: palawakin ang window o gawin ang orientation nito sa landscape para paganahin ang 2-Player Window Arrangement.',
+
+   vs_pps:'Limit ng bilis:',
+   vs_kps:'Interval (Mga Keypress Bawat Segundo):',
+   vs_name:'Pangalan ng AI:',
+   vs_characteruse:'Kasalukuyang Karakter:',
+   vs_pickChar:'Gacha Character para sa AI',
+   vs_ai:'Laban sa AI',
+   vs_warn2:`Sa VS AI mode, nawawala ang isa o higit pang mga parameter ng '1v1params': ${_INPUT}; Gayundin, kung babaguhin mo ang ilan sa mga ito para sa nasabing Mode mula sa orihinal na mga parameter sa replay data, maaaring may mangyari na masama, o kung nawawala ang isa o higit pang mga parameter, hindi na ma-load ang replay data.`,
+   vs_warn1: 'Sa VS AI mode, dapat na umiiral ang parameter na \'1v1params\' bilang default.',
+   
 
    single: "Single",
    double: "Double",
@@ -429,6 +457,20 @@ playername:"Nom de joueur:",
    master_warn2: 'En Mode Master, level, linesRequire et lineLimit doivent TOUS exister. Sinon, si vous modifiez certains d\'entre eux pour ledit mode à partir des paramètres d\'origine dans les données de relecture, quelque chose de grave peut se produire.',
    master_warn1: 'En Mode Master, le paramètre \'masterParams\' doit exister par défaut.',
 
+vs_note:'ASTUCE: agrandissez la fenêtre ou orientez-la vers le paysage pour activer l\'arrangement de la fenêtre à 2 joueurs. ',
+
+  selectorAI: "Sélectionnez un personnage Gacha pour l'IA",
+   charNameAI: "Vous laissez maintenant l'IA utiliser:",
+   vs_pps:'Limitation de vitesse:',
+   vs_kps:'Intervalle (Touches par Seconde):',
+   vs_name:'Nom de l\'IA:',
+   vs_characteruse:'Caractère Actuel:',
+   vs_pickChar:'Personnage Gacha pour l\'IA',
+   vs_ai:'Versus IA',
+   vs_warn2:`En mode VS AI, il vous manque un ou plusieurs paramètres de '1v1params': ${_INPUT}; De même, soit si vous modifiez certains d'entre eux pour ledit mode à partir des paramètres d'origine dans les données de relecture, quelque chose de mauvais peut arriver, soit si un ou plusieurs paramètres manquent, les données de relecture ne peuvent pas être chargées.`,
+   vs_warn1: 'En mode VS IA, le paramètre \'1v1params\' doit exister par défaut.',
+   
+
    endless: "SANS FIN",
 
    single: "Single",
@@ -549,6 +591,8 @@ nameGUI('done', TransText('done'))
 
 textGUI('selector', TransText('selector'))
 textGUI('charName', TransText('charName'))
+textGUI('vs-note', TransText('vs_note'))
+
 
  buttonGUI('continue', TransText('return'))
 
@@ -561,6 +605,10 @@ textGUI('charName', TransText('charName'))
  $iH('nextTXT', TransText('next'))
  $iH('allcleartext', TransText('pc'))
  textGUI('piece', TransText('piece'))
+ textGUI('hold2', TransText('hold'))
+ $iH('nextTXT2', TransText('next'))
+ $iH('allcleartext2', TransText('pc'))
+ textGUI('piece2', TransText('piece'))
 
  textGUI('timeheader', TransText('DA_timer'))
  textGUI('missheader', TransText('DA_miss'))
@@ -576,6 +624,20 @@ textGUI('charName', TransText('charName'))
  textGUI('master-levelheader', TransText('master_level'))
  textGUI('master-linereqheader', TransText('master_linereq'))
  textGUI('playername', TransText('playername'))
+ 
+ textGUI('vs-speedheader', TransText('vs_pps'))
+ textGUI('vs-kpsheader', TransText('vs_kps'))
+ textGUI('vs-nameheader', TransText('vs_name'))
+textGUI('vs-characterheader', TransText('vs_characteruse'))
+ buttonGUI('pickAIChar', TransText('vs_pickChar'))
+ textGUI('selectorAI', TransText('selectorAI'))
+ textGUI('charNameAI', TransText('charNameAI'))
+ buttonGUI('vs', TransText('vs_ai'))
+ textGUI('vs', TransText('vs_ai'))
+
+
+
+
  
  $iH('feverTXT', TransText('frenzy'))
 

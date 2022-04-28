@@ -1,4 +1,4 @@
-var SoundFX = {
+var SoundFX = {/*
  renend: new Howl({ src: 'sounds/UNDEFINED/endren.ogg' }),
  b2bs: new Howl({ src: 'sounds/UNDEFINED/b2b.ogg' }),
  b2bs2: new Howl({ src: 'sounds/UNDEFINED/b2b-low.ogg' }),
@@ -56,7 +56,7 @@ IHSSound: new Howl({ src: 'sounds/UNDEFINED/ihs.ogg' }),
 
  timer: new Howl({ src: 'sounds/UNDEFINED/timerwarn.ogg', html5: true }),
  linedown: new Howl({ src: 'sounds/UNDEFINED/linedown.ogg', html5: true })
-}
+/**/}
 var REN = {}
 var musicbgm = new Howl({ src: 'music/original.mp3', html5: true })
 
@@ -233,11 +233,17 @@ function comset(line, spin, mini, pc, b2b) {
 var fieldimgenable = true;
 var fieldimg2enable = true
 var fieldimg3enable = true
+
+var field2imgenable = true;
+var field2img2enable = true
+var field2img3enable = true
+
 var feverenable = true
 
 var fieldload = ''
+var fieldload2 = ''
 
-var characters_folder, dsfever;
+var characters_folder, characters_folder2 , dsfever;
 
 var voiceset = {
  /* initv1: new Howl({ src: 'characters/voices/init1.ogg' }),
@@ -250,12 +256,19 @@ var voiceset = {
   vwin: new Howl({ src: 'characters/voices/win.ogg' }),
   damage1: new Howl({ src: 'characters/voices/damage1.ogg' }),
   damage2: new Howl({ src: 'characters/voices/damage2.ogg' }),*/
-}
+}, voiceset2={}
 var fieldwarningload
 var fieldsleepload
 var fieldimg = new Image()
 var fieldimg3 = new Image()
 var fieldimg2 = new Image()
+
+var fieldwarningload2
+var fieldsleepload2
+var field2img = new Image()
+var field2img3 = new Image()
+var field2img2 = new Image()
+
 var feverChar = new Image()
 
 function characterinit(NEW) {
@@ -313,7 +326,10 @@ function characterinit(NEW) {
 
 
  var settingchar = settings.Character.toString()
- characters_folder;
+ if('1v1params' in replayKeys)
+ var settingchar2 = replayKeys['1v1params'].character.toString()
+ 
+ 
  if (currentCharacter == '0') { characters_folder = NaN }
  else characters_folder = setting.Character[currentCharacter];
 
@@ -330,7 +346,8 @@ function characterinit(NEW) {
 
  fieldimg.onerror = function() {
   fieldimgenable = false
-
+  
+  
   document.getElementById('SHOWFIELD').style.visibility = "hidden";
  }
  fieldimg2.onerror = function() {
@@ -391,6 +408,8 @@ function characterinit(NEW) {
 
 
 
+
+
  try {
   voiceset['initv1'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/init1.ogg') });
   voiceset['initv2'] = new Howl({ src: 'characters/'.concat(characters_folder, '/voices/init2.ogg') });
@@ -420,19 +439,113 @@ function characterinit(NEW) {
  voiceset['gachatrisplus'].once('loaderror', function() { NEW.gtrisenableplus = false })
  voiceset['gachatrisplus'].once('load', function() { NEW.gtrisenableplus = true })
 }
+
+if ('1v1params' in replayKeys) {
+ if(currentCharacter2!==replayKeys['1v1params'].character){
+  currentCharacter2=replayKeys['1v1params'].character
+ if (currentCharacter2 == '0') { characters_folder2 = NaN }
+ else characters_folder2 = setting.Character[currentCharacter2];
+
+ fieldwarningload2 = 'characters/'.concat(characters_folder2, '/fieldwarning.png')
+ fieldload2 = 'characters/'.concat(characters_folder2, '/field.png')
+ fieldsleepload2 = 'characters/'.concat(characters_folder2, '/fieldsleep.png')
+
+
+ field2img.src = fieldload2
+ field2img2.src = fieldwarningload2
+ field2img3.src = fieldsleepload2
+
+
+ field2img.onerror = function() {
+  field2imgenable = false
+
+  document.getElementById('SHOWFIELD').style.visibility = "hidden";
+ }
+ field2img2.onerror = function() {
+  field2img2enable = false
+
+  document.getElementById('SHOWFIELD').style.visibility = "hidden";
+ }
+ field2img3.onerror = function() {
+  field2img3enable = false
+
+  document.getElementById('SHOWFIELD').style.visibility = "hidden";
+ }
+
+
+ field2img.onload = function() {
+  field2imgenable = true
+  document.getElementById('bgFIELD2').style.opacity = 1
+  document.getElementById('SHOWFIELD2').style.visibility = "visible";
+ }
+ field2img2.onload = function() {
+  field2img2enable = true
+  document.getElementById('bgFIELD2').style.opacity = 1
+  document.getElementById('SHOWFIELD2').style.visibility = "visible";
+ }
+ field2img3.onload = function() {
+  field2img3enable = true
+  document.getElementById('bgFIELD2').style.opacity = 1
+  document.getElementById('SHOWFIELD2').style.visibility = "visible";
+ }
+
+ rectAnimations2.loadRA = true
+ let eee = ['spell1', 'spell2', 'spell3', 'spell4', 'spell5', 'counter', 'damage']
+ for (let i of eee) {
+  $d(i).src = `characters/${characters_folder2}/rectAnimations/${i}.png`
+  rectAnimations2.preload[i] = new Image()
+  rectAnimations2.preload[i].src = `characters/${characters_folder2}/rectAnimations/${i}.png`
+  rectAnimations2.preload[i].onloaderror = () => { rectAnimations2.loadRA = false }
+ }
+ rectAnimations.preloader()
+ try {
+  voiceset2['initv1'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/init1.ogg') });
+  voiceset2['initv2'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/init2.ogg') });
+  voiceset2['initv3'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/init3.ogg') });
+  voiceset2['initv4'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/init4.ogg') });
+  voiceset2['initv5'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/init5.ogg') });
+  voiceset2['success'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/frenzysuccess.ogg') });
+  voiceset2['fail'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/frenzyfail.ogg') });
+  voiceset2['frenzystart'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/frenzy.ogg') });
+  voiceset2['counter'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/counterspell.ogg') });
+
+  voiceset2['spellv1'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/spell1.ogg') });
+  voiceset2['spellv2'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/spell2.ogg') });
+  voiceset2['spellv3'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/spell3.ogg') });
+  voiceset2['spellv4'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/spell4.ogg') });
+  voiceset2['spellv5'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/spell5.ogg') });
+  voiceset2['damage1'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/damage1.ogg') });
+  voiceset2['damage2'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/damage2.ogg') });
+  voiceset2['gachatris'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/gtris.ogg') })
+  voiceset2['gachatrisplus'] = new Howl({ src: 'characters/'.concat(characters_folder2, '/voices/gtrisplus.ogg') })
+
+ } catch (e) {
+  // alert(e)
+ }
+ voiceset2['gachatris'].once('loaderror', function() { stack2.gtrisenable = false })
+ voiceset2['gachatris'].once('load', function() { stack2.gtrisenable = true })
+ voiceset2['gachatrisplus'].once('loaderror', function() { stack2.gtrisenableplus = false })
+ voiceset2['gachatrisplus'].once('load', function() { stack2.gtrisenableplus = true })
+
+ 
+ 
+}
+}
 }
 
 
 
 
 var varfieldenable = fieldimgenable == true && fieldimg2enable == true && fieldimg3enable == true
+var varfieldenable2 = fieldimgenable == true && fieldimg2enable == true && fieldimg3enable == true
 var frenzydifficulty = 4
-
+var alertsoundactive2
 function warningalarm() {
+ try{
  if (linosbool && !paused && gameState == 0 && gametype !== 113 &&gametype!==116 || timewarning) {
 
   if (!alertsoundactive) {
-   
+   if(!('1v1params'in replayKeys))
    playsfx('alertsoundslow');
    
 
@@ -474,7 +587,7 @@ function warningalarm() {
     }
 
   //  while(sfxRETURN('alertsoundslow').playing())
-     
+     if(!('1v1params'in replayKeys))
      sfxRETURN('alertsoundslow').fade(1,0,500)
      /**/
    }
@@ -491,7 +604,7 @@ function warningalarm() {
    document.getElementById('bgFIELD').style = "width:100%;height:100%"
   }
 
-  if (gameState == 4 || gameState >= 3) {
+  if ((gameState == 4 || gameState >= 3)&&!('1v1params'in replayKeys)) {
    if (varfieldenable) {
 
     document.getElementById('bgFIELD').src = fieldsleepload
@@ -502,7 +615,89 @@ function warningalarm() {
    }
   }
  }
+ }catch(e){}
 }
+
+
+function warningalarm2() {
+ try {
+  if (linosbool2 && !paused && gameState == 0 && gametype !== 113 && gametype !== 116 || timewarning) {
+
+   if (!alertsoundactive2) {
+
+  //  playsfx('alertsoundslow');
+
+
+    alertsoundactive2 = true;
+    document.getElementById('b2').style.border = "0.2em solid #f00"
+    if ((gameState == 4 || gameState >= 3)) {
+     if (varfieldenable2) {
+      document.getElementById('bgFIELD2').src = fieldsleepload2
+      document.getElementById('bgFIELD2').style = "width:100%;height:100%;opacity:1"
+     } else {
+      document.getElementById('bgFIELD2').style.opacity = 0
+      document.getElementById('bgFIELD2').style = "width:100%;height:100%"
+     }
+    } else if (paused !== true && gameState == 0) {
+     if (varfieldenable2) {
+      document.getElementById('bgFIELD2').src = fieldwarningload2
+      document.getElementById('bgFIELD2').style = "width:100%;height:100%;opacity:1"
+     } else {
+      document.getElementById('bgFIELD2').style.visibility = opacity = 0
+      document.getElementById('bgFIELD2').style = "width:100%;height:100%"
+     }
+    }
+   }
+  }
+  else {
+   if (alertsoundactive2 == true) {
+    alertsoundactive2 = false;
+    document.getElementById('b2').style.border = "0.2em solid #fff"
+    {
+     if (varfieldenable2) {
+      if (document.getElementById('bgFIELD2').src !== fieldload2) {
+       document.getElementById('bgFIELD2').src = fieldload2
+       document.getElementById('bgFIELD2').style = "width:100%;height:100%;opacity:1"
+      }
+
+     } else {
+      document.getElementById('bgFIELD2').style.opacity = 0
+      document.getElementById('bgFIELD2').style = "width:100%;height:100%"
+     }
+
+     //  while(sfxRETURN('alertsoundslow').playing())
+
+     
+     /**/
+    }
+
+   }
+   if (varfieldenable2) {
+
+    if (document.getElementById('bgFIELD2').loaded) {
+     document.getElementById('bgFIELD2').src = fieldload2
+     document.getElementById('bgFIELD2').style = "width:100%;height:100%;opacity:1"
+    }
+   } else {
+    document.getElementById('bgFIELD2').style.opacity = 0
+    document.getElementById('bgFIELD2').style = "width:100%;height:100%"
+   }
+
+   if ((gameState == 4 || gameState >= 3)&&!('1v1params'in replayKeys)) {
+    if (varfieldenable2) {
+
+     document.getElementById('bgFIELD2').src = fieldsleepload2
+     document.getElementById('bgFIELD2').style = "width:100%;height:100%;opacity:1"
+    } else {
+     document.getElementById('bgFIELD2').style.opacity = 0
+     document.getElementById('bgFIELD2').style = "width:100%;height:100%"
+    }
+   }
+  }
+ } catch (e) {}
+}
+
+
 var gtrisenable = false
 var gtrisenableplus = false
 var gtrisinput = false
@@ -556,6 +751,29 @@ function allclearshow() {
    document.getElementById('allcleartext').style.transition = "top 1s cubic-bezier(0.1,-0.4,1,0)"
 
    document.getElementById('allcleartext').style.top = "-50%"
+  }, initid)
+ }
+
+}
+
+function allclearshow2() {
+ var initid = 0
+
+ document.getElementById('allcleartext2').style.transition = "top .0s linear"
+ document.getElementById('allcleartext2').style.top = "-30%"
+ setTimeout(function() {
+  document.getElementById('allcleartext2').style.transition = "top .1s linear"
+  document.getElementById('allcleartext2').style.top = "40%"
+ }, 2)
+
+ initid = 1200
+ try {
+  clearTimeout(initids2)
+ } catch {} finally {
+  initids2 = setTimeout(function() {
+   document.getElementById('allcleartext2').style.transition = "top 1s cubic-bezier(0.1,-0.4,1,0)"
+
+   document.getElementById('allcleartext2').style.top = "-50%"
   }, initid)
  }
 
@@ -658,9 +876,12 @@ function startMode(type) {
   masterParameter.LEVEL = ~~($d('master-levelset').value)
   masterParameter.LINELIMIT = ~~($d('master-lineset').value) == 301 ? 'infinity' : ~~($d('master-lineset').value)
   masterParameter.LINESREQ = ~~($d('master-linereqset').value)
- 
   init(118)
  }
+  if (type == "VS AI") {
+   //making sure everything is secure
+   init(119)
+  }
 }
 
 
@@ -696,7 +917,7 @@ function resetfieldposition() {
  document.getElementById('b').style.transition = "transform .0s ease-in"
  document.getElementById('b').style.transform = "translate(0,0) rotateZ(0deg)"
 
- initid = 0
+ initid = 1
  try {
   clearTimeout(initids)
  } catch {} finally {
@@ -705,11 +926,33 @@ function resetfieldposition() {
    document.getElementById('b').style.transform = "translate(0,0) rotateZ(0deg)"
   }, initid)
  }
+ 
+ 
+  document.getElementById('b2').style.transition = "transform .0s ease-in"
+  document.getElementById('b2').style.transform = "translate(0,0) rotateZ(0deg)"
+ 
+  try {
+   clearTimeout(initids)
+  } catch {} finally {
+  
+  setTimeout(function() {
+    document.getElementById('b2').style.transition = "transform 2s ease-in"
+    document.getElementById('b2').style.transform = "translate(0,0) rotateZ(0deg)"
+   }, 1)}
+  
+ 
+ 
 }
 
 function fallboard() {
- // document.getElementById('b').style.transition = "transform 2s linear"
+  document.getElementById('b').style.transition = "transform 2s ease-in"
  document.getElementById('b').style.transform = "translate(91px,2300px) rotateZ(100deg)"
+
+}
+
+function fallboard2() {
+  document.getElementById('b2').style.transition = "transform 2s ease-in"
+ document.getElementById('b2').style.transform = "translate(91px,2300px) rotateZ(100deg)"
 
 }
 
@@ -749,4 +992,4 @@ function MarathonLockLimit(int){
  }
 }
 
-var currentCharacter=null, currentCOMVoice=null
+var currentCharacter=null, currentCOMVoice=null, currentCharacter2=null
