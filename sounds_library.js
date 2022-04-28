@@ -588,7 +588,7 @@ function warningalarm() {
 
   //  while(sfxRETURN('alertsoundslow').playing())
      if(!('1v1params'in replayKeys))
-     sfxRETURN('alertsoundslow').fade(1,0,500)
+     sfxRETURN('alertsoundslow').fade(settings.SFXVol,0,500)
      /**/
    }
 
