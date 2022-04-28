@@ -2,7 +2,7 @@
 
 Gachatris JavaScriptus is a Tetr.js mod forked from Tetr.js originally developed by 'simonlc' (from www.simon.lc/tetr.js), modified by EricLenovo, with the inclusion of Gacha Club characters of Gacha personalities worldwide, and more features the original one did not have.
 
-Gacha Club is a trademark and application of Lunime Ganes.
+Gacha Club is a trademark and application of Lunime Games.
 
 ### Default Controls:
 
