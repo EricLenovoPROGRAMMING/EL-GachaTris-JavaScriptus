@@ -1419,8 +1419,8 @@ Stack2.prototype.draw = function() {
    var b = ~~(cellSize / 8);
    var c = cellSize;
    var lineCanvas = document.createElement('canvas');
-   lineCanvas.width = stastack2Canvasdth;
-   stacstack2Canvas
+   lineCanvas.width = stack2Canvas.width;
+   
    lineCanvas.height = stack2Canvas.height;
    var lineCtx = lineCanvas.getContext('2d');
    lineCtx.fillStyle = 'rgba(255,255,255,0.5)';
