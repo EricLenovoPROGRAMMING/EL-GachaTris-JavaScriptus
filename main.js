@@ -651,8 +651,11 @@ iconCHAR.style.height=iconCHARAI.style.height=$d('selectorICON').style.height = 
  // Redraw graphics
  makeSprite();
 
- if (settings.Grid === 1) bg(bgStackCtx);
+ if (settings.Grid === 1) {
+  bg(bgStackCtx);
+  bg(bgStackCtx2);
 
+ }
  if (gameState === 0) {
   piece.drawGhost();
   piece.draw();
