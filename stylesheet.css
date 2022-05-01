@@ -190,7 +190,7 @@ nav a {
   transition: background 0.03s linear;
 }
 
-.levelSELECTOR {
+.levelSELECTOR, .XSELECTOR, .ZSELECTOR {
  font: 1.25rem 'ColorFont';
  display: block;
  width: 90%;
