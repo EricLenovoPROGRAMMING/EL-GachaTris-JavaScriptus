@@ -21,7 +21,7 @@ Controls are configurable
 
 - Tetris Guideline compliant
   - 
-  - SRS (Super Rotation System) with Jstris-like T-spin detection rule
+  - SRS (Super Rotation System) with full T-spin detection rule
   - Hold
   - Piece preview (configurable range from 0 to 6)
   - Ghost piece
