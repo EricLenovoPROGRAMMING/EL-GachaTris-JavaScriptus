@@ -202,6 +202,14 @@ Stack2.prototype.spinCheck = function() {
 
     }
    }
+   if (piece2.stsd.y == -2) {
+    if (piece2.stsd.x == 1) {
+     this.spinCheckCount += 4
+    }
+    if (piece2.stsd.x == -1) {
+     this.spinCheckCount += 4
+    }
+   }
    if (this.miniSpinCount >= 1 && this.spinCheckCount >= 0.7 && piece2.spinX == piece2.x && piece2.spinY == piece2.y) {
     if (this.miniSpinCount == 2) {
      this.isSpin = true;
@@ -226,7 +234,16 @@ Stack2.prototype.spinCheck = function() {
     this.isMini = true
     this.spinrecogmini = this.isMini
    }
-
+if (piece2.stsd.y == -2 && this.spinCheckCount >= 0.7 && this.miniSpinCount >= 1) {
+ if (piece2.stsd.x == 1) {
+  this.isSpin = true
+  this.isMini = false
+ }
+ if (piece2.stsd.x == -1) {
+  this.isSpin = true
+  this.isMini = false
+ }
+}
   }
   this.spinrecog = this.isSpin;
   this.spinrecogmini = this.isMini;
@@ -1059,6 +1076,7 @@ Stack2.prototype.clear_line = function(boollinevv, LNSDTCT, LSR, MSR, PC, Multip
     TSD++
     statsLines.innerHTML = TSD
    }
+   if(LSR===true&&MSR===false){
    this.b2b++
    if (this.b2b < 1)
     stackscore2 += 1200 * Multiplier
@@ -1084,8 +1102,35 @@ Stack2.prototype.clear_line = function(boollinevv, LNSDTCT, LSR, MSR, PC, Multip
     //  playsfx('this.b2bs');;
     // cleartext2 += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
    };
+}
+if (LSR === false && MSR === true) {
+ this.b2b++
+ if (this.b2b < 1)
+  stackscore2 += 400 * Multiplier
+ if (this.b2b >= 1) {
+  playsfx('b2btwomini');
+ }
+ else
+  playsfx('twomini');
 
+
+
+ /*this.varren++*/
+ ;
+
+
+
+ this.linevoice = 2;
+ this.linesend = 2
+
+ cleartext2 = TransText('mini2')
+ if (this.b2b >= 1) {
+  stackscore2 += 600 * Multiplier
+  //  playsfx('this.b2bs');;
+  // cleartext2 += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+ };
   }
+ }
  };
  if (boollinevv == 1 && LNSDTCT === 3) {
   // 30
@@ -1419,8 +1464,8 @@ Stack2.prototype.draw = function() {
    var b = ~~(cellSize / 8);
    var c = cellSize;
    var lineCanvas = document.createElement('canvas');
-   lineCanvas.width = stack2Canvas.width;
-   
+   lineCanvas.width = stastack2Canvasdth;
+   stacstack2Canvas
    lineCanvas.height = stack2Canvas.height;
    var lineCtx = lineCanvas.getContext('2d');
    lineCtx.fillStyle = 'rgba(255,255,255,0.5)';

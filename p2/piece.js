@@ -40,32 +40,37 @@ function Piece2() {
     
     this.softg = 0
     this.moved=false
+    
+    this.stsd={
+     x:0,
+     y:0
+    }
 }
 
 
 try {
     Piece2.prototype.spinning=function() {
-    	if (this.index==5&&this.landed){
-        if (stack2.miniSpinCount >= 1 && stack2.spinCheckCount >= 0.7 && this.spinX == this.x && this.spinY == this.y) {
-            if (stack2.miniSpinCount == 2) {
-                playsfx('spinsound')
-                
-
-
-            }
-            if (stack2.miniSpinCount == 1 && stack2.spinCheckCount >= 1) {
-                playsfx('minispinsound')
-                
-
-
-            }
-        }
-        if (stack2.miniSpinCount == 1 && stack2.spinCheckCount == 1 && stack2.mini2SpinCount <= 1 && this.spinX == this.x && this.spinY == this.y) {
-            playsfx('minispinsound')
-           
-
-        }
-
+    	if (this.index == 5 && this.landed&&this.moved==false) {
+     if (stack2.miniSpinCount >= 1 && stack2.spinCheckCount >= 0.7 && this.spinX == this.x && this.spinY == this.y) {
+      if (stack2.miniSpinCount == 2) {
+       playsfx('spinsound')
+      }
+      if (stack2.miniSpinCount == 1 && stack2.spinCheckCount >= 1) {
+       playsfx('minispinsound')
+      }
+     } else
+    
+     if (stack2.miniSpinCount == 1 && stack2.spinCheckCount >= 1 && stack2.mini2SpinCount <= 1 && this.spinX == this.x && this.spinY == this.y) {
+      playsfx('minispinsound')
+     } else
+     if (this.stsd.y == -2 && stack2.spinCheckCount >= 0.7 && stack2.miniSpinCount >= 1) {
+      if (this.stsd.x == 1) {
+       playsfx('spinsound')
+      }
+      if (this.stsd.x == -1) {
+       playsfx('spinsound')
+      }
+     }
     }
     }
 } catch (e) {
@@ -174,7 +179,7 @@ Piece2.prototype.new = function(index) {
 Piece2.prototype.rotate = function(direction) {
     // Rotates tetromino.
 
-    this.moved = false
+
 
    this.rotatefail=false
     var rotated = [];
@@ -226,20 +231,30 @@ Piece2.prototype.rotate = function(direction) {
                 rotated,
             )
         ) {
-
-            rotatefail = false
+    this.moved = false
+    this.stsd.x =
+     this.stsd.y = 0
+           this. rotatefail = false
             this.x += this.kickData[curPos][x][0] - this.kickData[newPos][x][0];
             this.y += this.kickData[curPos][x][1] - this.kickData[newPos][x][1];
+            this.stsd.x=this.kickData[newPos][x][0]
+            this.stsd.y=this.kickData[newPos][x][1]
+        //   this.rotatespin=true
             this.tetro = rotated;
             this.pos = newPos;
             // TODO make 180 rotate count as one or just update finess 180s
-            //this.finesse++;
+          //  //this.finesse++;
+           // while (this.rotatespin == true) {
+          //   this.rotatespin = false
+             this.spinning()
+            
             break;
         } else {
-            rotatefail = true
+            this.rotatefail = true
         }
     };
-    if (rotatefail == false) {
+    if (this
+    .rotatefail == false) {
         playsfx('rotatepiece');
         if(this.landed)
         this.lockLimit-=replayKeys['1v1params'].LCK*0.0001
@@ -249,14 +264,14 @@ Piece2.prototype.rotate = function(direction) {
         stack2.isSpin = false;
         stack2.isMini = false;
         stack2.spinCheck();
-        this.rotatespin = true
+       // this.rotatespin = true
     } else {
      
     }
-    while (this.rotatespin == true&&this.landed) {
+  /*  while (this.rotatespin == true) {
      this.rotatespin = false
      this.spinning()
-    }
+    }*/
 }else
 {
  playsfx('rotatepiece')
@@ -595,6 +610,8 @@ Piece2.prototype.moveValid = function(cx, cy, tetro) {
  this.lockDelay=0+(this.lockLimit*0.4)+(gametype!==118?MarathonLockLimit(marathonParameter.activity.LEVEL):(masterParameter.activity.LEVEL-1)*0.5)
 // this.lockDelay-=(this.lockDelay/3>=0?replayKeys['1v1params'].LCK/3:0)
 }
+this.stsd.x =
+ this.stsd.y = 0
     return true;
 	}catch(e){}
 };
