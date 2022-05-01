@@ -156,7 +156,7 @@ Stack2.prototype.spinCheck = function() {
 
  if (piece2.landed == true && piece2.moved == false) {
   if (piece2.index == 5) {
-
+   var checkPoints=0
    this.spinCheckCount = 0;
    var spinCount = this.spinCheckCount
    this.miniSpinCount = 0
@@ -167,7 +167,7 @@ Stack2.prototype.spinCheck = function() {
     if ((this.testSpace(piece2.x + pieces[5].spin.highX[piece2.pos][i], piece2.y + pieces[5].spin.highY[piece2.pos][i])) == true && piece2.landed == true) {
 
      this.miniSpinCount++;
-
+checkPoints++
     }
    }
 
@@ -196,7 +196,7 @@ Stack2.prototype.spinCheck = function() {
    for (var i = 0; i < pieces[5].spin.lowX[0].length; i++) {
     if ((this.testSpace(piece2.x + pieces[5].spin.lowX[piece2.pos][i], piece2.y + pieces[5].spin.lowY[piece2.pos][i])) == true && piece2.landed == true) {
      this.spinCheckCount += 0.8
-
+checkPoints++
      ;
 
 
@@ -204,12 +204,13 @@ Stack2.prototype.spinCheck = function() {
    }
    if (piece2.stsd.y == -2) {
     if (piece2.stsd.x == 1) {
-     this.spinCheckCount += 4
+     this.spinCheckCount += 0.6
     }
     if (piece2.stsd.x == -1) {
-     this.spinCheckCount += 4
+     this.spinCheckCount += 0.6
     }
    }
+   if(checkPoints>=3){
    if (this.miniSpinCount >= 1 && this.spinCheckCount >= 0.7 && piece2.spinX == piece2.x && piece2.spinY == piece2.y) {
     if (this.miniSpinCount == 2) {
      this.isSpin = true;
@@ -245,6 +246,7 @@ if (piece2.stsd.y == -2 && this.spinCheckCount >= 0.7 && this.miniSpinCount >= 1
  }
 }
   }
+ }
   this.spinrecog = this.isSpin;
   this.spinrecogmini = this.isMini;
   /*if (boolline == 0 && this.sensespin == 1) {
@@ -1464,8 +1466,8 @@ Stack2.prototype.draw = function() {
    var b = ~~(cellSize / 8);
    var c = cellSize;
    var lineCanvas = document.createElement('canvas');
-   lineCanvas.width = stastack2Canvasdth;
-   stacstack2Canvas
+   lineCanvas.width = stack2Canvas.width;
+   
    lineCanvas.height = stack2Canvas.height;
    var lineCtx = lineCanvas.getContext('2d');
    lineCtx.fillStyle = 'rgba(255,255,255,0.5)';
