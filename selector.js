@@ -35,7 +35,12 @@ for(let C=0;C<Object.keys(CutscenePages).length;C++){
  let a =document.createElement('a')
  a.className='chapterSELECTOR'
  a.addEventListener('click',function(){loadLevel(C+1);setChapterS(C+1);},false)
- a.innerHTML=`${"Chapter"} ${C+1}: ${CutscenePages[`chapter${C+1}`].title}`
+ a.innerHTML=`${"Chapter"} ${C+1}: ${CutscenePages[`chapter${C+1}`].title[{
+ 0:'en',
+   1:'fil',
+   2:'fr'
+  
+ }[settings.Language]]}`
  
  ul.appendChild(li)
 li.appendChild(a)
@@ -61,6 +66,10 @@ function loadLevel(number) {
 }
 //textGUI('adventurelevel',`Chapter ${adventureParameter.selectorchapter} Levels (${Object.keys(adventureParameter.localStorageSession[`chapter${adventureParameter.selectorchapter}`]).length}/${Object.keys(CutscenePages[`chapter${adventureParameter.selectorchapter}`].levels).length} UNLOCKED)`)
 
+try{$ctsc('Name','title')
+  $ctsc('_description','description')
+  $iH('level_charName', CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel].character)
+}catch(e){}
  var ul = document.createElement('ul')
  var setChar = $d("selectorCLVL");
 
@@ -74,7 +83,13 @@ function loadLevel(number) {
   img.setAttribute('src',`characters/${CutscenePages[`chapter${number}`].levels[C+1].character}/icon.png`)
   li.addEventListener('click', function() { setLevelS(C+1);
   setLevelTest()}, false)
-  p.innerHTML = `${"Level"} ${C+1}: ${CutscenePages[`chapter${number}`].levels[C+1].title}`
+  p.innerHTML = `${"Level"} ${C+1}: ${CutscenePages[`chapter${number}`].levels[C+1].title[{
+   0:'en',
+   1:'fil',
+   2:'fr'
+  }[settings.Language]]}
+  
+  `
   li.appendChild(p)
   li.appendChild(img)
   setChar.appendChild(li)
@@ -145,7 +160,7 @@ function subChar(){
 
 function setCharS(index){
  settings.Character=index
- localStorage['gtris_settingsse']=localStorage['gtris_settings']=JSON.stringify(settings)
+ localStorage['gtris333_settingsse']=localStorage['gtris333_settings']=JSON.stringify(settings)
 }
 function setCharAI(index) {
  vsParameter.CHARACTER = index
@@ -198,13 +213,56 @@ function setLevelTest() {
    document.getElementsByClassName('levelSELECTOR')[t].classList.remove('TACTIVE')
   } catch (e) {}
  document.getElementsByClassName('levelSELECTOR')[adventureParameter.selectorlevel-1].classList.add('TACTIVE')
-$iH('levelName', `${adventureParameter.selectorchapter}-${adventureParameter.selectorlevel}: ${CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel].title}`)
-
- $iH('level_description', CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel].description)
-$iH('level_charName', CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel].character)
+$ctsc('Name','title')
+  $ctsc('_description','description',`<br/><br/>
+ ${TransText('starNotes', (function(){
+ var main=CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel]
+ if(main.stars.type=='score'){
+  return 'score'
+ }
+ if (main.stars.type == 'time') {
+  return 'time'
+ }
+ })())}:<br/>
+ ★: ${TransText('clearLevelNote')}<br>
+ ★★: ${(function(){
+ var main=CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel]
+ if(main.stars.type=='time'){
+ let time=main.stars[2]
+  return `${(Math.floor((time) / 3600)).toFixed(0)}:${((time / 60) % 60) < 10 ? '0' : ''}${((time / 60) % 60).toFixed(2)}`
+ }
+ if(main.stars.type=='score'){
+ let statsscore = main.stars[2]
+  return `${(statsscore < 10000000 ? '0' : '')}${(statsscore < 1000000 ? '0' : '')}${(statsscore < 100000 ? '0' : '')}${(statsscore < 10000 ? '0' : '')}${(statsscore < 1000 ? '0' : '')}${(statsscore < 100 ? '0' : '')}${(statsscore < 10 ? '0' : '')}${statsscore}`
+ }
+ })()}<br/>
+ ★★★: ${(function(){
+ var main=CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel]
+ if(main.stars.type=='time'){
+ let time=main.stars[3]
+  return `${(Math.floor((time) / 3600)).toFixed(0)}:${((time / 60) % 60) < 10 ? '0' : ''}${((time / 60) % 60).toFixed(2)}`
+ }
+ if(main.stars.type=='score'){
+ let statsscore = main.stars[3]
+  return `${(statsscore < 10000000 ? '0' : '')}${(statsscore < 1000000 ? '0' : '')}${(statsscore < 100000 ? '0' : '')}${(statsscore < 10000 ? '0' : '')}${(statsscore < 1000 ? '0' : '')}${(statsscore < 100 ? '0' : '')}${(statsscore < 10 ? '0' : '')}${statsscore}`
+ }
+ })()}`)
+  $iH('level_charName', CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel].character)
 
  
 }
 
 
 setCharTest()
+function $ctsc(component,Ctsc, additions){
+ $iH(`level${component}`, `${CutscenePages[`chapter${adventureParameter.selectorchapter}`]['levels'][adventureParameter.selectorlevel][Ctsc][{
+  0:'en',
+  1:'fil',
+  2:'fr'
+ }[settings.Language]]}
+ ${(function(e){
+ if(typeof e == 'undefined')
+ return ''
+ else return e
+ })(additions)}`)
+}

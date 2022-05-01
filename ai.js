@@ -13,11 +13,13 @@ function gtAI(){
  this.bestIndex={}
  this.fixedCounter=0
  this.PPSLimit=''
+ 
 }
 gtAI.prototype={
  run:function(){
+  
   this.counter--
-  if (keysDown2 == 0&&this.counter<=1/*&&(pieces2Set / ((frame-100) / 60))<this.PPSLimit/**/) {
+  if ((keysDown2 == flags.moveDown||keysDown2==0)&&this.counter<=1/*&&(pieces2Set / ((frame-100) / 60))<this.PPSLimit/**/) {
    if(!this.imaginary.hold){
    
    }
@@ -56,6 +58,7 @@ gtAI.prototype={
    {
     keysDown2 |= flags.hardDrop
  // this.eval(piece2.index,piece2.held)
+    
    }
  /*  else{
     keysDown2 |= flags.moveDown

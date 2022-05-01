@@ -17,32 +17,38 @@ function Piece() {
     this.spinX = 0
     this.spinY = 0
     this.landed
+    this.rotatefail=false
+    this.moved=false
+    this.stsd={
+     x:0,
+     y:0
+    }
 }
 
 
 try {
     Piece.prototype.spinning=function() {
-    	if (piece.index==5&&this.landed){
-        if (stack.miniSpinCount >= 1 && stack.spinCheckCount >= 0.7 && this.spinX == piece.x && this.spinY == piece.y) {
-            if (stack.miniSpinCount == 2) {
-                playsfx('spinsound')
-                
-
-
-            }
-            if (stack.miniSpinCount == 1 && stack.spinCheckCount >= 1) {
-                playsfx('minispinsound')
-                
-
-
-            }
+    	if (this.index==5&&(this.landed&&this.moved==false)){
+        if (stack.miniSpinCount >= 1 && stack.spinCheckCount >= 0.7 && this.spinX == this.x && this.spinY == this.y) {
+         if (stack.miniSpinCount == 2) {
+          playsfx('spinsound')
+         }
+         if (stack.miniSpinCount == 1 && stack.spinCheckCount >= 1) {
+          playsfx('minispinsound')
+         }
+        }else
+        
+        if (stack.miniSpinCount == 1 && stack.spinCheckCount >= 1 && stack.mini2SpinCount <= 1 && this.spinX == this.x && this.spinY == this.y) {
+         playsfx('minispinsound')
+        }else
+        if (this.stsd.y == -2 && stack.spinCheckCount >= 0.7 && stack.miniSpinCount >= 1) {
+         if (this.stsd.x == 1) {
+          playsfx('spinsound')
+         }
+         if (this.stsd.x == -1) {
+         playsfx('spinsound')
+         }
         }
-        if (stack.miniSpinCount == 1 && stack.spinCheckCount == 1 && stack.mini2SpinCount <= 1 && this.spinX == piece.x && this.spinY == piece.y) {
-            playsfx('minispinsound')
-           
-
-        }
-
     }
     }
 } catch (e) {
@@ -69,7 +75,7 @@ Piece.prototype.initNew = function(index){
  if (IHScount !== 0) {
   playsfx('IHSSound')
   $iH('guitext_hold', TransText('hold'))
-  piece.hold()
+  this.hold()
   IHScount = 0
  
  }
@@ -120,7 +126,7 @@ Piece.prototype.new = function(index) {
     this.landed = false;
     
     // TODO Do this better. Make clone object func maybe.
-    //for property in pieces, this.prop = piece.prop
+    //for property in pieces, this.prop = this.prop
     
     this.tetro = pieces[index].tetro;
     this.kickData = pieces[index].kickData;
@@ -158,11 +164,10 @@ var rotatespin = false
 Piece.prototype.rotate = function(direction) {
     // Rotates tetromino.
 
-    moved = false
 
 
     var rotated = [];
-    if (piece.y>-10){
+    if (this.y>-10){
     if (direction === -1) {
 
 
@@ -185,6 +190,7 @@ Piece.prototype.rotate = function(direction) {
         }
 
     }
+    
 /*if (direction === 2) {
 
  for(var ttt=0;ttt<direction;ttt++)
@@ -201,7 +207,7 @@ Piece.prototype.rotate = function(direction) {
     // Goes thorugh kick data until it finds a valid move.
     var curPos = this.pos.mod(4);
     var newPos = (this.pos + direction).mod(4);
-
+    
     for (var x = 0, len = this.kickData[0].length; x < len; x++) {
         if (
             this.moveValid(
@@ -210,37 +216,47 @@ Piece.prototype.rotate = function(direction) {
                 rotated,
             )
         ) {
-
-            rotatefail = false
+             this.moved = false
+         
+             this.stsd.x = 0
+             this.stsd.y = 0
+         //  console.log(this.kickData[newPos][x][0],this.kickData[newPos][x][1],this.spinX)
+            this.rotatefail = false
             this.x += this.kickData[curPos][x][0] - this.kickData[newPos][x][0];
             this.y += this.kickData[curPos][x][1] - this.kickData[newPos][x][1];
+            this.stsd.x=this.kickData[newPos][x][0]
+            this.stsd.y=this.kickData[newPos][x][1]
             this.tetro = rotated;
             this.pos = newPos;
+          //  this.rotatespin=true
+           // while (this.rotatespin == true && this.landed) {
+           //  this.rotatespin = falser
+           this.moved=false
+             
+           // }
             // TODO make 180 rotate count as one or just update finess 180s
             //this.finesse++;
             break;
         } else {
-            rotatefail = true
+            this.rotatefail = true
         }
     };
-    if (rotatefail == false) {
+    if (this.rotatefail == false) {
         playsfx('rotatepiece');
         if(this.landed)
         this.lockLimit-=replayKeys.LCK*0.0001
-        this.spinX = Math.floor(piece.x);
-        this.spinY = Math.floor(piece.y);
-        moved = false
+        this.spinX = Math.floor(this.x);
+        this.spinY = Math.floor(this.y);
+        this.moved = false
         stack.isSpin = false;
         stack.isMini = false;
         stack.spinCheck();
-        rotatespin = true
+        this.spinning()
+       // rotatespin = true
     } else {
      
     }
-    while (rotatespin == true&&this.landed) {
-     rotatespin = false
-     this.spinning()
-    }
+    
 }else
 {
  playsfx('rotatepiece')
@@ -261,6 +277,8 @@ Piece.prototype.rotate = function(direction) {
  
 }
 };
+
+
 Piece.prototype.checkShift = function() {
     // Shift key pressed event.
     if (keysDown & flags.moveLeft && !(lastKeys & flags.moveLeft)) {
@@ -351,7 +369,7 @@ Piece.prototype.checkShift = function() {
 ;
 Piece.prototype.shift = function(direction) {
     this.arrDelay = 0;;
-if (piece.y>-10){
+if (this.y>-10){
     if (replayKeys.ARR === 0 && this.shiftDelay === replayKeys.DAS) {
         for (var i = 1;; i++) {
             if (!this.moveValid(i * direction, 0, this.tetro)) {
@@ -366,9 +384,9 @@ if (piece.y>-10){
         this.x += direction;
         if (direction== -1) {}
         playsfx('movesound')
-        moved = true
+        this.moved = true
         
-        if (moved == true) {
+        if (this.moved == true) {
 
 
 
@@ -383,17 +401,17 @@ if (piece.y>-10){
     }
 }
 };
-var moved = true
+//var this.moved = true
 var softdropscore = 0
 var gravscore = 0
 var gravscore2 = 0
 var gravscorehigh = 0
 var gravscore2high = 0
 Piece.prototype.shiftDown = function() {
-    if (piece.y>-10){
+    if (this.y>-10){
     try {
         if (this.moveValid(0, 1, this.tetro)) {
-
+         
             var grav = gravityArr[replayKeys.SFT + 1];
             if (grav > 1) {
                 this.y += this.getDrop(grav);
@@ -453,7 +471,7 @@ var softdropbool = false
 var harddropenabled=false
 
 Piece.prototype.hardDrop = function() {
-if (piece.y>-10){
+if (this.y>-10){
     if (this.landed == false) {
         stack.isSpin = false;
         stack.isMini = true;
@@ -477,9 +495,9 @@ if (piece.y>-10){
        
         	
         
-        	piece.new(preview.next());
-        	piece.draw();
-        	piece.drawGhost()
+        	this.new(preview.next());
+        	this.draw();
+        	this.drawGhost()
 
         	break
         };
@@ -526,7 +544,7 @@ Piece.prototype.getDrop = function(distance) {
     }
 };
 Piece.prototype.hold = function() {
-if (piece.y>-10&&gametype!==116&&feverAble==false&&feverActivate==false){
+if (this.y>-10&&gametype!==116&&feverAble==false&&feverActivate==false){
     var temp = hold.piece;
     IHScount=0
     if (!this.held) {
@@ -583,6 +601,7 @@ Piece.prototype.moveValid = function(cx, cy, tetro) {
  this.lockDelay=0+(this.lockLimit*0.4)+(gametype!==118?MarathonLockLimit(marathonParameter.activity.LEVEL):(masterParameter.activity.LEVEL-1)*0.5)
 // this.lockDelay-=(this.lockDelay/3>=0?replayKeys.LCK/3:0)
 }
+this.stsd.x=this.stsd.y=0
     return true;
 	}catch(e){}
 };
@@ -590,10 +609,11 @@ Piece.prototype.update = function() {
 	if(this.y!==undefined){
 
     stack.spinCheck()
+    
 
-if (piece.y>-10){
+if (this.y>-10){
     if (this.moveValid(0, 1, this.tetro)) {
-      
+    //  this.stsd.x=this.stsd.y=0
         stack.isSpin = false;
         stack.isMini = false;
         spinrecog = false
@@ -653,11 +673,11 @@ if (piece.y>-10){
 if (true){
     
             stack.addPiece(this.tetro);
-            piece.y=-33
+            this.y=-33
             
-           if(gametype!=116&&!feverActivate||piece.y==-10){piece.initNew(preview.next())} else piece.y=-38;
-            piece.draw();
-            piece.drawGhost()
+           if(gametype!=116&&!feverActivate||this.y==-10){this.initNew(preview.next())} else this.y=-38;
+            this.draw();
+            this.drawGhost()
             if(hold.piece!==void 0)
             hold.draw()
              

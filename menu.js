@@ -1,4 +1,4 @@
-var version = '0.9a.4 Gachatris Quickfix';
+var version = '0.9a.7TSMD Gachatris';
 var setLoop;
 var sfx
 var arrowReleased = true;
@@ -231,7 +231,7 @@ addEventListener(
       // Binds the key and saves the data.
       binds[currCell.id] = e.keyCode;
       currCell.innerHTML = key[e.keyCode];
-      localStorage.setItem('gtris_binds', JSON.stringify(binds));
+      localStorage.setItem('gtris333_binds', JSON.stringify(binds));
       currCell = 0;
     }
   },
@@ -282,7 +282,7 @@ function right() {
  * LocalStorage functions
  */
 function saveSetting(s) {
-  localStorage['gtris_version'] = version;
+  localStorage['gtris333_version'] = version;
 
   document.getElementById(s).getElementsByTagName('span')[0].innerHTML =
     setting[s][settings[s]];
@@ -301,9 +301,9 @@ function loadLocalData() {
   // TODO When new version just update with new stuff, rest stays unchanged.
   if (localStorage['gtris333_version'] !== version) {
       try{
-          
+            localStorage['gtris333_version'] = version
     localStorage.removeItem('gtris333_settingsse');
-    localStorage.removeItem('gtris333_binds');
+    //localStorage.removeItem('gtris333_binds');
     
     var settingsload =JSON.parse(localStorage.getItem('gtris333_settings'))
 
@@ -317,7 +317,7 @@ function loadLocalData() {
     }
       }catch(e){/*alert(e)*/}
   }
-  if (localStorage['gtris333_settingsse']) {
+  if (typeof localStorage['gtris333_settingsse']==='string') {
       settings = JSON.parse(localStorage.getItem('gtris333_settingsse'));
   }
   translate()
@@ -337,7 +337,7 @@ loadLocalData();
 function loadsettinginit(){
  try{
   try{
-  var playername=localStorage.getItem(gtris_playerName)
+  var playername=localStorage.getItem("gtris_playerName")
  if(playername!==void 0&&playername!==undefined){
   $d('playernamequery').value=playername
  }
@@ -365,7 +365,7 @@ for (let s in settings) {
   div.appendChild(span);
   div.appendChild(iRight);
  }catch(e){
-  localStorage['gtris_settingsse'][s]=undefined
+  localStorage['gtris333_settingsse'][s]=undefined
  }
   
  }

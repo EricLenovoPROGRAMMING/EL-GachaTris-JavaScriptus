@@ -368,7 +368,7 @@ var setting = {
 //Slowdown: [60, 1, 6, 8, 10, 40],
 RectAnimations:['ON','OFF'],
  Size: ['Auto', 'Small', 'Medium', 'Large'],
- Character: ['No Character', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf', 'LeoSnowy', 'DaWildOne', 'ItsBreezeyFears', 'Starshine','GloriaFam'],
+ Character: ['No Character', 'Flotalendy', 'ElishDimensions', 'Nyx4tune', 'Epicman33456', 'Tsukii', 'Paulina-Sena ZJ', 'Edxy', 'PandaLover', 'ArgoGacha', 'Alix', 'EricLenovo', 'KailyDimensions', 'Agate Loran', 'Beowulf', 'LeoSnowy', 'DaWildOne', 'ItsBreezeyFears', 'Starshine','GloriaFam','Juelz Hinkle'],
  '60FPS Sync':['Sync', 'Async'],
  Sound: ['Off', 'On'],
  Voice: ['Off', 'On'],
@@ -744,7 +744,7 @@ function init(gt, gamep) {
      DAS: 7,
      ARR: 1,
      GRAV: 0,
-     SFT: 32,
+     SFT: 82,
      LCK: replayKeys.LCK,
      PREV: 5,
      keys: {},
@@ -1925,10 +1925,7 @@ document.getElementById('active_GM2').style.top = 100 - ((Math.min(stack2.garbag
    }
   }
 
-if('1v1params' in replayKeys&&!watchingReplay&&frame>100){
- gtrisAI.run()
- //keysDown2=keysDown
-}
+
 
 
   if (!feverActivate && feverAble) {
@@ -2487,6 +2484,10 @@ ctscmain.simultaneous(function(){
     update();
     if('1v1params' in replayKeys || gametype == 119)
     update2()
+    if('1v1params' in replayKeys&&!watchingReplay&&frame>100){
+ gtrisAI.run()
+ //keysDown2=keysDown
+}
    } else {
 
    }

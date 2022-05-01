@@ -33,6 +33,8 @@ function loadSFX(){
   fourline: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/tetris.ogg` , preload: false}),
   onespin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/spin1.ogg` , preload: false}),
   twospin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/spin2.ogg` , preload: false}),
+  twomini: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/mini2.ogg` , preload: false}),
+
   threespin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/spin3.ogg` , preload: false}),
   IRSSound: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/irs.ogg` , preload: false}),
   IHSSound: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/ihs.ogg` , preload: false}),
@@ -71,6 +73,8 @@ function loadSFX(){
   b2bfourline: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2btetris.ogg`, html5: true , preload: false}),
   b2bonespin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspin1.ogg`, html5: true , preload: false}),
   b2btwospin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspin2.ogg`, html5: true , preload: false}),
+    b2btwomini: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bmini2.ogg`, html5: true , preload: false}),
+
   b2bthreespin: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bspin3.ogg`, html5: true , preload: false}),
   b2bonemini: new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/b2bmini1.ogg`, html5: true , preload: false}),
 
@@ -89,7 +93,7 @@ function loadSFX(){
   SoundFX[`inithold`]=new Howl({ src: `sounds/${setting.SoundType[currentSFX]}/nith.ogg` , preload:true})
  
  })
- var lineClear=[`onespin`,`twospin`,`threespin`]
+ var lineClear=[`onespin`,`twospin`,`threespin`,'twomini']
  
  var spinZero=[`spinzero`,`minizero`]
  /*for (var i of lineClear){

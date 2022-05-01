@@ -151,6 +151,7 @@ function TransText(_TEXT, _INPUT) {
    tspin3: "T-Spin Triple",
    mini0: "T-Spin Mini",
    mini1: "T-Spin Mini Single",
+   mini2: "T-Spin Mini Double",
 
    b2b: "Back-to-back",
    renInt: "COMBO",
@@ -171,7 +172,17 @@ function TransText(_TEXT, _INPUT) {
    digfinish: "Bedrock",
    marathonsuccess: 'Success',
 
-   gtrdenderror: `${_INPUT} does not end with .gtrd-json. Try again!`
+   gtrdenderror: `${_INPUT} does not end with .gtrd-json. Try again!`,
+
+   starNotes:(function(IN){
+   if(IN=='time'){
+    return 'Clear a Level to get one star. Finish the game as soon as possible with the conditions that must be met to get 2-3 stars'
+   }
+   if (IN == 'score') {
+    return 'Clear a Level to get one star. Obtain the score as high as you can with the conditions that must be met to get 2-3 stars'
+   }
+   })(_INPUT),
+  clearLevelNote:'Clear a Level'
 
   },
   fil: {
@@ -317,6 +328,7 @@ selectorAI: "Pumili ng Gacha Character para sa AI",
    tspin3: "T-Spin Triple",
    mini0: "T-Spin Mini",
    mini1: "T-Spin Mini Single",
+   mini2: "T-Spin Mini Double",
 
    b2b: "Back-to-back",
    renInt: "COMBO",
@@ -484,6 +496,7 @@ vs_note:'ASTUCE: agrandissez la fenêtre ou orientez-la vers le paysage pour act
    tspin3: "T-Spin Triple",
    mini0: "T-Spin Mini",
    mini1: "T-Spin Mini Single",
+   mini2: "T-Spin Mini Double",
 
    b2b: "Back-to-back",
    renInt: "COMBO",

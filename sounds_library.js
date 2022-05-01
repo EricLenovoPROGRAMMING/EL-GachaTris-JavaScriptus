@@ -173,6 +173,9 @@ function comset(line, spin, mini, pc, b2b) {
     }
    }
   }
+  else{
+   playcom('pc')
+  }
  } else {
   if (spin) {
    if (b2b) {
@@ -192,13 +195,13 @@ function comset(line, spin, mini, pc, b2b) {
   {
    if (b2b) {
     if (line == 1) playcom('b2bmini1');
-    if (line == 2) playcom('b2bspin2');
+    if (line == 2) playcom('b2bmini2');
 
    }
    else {
     if (line == 0) playcom('mini0');
     if (line == 1) playcom('mini1');
-    if (line == 2) playcom('spin2');
+    if (line == 2) playcom('mini2');
    }
 
   } else {
@@ -287,6 +290,7 @@ function characterinit(NEW) {
   spin0: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/tspin0.ogg', html5: true, preload: false }),
   mini0: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/tmini0.ogg', html5: true, preload: false }),
   mini1: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/tmini1.ogg', html5: true, preload: false }),
+mini2: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/tmini2.ogg', html5: true, preload: false }),
 
   spin1: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/tspin1.ogg', html5: true, preload: false }),
   pc: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/pc.ogg', html5: true, preload: false }),
@@ -296,6 +300,8 @@ function characterinit(NEW) {
   b2bgtris: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2bgquad.ogg', html5: true, preload: false }),
   b2bspin0: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2btspin0.ogg', html5: true, preload: false }),
   b2bmini1: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2btmini1.ogg', html5: true, preload: false }),
+  b2bmini2: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2btmini2.ogg', html5: true, preload: false }),
+
   b2bspin1: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2btspin1.ogg', html5: true, preload: false }),
   b2bspin2: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2btspin2.ogg', html5: true, preload: false }),
   b2bspin3: new Howl({ src: 'commentary/' + setting.Commentary[settings.Commentary] + '/b2btspin3.ogg', html5: true, preload: false }),

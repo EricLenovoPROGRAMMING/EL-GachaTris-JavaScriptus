@@ -169,7 +169,7 @@ Stack.prototype.spinCheck=function() {
  this.isSpin = false;
  this.isMini = false;
  
- if (piece.landed == true && moved == false) {
+ if (piece.landed == true && piece.moved == false) {
   if (piece.index == 5) {
 
    this.spinCheckCount = 0;
@@ -212,9 +212,17 @@ Stack.prototype.spinCheck=function() {
     if ((this.testSpace(piece.x + pieces[5].spin.lowX[piece.pos][i], piece.y + pieces[5].spin.lowY[piece.pos][i])) == true && piece.landed == true) {
      this.spinCheckCount += 0.8
 
-     ;
+     
 
 
+    }
+   }
+   if (piece.stsd.y == -2) {
+    if (piece.stsd.x == 1) {
+     this.spinCheckCount+=4
+    }
+    if (piece.stsd.x == -1) {
+     this.spinCheckCount+=4
     }
    }
    if (this.miniSpinCount >= 1 && this.spinCheckCount >= 0.7 && piece.spinX == piece.x && piece.spinY == piece.y) {
@@ -223,8 +231,6 @@ Stack.prototype.spinCheck=function() {
      this.spinrecog = this.isSpin
      this.isMini = false
      this.spinrecogmini = this.isMini
-
-
     }
     if (this.miniSpinCount == 1 && this.spinCheckCount >= 1) {
      this.isSpin = false;
@@ -235,13 +241,23 @@ Stack.prototype.spinCheck=function() {
 
     }
    }
+   
    if (this.miniSpinCount == 1 && this.spinCheckCount >= 1 && this.mini2SpinCount <= 1 && piece.spinX == piece.x && piece.spinY == piece.y) {
     this.isSpin = false;
     this.spinrecog = this.isSpin
     this.isMini = true
     this.spinrecogmini = this.isMini
    }
-
+  if (piece.stsd.y == -2 && this.spinCheckCount >= 0.7&&this.miniSpinCount>=1) {
+   if (piece.stsd.x == 1) {
+    this.isSpin = true
+    this.isMini = false
+   }
+   if (piece.stsd.x == -1) {
+    this.isSpin = true
+    this.isMini = false
+   }
+  }
   }
   this.spinrecog = this.isSpin;
   this.spinrecogmini = this.isMini;
@@ -1180,12 +1196,15 @@ Stack.prototype.clear_line = function(boollinevv, LNSDTCT, LSR, MSR, PC, Multipl
 
    cleartext = TransText('double')
   }
+
+  
   else {
    if (gametype == 111) {
     failTSD = false
     TSD++
     statsLines.innerHTML = TSD
    }
+   if(LSR===true&&MSR===false){
    this.b2b++
    if (this.b2b < 1)
     stackscore += 1200 * Multiplier
@@ -1211,7 +1230,34 @@ Stack.prototype.clear_line = function(boollinevv, LNSDTCT, LSR, MSR, PC, Multipl
     //  playsfx('this.b2bs');;
     // cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
    };
+}else
+if (LSR === false && MSR === true) {
+ this.b2b++
+ if (this.b2b < 1)
+  stackscore += 400 * Multiplier
+ if (this.b2b >= 1) {
+  playsfx('b2btwomini');
+ }
+ else
+  playsfx('twomini');
 
+
+
+ /*this.varren++*/
+ ;
+
+
+
+ this.linevoice = 2;
+ linesend = 2
+
+ cleartext = TransText('mini2')
+ if (this.b2b >= 1) {
+  stackscore += 600 * Multiplier
+  //  playsfx('this.b2bs');;
+  // cleartext += '<br/>Back-to-back X'.concat(this.b2b.toString(), '')
+ };
+}
   }
  };
  if (boollinevv == 1 && LNSDTCT === 3) {

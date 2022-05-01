@@ -2,6 +2,7 @@ function Hold(NEW) {
   this.piece;
   this.held=NEW.held
 }
+
 Hold.prototype.draw = function() {
   clear(holdCtx);
   if(piece.held){
