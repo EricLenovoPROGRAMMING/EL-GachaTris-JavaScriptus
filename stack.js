@@ -178,11 +178,12 @@ Stack.prototype.spinCheck=function() {
    this.mini2SpinCount = 0
    this.mini3SpinCount = 0
    this.mini3REVSpinCount = 0
+   var checkPoints=0
    for (var i = 0; i < pieces[5].spin.highX[0].length; i++) {
     if ((this.testSpace(piece.x + pieces[5].spin.highX[piece.pos][i], piece.y + pieces[5].spin.highY[piece.pos][i])) == true && piece.landed == true) {
 
      this.miniSpinCount++;
-
+     checkPoints++
     }
    }
 
@@ -190,7 +191,7 @@ Stack.prototype.spinCheck=function() {
     if ((!this.testSpace(piece.x + pieces[5].spin.lowY[i][piece.pos], piece.y - 1 + pieces[5].spin.highY[i][piece.pos])) && piece.landed == true) {
 
      this.mini3SpinCount += 0.25 + (this.mini2SpinCount * 0.5) + (this.miniSpinCount * this.spinCheckCount / 0.1);
-
+    
     }
    }
    for (var i = 0; i < pieces[5].spin.lowX[0].length * pieces[5].spin.highY[0].length; i++) {
@@ -211,20 +212,21 @@ Stack.prototype.spinCheck=function() {
    for (var i = 0; i < pieces[5].spin.lowX[0].length; i++) {
     if ((this.testSpace(piece.x + pieces[5].spin.lowX[piece.pos][i], piece.y + pieces[5].spin.lowY[piece.pos][i])) == true && piece.landed == true) {
      this.spinCheckCount += 0.8
-
+    checkPoints++
      
 
 
     }
    }
-   if (piece.stsd.y == -2) {
+  if (piece.stsd.y == -2) {
     if (piece.stsd.x == 1) {
-     this.spinCheckCount+=4
+     this.spinCheckCount+=0.6
     }
     if (piece.stsd.x == -1) {
-     this.spinCheckCount+=4
+     this.spinCheckCount+=0.6
     }
    }
+   if(checkPoints>=3){
    if (this.miniSpinCount >= 1 && this.spinCheckCount >= 0.7 && piece.spinX == piece.x && piece.spinY == piece.y) {
     if (this.miniSpinCount == 2) {
      this.isSpin = true;
@@ -257,6 +259,7 @@ Stack.prototype.spinCheck=function() {
     this.isSpin = true
     this.isMini = false
    }
+  }
   }
   }
   this.spinrecog = this.isSpin;
