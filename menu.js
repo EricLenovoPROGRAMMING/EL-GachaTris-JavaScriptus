@@ -1,4 +1,4 @@
-var version = '0.9a.7TSMD Gachatris';
+var version = '1.0.0Final Gachatris';
 var setLoop;
 var sfx
 var arrowReleased = true;
@@ -152,9 +152,9 @@ function menu(menuIndex) {
   for (var MMM=0; MMM<3; MMM++){
       moremodeselect[MMM].classList.remove('on')}
      try{
-      if(typeof SoundFX['alertsoundslow'!=='undefined'])
+      if(typeof SoundFX['alertsoundslow']!=='undefined')
       stopsfx('alertsoundslow')
-      if(typeof SoundFX['alarm'!=='undefined'])
+      if(typeof SoundFX['alarm']!=='undefined')
 
       stopsfx('alarm')
      }catch(U){}

@@ -108,6 +108,7 @@ this.imaginary.rot = this.bestIndex['rot']
 this.imaginary.y = this.bestIndex['y']
 this.imaginary.index = this.bestIndex['index']
 this.imaginary.hold = hold
+//console.log(this.bestIndex.score, this.bestIndex.index)
 }
  
 }

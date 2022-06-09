@@ -29,6 +29,23 @@ function gtAIPredict() {
 
 
 
+function $copy(arr) {
+	var ARR = []
+	for (let a = 0; a < arr.length; a++) {
+		if (typeof arr[a] == "object" && arr[a] instanceof Array) {
+			ARR.push([])
+			for (let b = 0; b < arr[a].length; b++) {
+				ARR[a].push(arr[a][b])
+			}
+		}
+		else {
+			ARR.push(arr[a])
+		}
+	}
+	return ARR
+}
+
+
 
 
 gtAIPredict.prototype = {
@@ -170,7 +187,7 @@ for (let uuu = 0; uuu < 15; uuu++) {
      }}
      //   if(this.moveValid( -1,0,this.tetro))break
     
-    for (let move = 0; move < 20 /*&&!this.moveValid(1, 0, this.tetro)/**/ ; move++) {
+    for (let move = 0; move < 30 /*&&!this.moveValid(1, 0, this.tetro)/**/ ; move++) {
      //  if(!this.moveValid(1,0,this.tetro))
      //if (this.moveValid(move, 0, this.tetro)) continue
      // this.new(10,22)
@@ -180,9 +197,8 @@ for (let uuu = 0; uuu < 15; uuu++) {
       }
      }*/
      //   for(var uuud=0;uuud<rot;uuud++)this.rotate(1)
-this.completeLines=0
-this.lineCount=0
-     this.grid = this.returnStack()
+
+     this.grid = $copy(stack2.grid)
      for(let GX = 0; GX<10;GX++){
       for(let GY = 0; GY<22; GY++){
        if (typeof this.grid[GX][GY]=="undefined")this.grid[GX][GY]=0
@@ -197,7 +213,9 @@ this.lineCount=0
 
      this.y += this.getDrop(79)
      this.columnHeights = []
-     
+     this.completeLines = 0
+     //this.lineCount=0
+     this.lines = 0
      {
 
       let tetro = this.tetro
@@ -227,7 +245,7 @@ this.lineCount=0
           
           // This checks if any cell is in the play field. If there
           //  isn't any this is called a lock out and the game ends.
-          if (!(y + this.y > 1)) this.completeLines-=99;
+         // if (!(y + this.y > 1)) this.completeLines-=9338383839;
          }
         }
        }
@@ -242,10 +260,10 @@ this.lineCount=0
              range = range.sort(function(a, b) {
     return a - b;
   });
-  for (var row = range[0], len = row + range.length; row < len; row++) {
+  for (let row = 0, len = 22; row < len; row++) {
                let count=0
                for (var x = 0; x < 10; x++) {
-                if (this.grid[x][y]!==0) {
+                if (this.grid[x][row]!==0&&typeof this.grid[x][row]=='number') {
                  count++
                  this.lineCount++
                  
@@ -254,21 +272,35 @@ this.lineCount=0
                }}
            
                
-               
+                
                // Clear the line. This basically just moves down the stack.
                // TODO Ponder during the day and see if there is a more elegant solution.
-               while (this.lineCount > 9)
+               if(count >9)
                {
                 ; // NOTE stats
-                this.lineCount-=10
+                //this.lineCount-=10
                 this.completeLines++
+                this.lines++
+              for (var y = row; y >= -1; y--) {
+                 for (var x = 0; x < 10; x++) {
+                  {
+                   this.grid[x][y] = this.grid[x][y - 1];
+                  }
+                 }
+                
+                }/**/
                }
               }
               
      }
-    // if(this.completeLines<4)this.completeLines*=9
+    
+  /*  if (this.lines < 4 && this.lines >= 1) this.score -= NaN
+else
+if (this.lines == 0) this.completeLines -= 3838/**/
+
+    
       this.aggregateHeight = 0
-      //CONSOLE.table(this.grid)
+    // console.log(this.lineCount)
       for (let gx = 0; gx < 10; gx++) {
        for (let gy = 0; gy < 22 /*&&!(this.grid[gx][gy])*/ ; gy++) {
        }
@@ -316,9 +348,15 @@ for (var c = 0; c <10; c++) {
 this.blockades=count;
 }
 
+
+
+
+
       this.score = ((this.heuristicsWeight.aggregateHeight* (this.aggregateHeight))) + (this.heuristicsWeight.completeLines*(this.completeLines))+(this.heuristicsWeight.holes * (this.holes)) + (this.heuristicsWeight.bumpiness * (this.bumpiness)) + (this.heuristicsWeight.blockades*(this.blockades)) 
      + (this.completeLines*this.holes*this.aggregateHeight*this.blockades*this.bumpiness*this.heuristicsWeight.overall)
-if(this.completeLines>26||this.completeLines==0){
+
+
+if((this.lines>1)||this.lines<=0)/**/{
       this.prediction.push({
        index: this.predictionCount,
        x: this.x,
@@ -329,7 +367,7 @@ if(this.completeLines>26||this.completeLines==0){
        lines: this.completeLines,
        rot: rot,
        pieceIndex: this.index,
-       score: this.score,
+       score: this.completeLines>1?this.score*-50:this.score,
        y:this.y
       })
       //console.log(this.prediction)
@@ -338,8 +376,8 @@ if(this.completeLines>26||this.completeLines==0){
 
      }
 
-     let highestScore = -888
-     let highestLine=-38
+     let highestScore = -888833883778
+     let highestLine=-3848883
      this.selectedIndex = 0
      for (let HIGH of this.prediction) {
       let evalS = HIGH['score']//+(HIGH['lines']*50)
@@ -522,7 +560,7 @@ if(this.completeLines>26||this.completeLines==0){
       // Clear the line. This basically just moves down the Stack2.
       // TODO Ponder during the day and see if there is a more elegant solution.
       if (count > 9) { //this.varpiecedelay=frame+this.varpiecedelayadd+40
-
+    
       }
      }
     },

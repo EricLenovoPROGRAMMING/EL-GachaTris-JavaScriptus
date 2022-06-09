@@ -12,6 +12,9 @@ function TransText(_TEXT, _INPUT) {
    title: "Tetr.JS - Gachatris JavaScriptus",
    title2: "EricLenovo's modification from Tetr.JS of Simon Laroche, under MIT License",
    play: "Play",
+   retirement:'Gachatris JavaScriptus Has Been Retired (1/12/2022 - 6/9/2022)',
+   retLetter:'EricLenovo: Hello users. Thank you very much for your love and support for over 5 months in modifying Tetr.JS into Gachatris JavaScriptus. Gachatris JavaScriptus has been officially retired, with inspirations given to my successor, <tet>Gachatris Tetraplus</tet>, and there will be no future updates for this game. <tet>Gachatris Tetraplus</tet> is early in development yet, but you may check it out! You may join my Discord server of Gachatris to see updates and talk about the game.',
+   changelogs: "Changelogs",
    controls: "Controls",
    replaycon: "ReplayCon",
    settings: "Settings",
@@ -24,7 +27,7 @@ function TransText(_TEXT, _INPUT) {
    about: "About",
    about1: "Gachatris JavaScriptus - a simonlc/Tetr.JS mod of EricLenovo, whose name was founded by himself - is a block stacking game whose aim is to clear rows of 10 blocks making up lines. Gachatris JavaScriptus was made on January 12, 2022. It consists of not only Gacha Club characters, but also more modes and features. EricLenovo himself is a Tetris-Gacha YouTuber who owns this Tetr.JS mod.",
    about2: "The Original Tetr.JS was designed and made by Simon Laroche under MIT License; Gacha Club, and other Gacha games, are the trademarks of Lunime; 'Gachatris JavaScriptus' is abbreviated as 'GT.JS'",
-   discordB: "Gachatris JavaScriptus Discord Server",
+   discordB: "Gachatris Discord Server",
    tetrjsB: "Simon Laroche's Tetr.JS",
 
   playername:"Player Name:",
@@ -189,6 +192,9 @@ function TransText(_TEXT, _INPUT) {
    title: "Tetr.JS - Gachatris JavaScriptus",
    title2: "Ang pagbabago ni EricLenovo mula sa Tetr.JS ni Simon Laroche, sa ilalim ng Lisensya ng MIT",
    play: "Maglaro",
+   retirement: 'Ay Gachatris JavaScriptus Ay Nagretiro na (1/12/2022 - 6/9/2022)',
+retLetter:"EricLenovo: Kumusta, mga gumagamit. Maraming salamat sa iyong pagmamahal at suporta sa mahigit 5 buwan sa pagbabago ng Tetr.JS sa Gachatris JavaScriptus. Ang Gachatris JavaScriptus ay opisyal na nagretiro, na may mga inspirasyong ibinigay sa aking kahalili, <tet>Gachatris Tetraplus</tet>, at walang magiging mga update sa hinaharap para sa larong ito. Ang <tet>Gachatris Tetraplus</tet> ay maaga pa sa pagbuo, ngunit maaari mo iyung tingnan! Maaari kang sumali sa aking Discord server ng Gachatris upang makita ang mga update at pag-usapan ang tungkol sa laro.",
+changelogs: "Mga Changelog (Ingles)",
    controls: "Mga Kontrol",
    replaycon: "ReplayCon",
    settings: "Mga Setting",
@@ -201,7 +207,7 @@ function TransText(_TEXT, _INPUT) {
    about: "Tungkol dito",
    about1: "Ang Gachatris JavaScriptus - isang simonlc/Tetr.JS mod ng EricLenovo, na ang pangalan ay siya mismo ang nagtatag - ay isang block stacking game na ang layunin ay i-clear ang mga hilera ng 10 bloke na bumubuo ng mga linya. Ginawa ang Gachatris JavaScriptus noong Enero 12, 2022. Binubuo ito hindi lamang ng mga character ng Gacha Club, kundi pati na rin ng higit pang mga mode at feature. Si EricLenovo mismo ay isang Tetris-Gacha YouTuber na nagmamay-ari ng Tetr.JS mod na ito.",
    about2: "Ang Orihinal na Tetr.JS ay idinisenyo at ginawa ni Simon Laroche sa ilalim ng Lisensya ng MIT; Ang Gacha Club, at iba pang mga laro ng Gacha, ay ang mga trademark ng Lunime; Ang 'Gachatris JavaScriptus' ay dinaglat bilang 'GT.JS'",
-   discordB: "Gachatris JavaScriptus Discord Server",
+   discordB: "Gachatris Discord Server",
    tetrjsB: "Tetr.JS ni Simon Laroche",
 
 playername:"Pangalan ng manlalaro:",
@@ -356,6 +362,9 @@ selectorAI: "Pumili ng Gacha Character para sa AI",
    title: "Tetr.JS - Gachatris JavaScriptus",
    title2: "Modification d'EricLenovo à partir de Tetr.JS de Simon Laroche, sous licence MIT",
    play: "Jouer",
+   retirement:'Gachatris JavaScriptus A été Retiré (1/12/2022 - 6/9/2022)',
+retLetter:"EricLenovo: Bonjour les utilisateurs. Merci beaucoup pour votre amour et votre soutien pendant plus de 5 mois dans la modification de Tetr.JS en Gachatris JavaScriptus. Gachatris JavaScriptus a été officiellement retiré, avec des inspirations données à mon successeur, <tet>Gachatris Tetraplus</tet>, et il n'y aura pas de futures mises à jour pour ce jeu. <tet>Gachatris Tetraplus</tet> est encore au début du développement, mais vous pouvez le vérifier! Vous pouvez rejoindre mon serveur Discord de Gachatris pour voir les mises à jour et parler du jeu." ,
+changelogs: "Journaux des modifications (Anglais)",
    controls: "Contrôles",
    replaycon: "Console de Relecture",
    settings: "Paramètres",
@@ -368,7 +377,7 @@ selectorAI: "Pumili ng Gacha Character para sa AI",
    about: "Informations",
    about1: "Gachatris JavaScriptus - un mod simonlc/Tetr.JS d'EricLenovo, dont le nom a été fondé par lui-même - est un jeu d'empilement de blocs dont le but est d'effacer des rangées de 10 blocs constituant des lignes. Gachatris JavaScriptus a été créé le 12 janvier 2022. Il se compose non seulement de personnages du Gacha Club, mais également de plusieurs modes et fonctionnalités. EricLenovo lui-même est un Tetris-Gacha YouTuber qui possède ce mod Tetr.JS.",
    about2: "L'Original Tetr.JS a été conçu et réalisé par Simon Laroche sous licence MIT ; Gacha Club et les autres jeux Gacha sont des marques déposées de Lunime ; 'Gachatris JavaScriptus' est abrégé en 'GT.JS'",
-   discordB: "Discord Server de Gachatris JavaScriptus",
+   discordB: "Discord Server de Gachatris",
    tetrjsB: "Tetr.JS de Simon Laroche",
 
 playername:"Nom de joueur:",
@@ -557,6 +566,9 @@ function controlsGUI(ID, text) {
  * Translate
  */
 function translate() {
+ $iH("retirement-title",TransText("retirement"))
+  $iH("retirement-letter",TransText("retLetter"))
+ buttonGUI("changelogs",TransText("changelogs"))
  classGUI('title', TransText('title'))
  textGUI('title2', TransText('title2'))
  textGUI('controls', TransText('controls'))
